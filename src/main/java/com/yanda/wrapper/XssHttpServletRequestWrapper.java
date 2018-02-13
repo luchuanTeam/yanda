@@ -73,7 +73,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper
 			return s;
 		}
 
-		return HtmlUtils.htmlEscape(s);
+		return HtmlUtils.htmlEscape(s);		//把HTML编码转义
 	}
 	
 	/**
