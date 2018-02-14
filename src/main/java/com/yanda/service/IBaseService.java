@@ -1,6 +1,6 @@
 package com.yanda.service;
 
-import java.util.List;
+import com.yanda.entity.PageResult;
 
 /**
  * 说明：增删改基础服务接口
@@ -8,6 +8,7 @@ import java.util.List;
  * @time 2018年1月4日 上午11:22:18
  */
 public interface IBaseService<T> {
+
 	/**
 	 * 添加一条记录
 	 * @param t
@@ -35,6 +36,6 @@ public interface IBaseService<T> {
 	 * @param pageSize
 	 * @return
 	 */
-	public List<T> list(int pageNum, int pageSize);
+	public PageResult<T> list(int pageNum, int pageSize, String searchVal);
 	
 }

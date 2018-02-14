@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yanda.mapper.MovieClassifyMapper">
+
+  <select id="findMovieListByClassify" resultMap="com.yanda.mapper.generated.MovieInfoMapper.BaseResultMap">
+    select
+	t1.*	
+    from t_movie_info t1 left join t_classify_info t2 on t1.classify_id = t2.classify_id
+    where 1=1
+    <if test="classifyId != 0">  
+    	and t1.classify_id = #{classifyId}
+    </if>
+    <if test="searchKey != null and searchVal != null">
+    	<choose>  
+           <when test="searchKey == 'all' ">
+           		and (t1.mv_title like concat('%',#{searchVal},'%') or t1.mv_desc like concat('%',#{searchVal},'%'))
+           	</when>  
+           <when test="searchKey != 'all'">
+           		and t1.mv_#{searchKey} like concat('%',#{searchVal},'%')
+           </when>  
+        </choose> 
+    </if>
+    <if test="order != null">  
+    	order by ${order}
+    </if>
+    <if test="order == null">  
+    	order by update_time desc;
+    </if>
+  </select>
+  	
+</mapper>

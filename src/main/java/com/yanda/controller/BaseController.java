@@ -1,7 +1,10 @@
 package com.yanda.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.yanda.entity.JsonResult;
 import com.yanda.util.ActionResultUtil;
+import com.yanda.util.StringUtil;
 
 /**
  * 控制基础类
@@ -66,4 +69,14 @@ public class BaseController {
 		return ActionResultUtil.result(status, message, data);
 	}
 	
+	public String getValue(HttpServletRequest request, String name, String defaultVal) {
+		String value = request.getParameter(name);
+		if (StringUtil.isEmpty(value))
+			return defaultVal;
+		return value;
+	}
+		
+	public String getValue(HttpServletRequest request, String name) {
+		return getValue(request, name, "");
+	}
 }

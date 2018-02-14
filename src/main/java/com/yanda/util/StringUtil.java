@@ -40,13 +40,13 @@ public class StringUtil {
 	private static String FALSE_STRINGS[] = { "false", "null", "nul", "off", "no", "n" };
 
 	private static String DEFAULT_DATE_PATTTERN = "yyyy-M-d";
-	
+
 	public static String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>"; // 定义script的正则表达式{或]*?>[\\s\\S]*?<\\/script>
 
 	public static String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>"; // 定义style的正则表达式{或]*?>[\\s\\S]*?<\\/style>
 
 	public static String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式
-	
+
 	public static Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);;
 
 	public static Pattern p_style = Pattern.compile(regEx_style, Pattern.CASE_INSENSITIVE);;
@@ -2350,6 +2350,15 @@ public class StringUtil {
 		}
 		return textStr;// 返回文本字符串
 
+	}
+
+	public static int[] stringToInts(String s) {
+		String[] strArr = s.split(",");
+		int[] n = new int[strArr.length];
+		for (int i = 0; i < strArr.length; i++) {
+			n[i] = Integer.parseInt(strArr[i]);
+		}
+		return n;
 	}
 
 	public static void main(String[] args) {

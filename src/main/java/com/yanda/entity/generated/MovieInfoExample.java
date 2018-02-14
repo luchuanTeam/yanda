@@ -654,6 +654,66 @@ public class MovieInfoExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andClassifyIdIsNull() {
+            addCriterion("classify_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdIsNotNull() {
+            addCriterion("classify_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdEqualTo(Integer value) {
+            addCriterion("classify_id =", value, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdNotEqualTo(Integer value) {
+            addCriterion("classify_id <>", value, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdGreaterThan(Integer value) {
+            addCriterion("classify_id >", value, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("classify_id >=", value, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdLessThan(Integer value) {
+            addCriterion("classify_id <", value, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdLessThanOrEqualTo(Integer value) {
+            addCriterion("classify_id <=", value, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdIn(List<Integer> values) {
+            addCriterion("classify_id in", values, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdNotIn(List<Integer> values) {
+            addCriterion("classify_id not in", values, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdBetween(Integer value1, Integer value2) {
+            addCriterion("classify_id between", value1, value2, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("classify_id not between", value1, value2, "classifyId");
+            return (Criteria) this;
+        }
     }
 
     /**
