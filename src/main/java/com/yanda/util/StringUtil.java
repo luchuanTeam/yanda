@@ -2360,6 +2360,15 @@ public class StringUtil {
 		}
 		return n;
 	}
+	
+	public static long[] stringToLongs(String s) {
+		String[] strArr = s.split(",");
+		long[] n = new long[strArr.length];
+		for (int i = 0; i < strArr.length; i++) {
+			n[i] = Integer.parseInt(strArr[i]);
+		}
+		return n;
+	}
 
 	public static void main(String[] args) {
 

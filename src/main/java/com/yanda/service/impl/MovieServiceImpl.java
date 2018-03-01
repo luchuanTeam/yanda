@@ -9,30 +9,14 @@ import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.mapper.MovieClassifyMapper;
 import com.yanda.mapper.generated.MovieInfoMapper;
+import com.yanda.service.BaseService;
+import com.yanda.service.MovieService;
 
 @Service
-public class MovieServiceImpl implements MovieService {
-	
-	@Autowired
-	private MovieInfoMapper movieInfoMapper;
+public class MovieServiceImpl extends BaseService<MovieInfoMapper ,MovieInfo, Long> implements MovieService {
 	
 	@Autowired
 	private MovieClassifyMapper movieClassifyMapper;
-
-	@Override
-	public int addRecord(MovieInfo record) {
-		return movieInfoMapper.insertSelective(record);
-	}
-
-	@Override
-	public int deleteRecord(int recordId) {
-		return movieInfoMapper.deleteByPrimaryKey(recordId);
-	}
-
-	@Override
-	public int updateRecord(MovieInfo record) {
-		return movieInfoMapper.updateByPrimaryKeySelective(record);
-	}
 
 	@Override
 	public PageResult<MovieInfo> list(int pageNum, int pageSize, String searchVal) {

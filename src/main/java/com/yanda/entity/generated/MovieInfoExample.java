@@ -205,123 +205,53 @@ public class MovieInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andMvIdEqualTo(Integer value) {
+        public Criteria andMvIdEqualTo(Long value) {
             addCriterion("mv_id =", value, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdNotEqualTo(Integer value) {
+        public Criteria andMvIdNotEqualTo(Long value) {
             addCriterion("mv_id <>", value, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdGreaterThan(Integer value) {
+        public Criteria andMvIdGreaterThan(Long value) {
             addCriterion("mv_id >", value, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andMvIdGreaterThanOrEqualTo(Long value) {
             addCriterion("mv_id >=", value, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdLessThan(Integer value) {
+        public Criteria andMvIdLessThan(Long value) {
             addCriterion("mv_id <", value, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdLessThanOrEqualTo(Integer value) {
+        public Criteria andMvIdLessThanOrEqualTo(Long value) {
             addCriterion("mv_id <=", value, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdIn(List<Integer> values) {
+        public Criteria andMvIdIn(List<Long> values) {
             addCriterion("mv_id in", values, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdNotIn(List<Integer> values) {
+        public Criteria andMvIdNotIn(List<Long> values) {
             addCriterion("mv_id not in", values, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdBetween(Integer value1, Integer value2) {
+        public Criteria andMvIdBetween(Long value1, Long value2) {
             addCriterion("mv_id between", value1, value2, "mvId");
             return (Criteria) this;
         }
 
-        public Criteria andMvIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andMvIdNotBetween(Long value1, Long value2) {
             addCriterion("mv_id not between", value1, value2, "mvId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlIsNull() {
-            addCriterion("mv_url is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlIsNotNull() {
-            addCriterion("mv_url is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlEqualTo(String value) {
-            addCriterion("mv_url =", value, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlNotEqualTo(String value) {
-            addCriterion("mv_url <>", value, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlGreaterThan(String value) {
-            addCriterion("mv_url >", value, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlGreaterThanOrEqualTo(String value) {
-            addCriterion("mv_url >=", value, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlLessThan(String value) {
-            addCriterion("mv_url <", value, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlLessThanOrEqualTo(String value) {
-            addCriterion("mv_url <=", value, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlLike(String value) {
-            addCriterion("mv_url like", value, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlNotLike(String value) {
-            addCriterion("mv_url not like", value, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlIn(List<String> values) {
-            addCriterion("mv_url in", values, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlNotIn(List<String> values) {
-            addCriterion("mv_url not in", values, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlBetween(String value1, String value2) {
-            addCriterion("mv_url between", value1, value2, "mvUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvUrlNotBetween(String value1, String value2) {
-            addCriterion("mv_url not between", value1, value2, "mvUrl");
             return (Criteria) this;
         }
 
@@ -712,6 +642,126 @@ public class MovieInfoExample {
 
         public Criteria andClassifyIdNotBetween(Integer value1, Integer value2) {
             addCriterion("classify_id not between", value1, value2, "classifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdIsNull() {
+            addCriterion("img_appendix_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdIsNotNull() {
+            addCriterion("img_appendix_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdEqualTo(Long value) {
+            addCriterion("img_appendix_id =", value, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdNotEqualTo(Long value) {
+            addCriterion("img_appendix_id <>", value, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdGreaterThan(Long value) {
+            addCriterion("img_appendix_id >", value, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("img_appendix_id >=", value, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdLessThan(Long value) {
+            addCriterion("img_appendix_id <", value, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdLessThanOrEqualTo(Long value) {
+            addCriterion("img_appendix_id <=", value, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdIn(List<Long> values) {
+            addCriterion("img_appendix_id in", values, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdNotIn(List<Long> values) {
+            addCriterion("img_appendix_id not in", values, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdBetween(Long value1, Long value2) {
+            addCriterion("img_appendix_id between", value1, value2, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgAppendixIdNotBetween(Long value1, Long value2) {
+            addCriterion("img_appendix_id not between", value1, value2, "imgAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdIsNull() {
+            addCriterion("mv_appendix_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdIsNotNull() {
+            addCriterion("mv_appendix_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdEqualTo(Long value) {
+            addCriterion("mv_appendix_id =", value, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdNotEqualTo(Long value) {
+            addCriterion("mv_appendix_id <>", value, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdGreaterThan(Long value) {
+            addCriterion("mv_appendix_id >", value, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("mv_appendix_id >=", value, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdLessThan(Long value) {
+            addCriterion("mv_appendix_id <", value, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdLessThanOrEqualTo(Long value) {
+            addCriterion("mv_appendix_id <=", value, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdIn(List<Long> values) {
+            addCriterion("mv_appendix_id in", values, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdNotIn(List<Long> values) {
+            addCriterion("mv_appendix_id not in", values, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdBetween(Long value1, Long value2) {
+            addCriterion("mv_appendix_id between", value1, value2, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvAppendixIdNotBetween(Long value1, Long value2) {
+            addCriterion("mv_appendix_id not between", value1, value2, "mvAppendixId");
             return (Criteria) this;
         }
     }

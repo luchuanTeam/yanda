@@ -2,6 +2,8 @@ package com.yanda.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import com.yanda.entity.JsonResult;
 import com.yanda.util.ActionResultUtil;
 import com.yanda.util.StringUtil;
@@ -12,6 +14,8 @@ import com.yanda.util.StringUtil;
  *
  */
 public class BaseController {
+	
+	protected Logger LOG = Logger.getLogger(this.getClass());
 	
 	public final static String PAGE_SIZE = ActionResultUtil.PAGE_SIZE;
 	

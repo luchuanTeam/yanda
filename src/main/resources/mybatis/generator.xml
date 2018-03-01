@@ -10,6 +10,15 @@
 	<classPathEntry location="${jdbc.driverLocation}" />
 
 	<context id="default" targetRuntime="MyBatis3">
+	
+		<!-- 通用mapper插件 -->
+        <!-- <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            此处的 MyMapper注意一定不能被扫描到
+          	<property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+        </plugin> -->
+		<!-- 实体序列化 -->
+         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+	
 		<!-- optional，旨在创建class时，对注释进行控制 -->
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
@@ -87,19 +96,25 @@
 		<table tableName="t_banner_info" domainObjectName="BannerInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
+			<!-- <generatedKey column="img_id" sqlStatement="MySql" identity="true"/> -->
 		</table>
 		<table tableName="t_movie_info" domainObjectName="MovieInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>
-		<!-- <table tableName="t_user_info" domainObjectName="UserInfo" 
+		<table tableName="t_user_info" domainObjectName="UserInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>
 		<table tableName="t_classify_info" domainObjectName="ClassifyInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
-		</table> -->
+		</table>
+		<table tableName="t_attachment_info" domainObjectName="AttachmentInfo" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="true" selectByExampleQueryId="true">
+			<generatedKey column="appendix_id" sqlStatement="MySql" identity="true"/>
+		</table>
 
 	</context>
 </generatorConfiguration>

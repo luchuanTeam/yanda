@@ -195,203 +195,133 @@ public class BannerInfoExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andImgIdIsNull() {
-            addCriterion("img_id is null");
+        public Criteria andBannerIdIsNull() {
+            addCriterion("banner_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdIsNotNull() {
-            addCriterion("img_id is not null");
+        public Criteria andBannerIdIsNotNull() {
+            addCriterion("banner_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdEqualTo(Integer value) {
-            addCriterion("img_id =", value, "imgId");
+        public Criteria andBannerIdEqualTo(Long value) {
+            addCriterion("banner_id =", value, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdNotEqualTo(Integer value) {
-            addCriterion("img_id <>", value, "imgId");
+        public Criteria andBannerIdNotEqualTo(Long value) {
+            addCriterion("banner_id <>", value, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdGreaterThan(Integer value) {
-            addCriterion("img_id >", value, "imgId");
+        public Criteria andBannerIdGreaterThan(Long value) {
+            addCriterion("banner_id >", value, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("img_id >=", value, "imgId");
+        public Criteria andBannerIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("banner_id >=", value, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdLessThan(Integer value) {
-            addCriterion("img_id <", value, "imgId");
+        public Criteria andBannerIdLessThan(Long value) {
+            addCriterion("banner_id <", value, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdLessThanOrEqualTo(Integer value) {
-            addCriterion("img_id <=", value, "imgId");
+        public Criteria andBannerIdLessThanOrEqualTo(Long value) {
+            addCriterion("banner_id <=", value, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdIn(List<Integer> values) {
-            addCriterion("img_id in", values, "imgId");
+        public Criteria andBannerIdIn(List<Long> values) {
+            addCriterion("banner_id in", values, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdNotIn(List<Integer> values) {
-            addCriterion("img_id not in", values, "imgId");
+        public Criteria andBannerIdNotIn(List<Long> values) {
+            addCriterion("banner_id not in", values, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdBetween(Integer value1, Integer value2) {
-            addCriterion("img_id between", value1, value2, "imgId");
+        public Criteria andBannerIdBetween(Long value1, Long value2) {
+            addCriterion("banner_id between", value1, value2, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("img_id not between", value1, value2, "imgId");
+        public Criteria andBannerIdNotBetween(Long value1, Long value2) {
+            addCriterion("banner_id not between", value1, value2, "bannerId");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlIsNull() {
-            addCriterion("img_url is null");
+        public Criteria andBannerDescIsNull() {
+            addCriterion("banner_desc is null");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlIsNotNull() {
-            addCriterion("img_url is not null");
+        public Criteria andBannerDescIsNotNull() {
+            addCriterion("banner_desc is not null");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlEqualTo(String value) {
-            addCriterion("img_url =", value, "imgUrl");
+        public Criteria andBannerDescEqualTo(String value) {
+            addCriterion("banner_desc =", value, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlNotEqualTo(String value) {
-            addCriterion("img_url <>", value, "imgUrl");
+        public Criteria andBannerDescNotEqualTo(String value) {
+            addCriterion("banner_desc <>", value, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlGreaterThan(String value) {
-            addCriterion("img_url >", value, "imgUrl");
+        public Criteria andBannerDescGreaterThan(String value) {
+            addCriterion("banner_desc >", value, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlGreaterThanOrEqualTo(String value) {
-            addCriterion("img_url >=", value, "imgUrl");
+        public Criteria andBannerDescGreaterThanOrEqualTo(String value) {
+            addCriterion("banner_desc >=", value, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlLessThan(String value) {
-            addCriterion("img_url <", value, "imgUrl");
+        public Criteria andBannerDescLessThan(String value) {
+            addCriterion("banner_desc <", value, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlLessThanOrEqualTo(String value) {
-            addCriterion("img_url <=", value, "imgUrl");
+        public Criteria andBannerDescLessThanOrEqualTo(String value) {
+            addCriterion("banner_desc <=", value, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlLike(String value) {
-            addCriterion("img_url like", value, "imgUrl");
+        public Criteria andBannerDescLike(String value) {
+            addCriterion("banner_desc like", value, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlNotLike(String value) {
-            addCriterion("img_url not like", value, "imgUrl");
+        public Criteria andBannerDescNotLike(String value) {
+            addCriterion("banner_desc not like", value, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlIn(List<String> values) {
-            addCriterion("img_url in", values, "imgUrl");
+        public Criteria andBannerDescIn(List<String> values) {
+            addCriterion("banner_desc in", values, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlNotIn(List<String> values) {
-            addCriterion("img_url not in", values, "imgUrl");
+        public Criteria andBannerDescNotIn(List<String> values) {
+            addCriterion("banner_desc not in", values, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlBetween(String value1, String value2) {
-            addCriterion("img_url between", value1, value2, "imgUrl");
+        public Criteria andBannerDescBetween(String value1, String value2) {
+            addCriterion("banner_desc between", value1, value2, "bannerDesc");
             return (Criteria) this;
         }
 
-        public Criteria andImgUrlNotBetween(String value1, String value2) {
-            addCriterion("img_url not between", value1, value2, "imgUrl");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescIsNull() {
-            addCriterion("img_desc is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescIsNotNull() {
-            addCriterion("img_desc is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescEqualTo(String value) {
-            addCriterion("img_desc =", value, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescNotEqualTo(String value) {
-            addCriterion("img_desc <>", value, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescGreaterThan(String value) {
-            addCriterion("img_desc >", value, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescGreaterThanOrEqualTo(String value) {
-            addCriterion("img_desc >=", value, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescLessThan(String value) {
-            addCriterion("img_desc <", value, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescLessThanOrEqualTo(String value) {
-            addCriterion("img_desc <=", value, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescLike(String value) {
-            addCriterion("img_desc like", value, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescNotLike(String value) {
-            addCriterion("img_desc not like", value, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescIn(List<String> values) {
-            addCriterion("img_desc in", values, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescNotIn(List<String> values) {
-            addCriterion("img_desc not in", values, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescBetween(String value1, String value2) {
-            addCriterion("img_desc between", value1, value2, "imgDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andImgDescNotBetween(String value1, String value2) {
-            addCriterion("img_desc not between", value1, value2, "imgDesc");
+        public Criteria andBannerDescNotBetween(String value1, String value2) {
+            addCriterion("banner_desc not between", value1, value2, "bannerDesc");
             return (Criteria) this;
         }
 
@@ -512,6 +442,186 @@ public class BannerInfoExample {
 
         public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
             addCriterion("update_time not between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdIsNull() {
+            addCriterion("appendix_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdIsNotNull() {
+            addCriterion("appendix_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdEqualTo(Long value) {
+            addCriterion("appendix_id =", value, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdNotEqualTo(Long value) {
+            addCriterion("appendix_id <>", value, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdGreaterThan(Long value) {
+            addCriterion("appendix_id >", value, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("appendix_id >=", value, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdLessThan(Long value) {
+            addCriterion("appendix_id <", value, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdLessThanOrEqualTo(Long value) {
+            addCriterion("appendix_id <=", value, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdIn(List<Long> values) {
+            addCriterion("appendix_id in", values, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdNotIn(List<Long> values) {
+            addCriterion("appendix_id not in", values, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdBetween(Long value1, Long value2) {
+            addCriterion("appendix_id between", value1, value2, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppendixIdNotBetween(Long value1, Long value2) {
+            addCriterion("appendix_id not between", value1, value2, "appendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdIsNull() {
+            addCriterion("mv_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdIsNotNull() {
+            addCriterion("mv_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdEqualTo(Long value) {
+            addCriterion("mv_id =", value, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdNotEqualTo(Long value) {
+            addCriterion("mv_id <>", value, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdGreaterThan(Long value) {
+            addCriterion("mv_id >", value, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("mv_id >=", value, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdLessThan(Long value) {
+            addCriterion("mv_id <", value, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdLessThanOrEqualTo(Long value) {
+            addCriterion("mv_id <=", value, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdIn(List<Long> values) {
+            addCriterion("mv_id in", values, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdNotIn(List<Long> values) {
+            addCriterion("mv_id not in", values, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdBetween(Long value1, Long value2) {
+            addCriterion("mv_id between", value1, value2, "mvId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvIdNotBetween(Long value1, Long value2) {
+            addCriterion("mv_id not between", value1, value2, "mvId");
             return (Criteria) this;
         }
     }
