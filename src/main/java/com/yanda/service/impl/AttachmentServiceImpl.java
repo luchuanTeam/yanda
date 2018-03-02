@@ -12,12 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yanda.component.FileConfig;
 import com.yanda.entity.FileType;
-import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.AttachmentInfoMapper;
 import com.yanda.service.AttachmentService;
-import com.yanda.service.BaseService;
 import com.yanda.util.ImageUtils;
 
 
@@ -28,11 +26,17 @@ import com.yanda.util.ImageUtils;
  * @time 2018年3月1日 下午5:18:24
  */
 @Service
-public class AttachmentServiceImpl extends BaseService<AttachmentInfoMapper, AttachmentInfo, Long> implements AttachmentService {
+public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper, AttachmentInfo, Long> implements AttachmentService {
 	
-	public final Set<Integer> iconSize = new LinkedHashSet<Integer>() {
+	
+	
+	public AttachmentServiceImpl() {
+		super();
+	}
 
-		private static final long serialVersionUID = 1L;
+	public static final Set<Integer> iconSize = new LinkedHashSet<Integer>() {
+
+		private static final long serialVersionUID = 2915123611231596820L;
 
 		{
 			add(800);
@@ -44,8 +48,7 @@ public class AttachmentServiceImpl extends BaseService<AttachmentInfoMapper, Att
 	
 	@Autowired
 	private FileConfig fileConfig;
-	@Autowired
-	private AttachmentInfoMapper attachMapper;
+
 	
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
@@ -55,18 +58,18 @@ public class AttachmentServiceImpl extends BaseService<AttachmentInfoMapper, Att
 		File tempFile = new File(fileConfig.getTempPath(), newFilename + "." + fileExt);
 		try {
 			
-			String filePath = generatedFilePath(record);
-			// 图片类型附件要生成缩略图
-			if (FileType.IMG.getValue() == record.getFileType()) {
-				generatedThumbnail(tempFile, new File(filePath), newFilename, fileExt);
-			}
+			String filePath = record.getFilePath();
 			File dest = new File(filePath, record.getNewFilename() + "." + record.getFileExt());
 			if (!dest.getParentFile().exists()) {
 				dest.getParentFile().mkdirs();
 			}
 			FileUtils.copyFile(tempFile, dest);
+			// 图片类型附件要生成缩略图
+			if (FileType.IMG.getValue() == record.getFileType()) {
+				generatedThumbnail(tempFile, new File(filePath), newFilename, fileExt);
+			}
 			tempFile.delete();
-			return attachMapper.insertSelective(record);
+			return this.mapper.insertSelective(record);
 			
 		} catch (IOException e) {
 			String tips = "添加附件失败：生成缩略图异常";
@@ -80,8 +83,8 @@ public class AttachmentServiceImpl extends BaseService<AttachmentInfoMapper, Att
 	public int deleteById(Long recordId) throws DOPException {
 		try {
 			
-			AttachmentInfo attachmentInfo = attachMapper.selectByPrimaryKey(recordId);
-			int result = attachMapper.deleteByPrimaryKey(recordId);
+			AttachmentInfo attachmentInfo = this.mapper.selectByPrimaryKey(recordId);
+			int result = this.mapper.deleteByPrimaryKey(recordId);
 			String filePath = generatedFilePath(attachmentInfo);
 			FileUtils.deleteDirectory(new File(filePath));
 			return result;
@@ -93,10 +96,6 @@ public class AttachmentServiceImpl extends BaseService<AttachmentInfoMapper, Att
 		}
 	}
 
-	@Override
-	public PageResult<AttachmentInfo> list(int pageNum, int pageSize, String searchVal) {
-		return null;
-	}
 	
 	/**
 	 * 根据附件类型生成不同上传目录

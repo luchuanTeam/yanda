@@ -95,7 +95,8 @@ public class AttachmentController extends BaseController {
 
 		AttachmentInfo attach = null;
 		try {
-			attach = attachmentService.selectByPrimaryKey(Long.valueOf(id));
+			attach = attachmentService.selectById(Long.valueOf(id));
+			initResponseType(response, attach);
 		} catch (NumberFormatException e) {
 			LOG.error("数据类型转换失败：传入的附件ID=["+id+"]不是number类型", e);
 		} catch (DOPException e) {
@@ -104,19 +105,15 @@ public class AttachmentController extends BaseController {
 		if (null == attach) {
 			return;
 		}
-
-		String fileName = attach.getOldFilename();
+		
+		String fileName = attach.getNewFilename();
 		if (FileType.IMG.getValue() == attach.getFileType()
-				&& attachmentService.iconSize.contains(Integer.valueOf(size))) {
+				&& AttachmentServiceImpl.iconSize.contains(Integer.valueOf(size))) {
 			fileName += "_" + size + "." + attach.getFileExt();
 		} else {
 			fileName += fileName + "." + attach.getFileExt();
 		}
 		
-		response.setHeader("content-type", "application/octet-stream");
-		response.setContentType("application/octet-stream");
-		response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-
 		byte[] buff = new byte[1024];
 		BufferedInputStream bis = null;
 		OutputStream os = null;
@@ -141,7 +138,23 @@ public class AttachmentController extends BaseController {
 				}
 			}
 		}
-
 	}
-
+	
+	
+	private void initResponseType(HttpServletResponse response, AttachmentInfo attach) {
+		String fileExt = attach.getFileExt();
+		String fileShowName = attach.getOldFilename() + "." + fileExt;
+		if ("jpg".equalsIgnoreCase(fileExt) || "jpeg".equalsIgnoreCase(fileExt)) {
+			response.setContentType("image/jpeg");
+		} else if ("png".equalsIgnoreCase(fileExt)) {
+			response.setContentType("image/png");
+		} else if ("gif".equalsIgnoreCase(fileExt)) {
+			response.setContentType("image/gif");
+		} else {
+			response.setHeader("content-type", "application/octet-stream");
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", "attachment;filename=" + fileShowName);
+		}
+		
+	}
 }

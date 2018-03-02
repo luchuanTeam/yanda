@@ -9,20 +9,13 @@ import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.mapper.MovieClassifyMapper;
 import com.yanda.mapper.generated.MovieInfoMapper;
-import com.yanda.service.BaseService;
 import com.yanda.service.MovieService;
 
 @Service
-public class MovieServiceImpl extends BaseService<MovieInfoMapper ,MovieInfo, Long> implements MovieService {
+public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo, Long> implements MovieService {
 	
 	@Autowired
 	private MovieClassifyMapper movieClassifyMapper;
-
-	@Override
-	public PageResult<MovieInfo> list(int pageNum, int pageSize, String searchVal) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public PageResult<MovieInfo> findMovieListByClassify(int classifyId, String searchKey, String searchVal, String order,

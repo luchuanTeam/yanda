@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @version V1.0.0   
  */
 @SpringBootApplication
-@MapperScan("com.yanda.mapper")
+@MapperScan(basePackages = "com.yanda.mapper")
 @EnableScheduling
 @EnableConfigurationProperties
 public class Application {

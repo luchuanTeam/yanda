@@ -12,10 +12,10 @@
 	<context id="default" targetRuntime="MyBatis3">
 	
 		<!-- 通用mapper插件 -->
-        <!-- <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            此处的 MyMapper注意一定不能被扫描到
-          	<property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
-        </plugin> -->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <!-- 此处的 MyMapper注意一定不能被扫描到 -->
+          	<property name="mappers" value="com.yanda.util.MyMapper"/>
+        </plugin> 
 		<!-- 实体序列化 -->
          <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 	
@@ -96,7 +96,6 @@
 		<table tableName="t_banner_info" domainObjectName="BannerInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
-			<!-- <generatedKey column="img_id" sqlStatement="MySql" identity="true"/> -->
 		</table>
 		<table tableName="t_movie_info" domainObjectName="MovieInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 

@@ -26,19 +26,19 @@ import com.yanda.util.StringUtil;
 @RestController
 @RequestMapping(value = "/banner")
 public class BannerController extends BaseController {
-	
+
 	@Autowired
 	private BannerServiceImpl bannerService;
 	@Autowired
 	private FileConfig fileConfig;
-	
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JsonResult listBanners(HttpServletRequest request) {
 		String pageNum = getValue(request, "pageNum", "1");
 		String pageSize = getValue(request, "pageSize", "1");
 		String bannerDesc = getValue(request, "bannerDesc");
-		PageResult<BannerInfo> bannerInfos = bannerService.list(Integer.valueOf(pageNum), Integer.valueOf(pageSize), bannerDesc);
+		PageResult<BannerInfo> bannerInfos = bannerService.list(Integer.valueOf(pageNum), Integer.valueOf(pageSize),
+				bannerDesc);
 		return result(200, "success", bannerInfos);
 	}
 
@@ -54,21 +54,22 @@ public class BannerController extends BaseController {
 		if (StringUtil.isEmpty(newFilename) || !tempFile.exists()) {
 			return result(-1, "找不到上传的图片");
 		}
-		
+
 		try {
 			Date crTime = new Date();
-			
 			// 获取图片的扩展名
 			String ext = StringUtils.substringAfter(newFilename, ".");
-			// 新的图片文件名 = 获取时间戳+"."图片扩展名
-			String newFileName = String.valueOf(System.currentTimeMillis());
+			// 获取图片名
+			String filename = StringUtils.substringBefore(newFilename, ".");
+
 			AttachmentInfo attachmentInfo = new AttachmentInfo();
-			attachmentInfo.setOldFilename(oldFilename);
-			attachmentInfo.setNewFilename(newFileName);
+			attachmentInfo.setOldFilename(StringUtils.substringBefore(oldFilename, "."));
+			attachmentInfo.setNewFilename(filename);
 			attachmentInfo.setCreateTime(crTime);
 			attachmentInfo.setFileExt(ext);
+			attachmentInfo.setFilePath(fileConfig.getUploadPath() + "/" + fileConfig.getBaseImgDir() + "/" + filename);
 			attachmentInfo.setFileType(FileType.IMG.getValue());
-			
+
 			bannerInfo.setCreateTime(crTime);
 			bannerInfo.setUpdateTime(crTime);
 			bannerService.addBanner(attachmentInfo, bannerInfo);
@@ -80,10 +81,10 @@ public class BannerController extends BaseController {
 			tempFile.delete();
 		}
 	}
-	
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	public JsonResult delete(HttpServletRequest request, @PathVariable("id") Long id) {
-		
+
 		try {
 			bannerService.deleteById(id);
 			return result(200, "删除成功!");
@@ -92,11 +93,11 @@ public class BannerController extends BaseController {
 			return result(-1, e.getMessage());
 		}
 	}
-	
+
 	@RequestMapping(value = "/batchDelete/{ids}", method = RequestMethod.POST)
 	public JsonResult batchDelete(HttpServletRequest request, @PathVariable("ids") String ids) {
 		try {
-			long[] idArr =  StringUtil.stringToLongs(ids);
+			long[] idArr = StringUtil.stringToLongs(ids);
 			for (long id : idArr) {
 				bannerService.deleteById(id);
 			}
@@ -106,7 +107,7 @@ public class BannerController extends BaseController {
 			return result(-1, e.getMessage());
 		}
 	}
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public JsonResult update(HttpServletRequest request, @RequestBody BannerInfo bannerInfo) {
 		bannerInfo.setUpdateTime(new Date());
@@ -117,6 +118,5 @@ public class BannerController extends BaseController {
 			return result(-1, "更新失败:" + e.getMessage());
 		}
 	}
-	
-	
+
 }

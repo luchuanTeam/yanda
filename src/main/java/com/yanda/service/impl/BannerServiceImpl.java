@@ -13,10 +13,9 @@ import com.yanda.entity.generated.BannerInfoExample;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.BannerInfoMapper;
 import com.yanda.service.BannerService;
-import com.yanda.service.BaseService;
 
 @Service
-public class BannerServiceImpl extends BaseService<BannerInfoMapper ,BannerInfo, Long> implements BannerService {
+public class BannerServiceImpl extends BaseServiceImpl<BannerInfoMapper ,BannerInfo, Long> implements BannerService {
 	
 	@Autowired
 	private AttachmentServiceImpl attachmentService;

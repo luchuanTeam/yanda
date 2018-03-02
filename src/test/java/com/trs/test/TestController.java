@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.yanda.Application;
@@ -24,8 +23,6 @@ import com.yanda.mapper.generated.BannerInfoMapper;
 public class TestController {
 
 	@Autowired
-	private TestRestTemplate restTemplate;
-	@Autowired
 	private BannerInfoMapper mapper;
 
 	@Test
@@ -33,11 +30,9 @@ public class TestController {
 		for (int i=0;i<3;i++) {
 			BannerInfo record = new BannerInfo();
 			record.setCreateTime(new Date());
-			record.setImgDesc("111");
-			record.setImgUrl("http://www.baidu.com");
+			record.setBannerDesc("111");
 			record.setUpdateTime(new Date());
 			mapper.insertSelective(record);
-			System.out.println("返回主键="+record.getImgId());
 		}
 		
 	}
