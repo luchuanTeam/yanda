@@ -12,13 +12,14 @@ import com.yanda.entity.generated.BannerInfo;
 import com.yanda.entity.generated.BannerInfoExample;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.BannerInfoMapper;
+import com.yanda.service.AttachmentService;
 import com.yanda.service.BannerService;
 
 @Service
 public class BannerServiceImpl extends BaseServiceImpl<BannerInfoMapper ,BannerInfo, Long> implements BannerService {
 	
 	@Autowired
-	private AttachmentServiceImpl attachmentService;
+	private AttachmentService attachmentService;
 
 
 

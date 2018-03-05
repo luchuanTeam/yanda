@@ -33,5 +33,6 @@ public interface BaseService<T extends Serializable, ID> {
      * @return 实体 
      */  
     public T selectById(ID id) throws DOPException;
+  
 	
 }

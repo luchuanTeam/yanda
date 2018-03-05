@@ -79,6 +79,39 @@ public class AttachmentController extends BaseController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/doVideoUpload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public JsonResult doVideoUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
+		if (file.isEmpty())
+			return result(-1, "上传失败，请选择要上传的视频!");
+//		if (!file.getContentType().contains("image"))
+//			return result(-1, "上传的文件不是视频类型，请重新上传!");
+		LOG.info("文件类型="+file.getContentType());
+		// 获取图片的文件名+后缀
+		String fileName = file.getOriginalFilename();
+		try {
+			Map<String, String> resultMap = new HashMap<>();
+			// 获取图片的扩展名
+			String fileExt = StringUtils.substringAfter(fileName, ".");
+			// 获取新图片的名字
+			String newFileName = String.valueOf(System.currentTimeMillis()) + "." + fileExt;
+
+			File dest = new File(fileConfig.getTempPath(), newFileName);
+			if (!dest.getParentFile().exists()) {
+				dest.getParentFile().mkdirs();
+			}
+			// 上传到指定目录
+			file.transferTo(dest);
+			resultMap.put("filename", fileName);
+			resultMap.put("newFilename", newFileName);
+			return result(200, "上传成功！", resultMap);
+		} catch (IOException e) {
+			String tips = "拷贝图片【" + fileName + "】到临时路径异常";
+			LOG.error(tips, e);
+			return result(-1, tips);
+		}
+	}
+	
 	/**
 	 * 读取附件
 	 * @param request
@@ -120,7 +153,7 @@ public class AttachmentController extends BaseController {
 		try {
 			os = response.getOutputStream();
 			bis = new BufferedInputStream(
-					new FileInputStream(new File(attachmentService.generatedFilePath(attach) + "/" +  fileName)));
+					new FileInputStream(new File(attach.getFilePath() + "/" +  fileName)));
 			int length = bis.read(buff);
 			while (length != -1) {
 				os.write(buff, 0, buff.length);

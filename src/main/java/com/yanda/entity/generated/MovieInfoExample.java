@@ -165,213 +165,143 @@ public class MovieInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleIsNull() {
-            addCriterion("mv_title is null");
+        public Criteria andMvNameIsNull() {
+            addCriterion("mv_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleIsNotNull() {
-            addCriterion("mv_title is not null");
+        public Criteria andMvNameIsNotNull() {
+            addCriterion("mv_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleEqualTo(String value) {
-            addCriterion("mv_title =", value, "mvTitle");
+        public Criteria andMvNameEqualTo(String value) {
+            addCriterion("mv_name =", value, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleNotEqualTo(String value) {
-            addCriterion("mv_title <>", value, "mvTitle");
+        public Criteria andMvNameNotEqualTo(String value) {
+            addCriterion("mv_name <>", value, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleGreaterThan(String value) {
-            addCriterion("mv_title >", value, "mvTitle");
+        public Criteria andMvNameGreaterThan(String value) {
+            addCriterion("mv_name >", value, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleGreaterThanOrEqualTo(String value) {
-            addCriterion("mv_title >=", value, "mvTitle");
+        public Criteria andMvNameGreaterThanOrEqualTo(String value) {
+            addCriterion("mv_name >=", value, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleLessThan(String value) {
-            addCriterion("mv_title <", value, "mvTitle");
+        public Criteria andMvNameLessThan(String value) {
+            addCriterion("mv_name <", value, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleLessThanOrEqualTo(String value) {
-            addCriterion("mv_title <=", value, "mvTitle");
+        public Criteria andMvNameLessThanOrEqualTo(String value) {
+            addCriterion("mv_name <=", value, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleLike(String value) {
-            addCriterion("mv_title like", value, "mvTitle");
+        public Criteria andMvNameLike(String value) {
+            addCriterion("mv_name like", value, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleNotLike(String value) {
-            addCriterion("mv_title not like", value, "mvTitle");
+        public Criteria andMvNameNotLike(String value) {
+            addCriterion("mv_name not like", value, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleIn(List<String> values) {
-            addCriterion("mv_title in", values, "mvTitle");
+        public Criteria andMvNameIn(List<String> values) {
+            addCriterion("mv_name in", values, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleNotIn(List<String> values) {
-            addCriterion("mv_title not in", values, "mvTitle");
+        public Criteria andMvNameNotIn(List<String> values) {
+            addCriterion("mv_name not in", values, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleBetween(String value1, String value2) {
-            addCriterion("mv_title between", value1, value2, "mvTitle");
+        public Criteria andMvNameBetween(String value1, String value2) {
+            addCriterion("mv_name between", value1, value2, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvTitleNotBetween(String value1, String value2) {
-            addCriterion("mv_title not between", value1, value2, "mvTitle");
+        public Criteria andMvNameNotBetween(String value1, String value2) {
+            addCriterion("mv_name not between", value1, value2, "mvName");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescIsNull() {
-            addCriterion("mv_desc is null");
+        public Criteria andMvIntroIsNull() {
+            addCriterion("mv_intro is null");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescIsNotNull() {
-            addCriterion("mv_desc is not null");
+        public Criteria andMvIntroIsNotNull() {
+            addCriterion("mv_intro is not null");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescEqualTo(String value) {
-            addCriterion("mv_desc =", value, "mvDesc");
+        public Criteria andMvIntroEqualTo(String value) {
+            addCriterion("mv_intro =", value, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescNotEqualTo(String value) {
-            addCriterion("mv_desc <>", value, "mvDesc");
+        public Criteria andMvIntroNotEqualTo(String value) {
+            addCriterion("mv_intro <>", value, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescGreaterThan(String value) {
-            addCriterion("mv_desc >", value, "mvDesc");
+        public Criteria andMvIntroGreaterThan(String value) {
+            addCriterion("mv_intro >", value, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescGreaterThanOrEqualTo(String value) {
-            addCriterion("mv_desc >=", value, "mvDesc");
+        public Criteria andMvIntroGreaterThanOrEqualTo(String value) {
+            addCriterion("mv_intro >=", value, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescLessThan(String value) {
-            addCriterion("mv_desc <", value, "mvDesc");
+        public Criteria andMvIntroLessThan(String value) {
+            addCriterion("mv_intro <", value, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescLessThanOrEqualTo(String value) {
-            addCriterion("mv_desc <=", value, "mvDesc");
+        public Criteria andMvIntroLessThanOrEqualTo(String value) {
+            addCriterion("mv_intro <=", value, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescLike(String value) {
-            addCriterion("mv_desc like", value, "mvDesc");
+        public Criteria andMvIntroLike(String value) {
+            addCriterion("mv_intro like", value, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescNotLike(String value) {
-            addCriterion("mv_desc not like", value, "mvDesc");
+        public Criteria andMvIntroNotLike(String value) {
+            addCriterion("mv_intro not like", value, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescIn(List<String> values) {
-            addCriterion("mv_desc in", values, "mvDesc");
+        public Criteria andMvIntroIn(List<String> values) {
+            addCriterion("mv_intro in", values, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescNotIn(List<String> values) {
-            addCriterion("mv_desc not in", values, "mvDesc");
+        public Criteria andMvIntroNotIn(List<String> values) {
+            addCriterion("mv_intro not in", values, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescBetween(String value1, String value2) {
-            addCriterion("mv_desc between", value1, value2, "mvDesc");
+        public Criteria andMvIntroBetween(String value1, String value2) {
+            addCriterion("mv_intro between", value1, value2, "mvIntro");
             return (Criteria) this;
         }
 
-        public Criteria andMvDescNotBetween(String value1, String value2) {
-            addCriterion("mv_desc not between", value1, value2, "mvDesc");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationIsNull() {
-            addCriterion("mv_duration is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationIsNotNull() {
-            addCriterion("mv_duration is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationEqualTo(String value) {
-            addCriterion("mv_duration =", value, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationNotEqualTo(String value) {
-            addCriterion("mv_duration <>", value, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationGreaterThan(String value) {
-            addCriterion("mv_duration >", value, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationGreaterThanOrEqualTo(String value) {
-            addCriterion("mv_duration >=", value, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationLessThan(String value) {
-            addCriterion("mv_duration <", value, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationLessThanOrEqualTo(String value) {
-            addCriterion("mv_duration <=", value, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationLike(String value) {
-            addCriterion("mv_duration like", value, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationNotLike(String value) {
-            addCriterion("mv_duration not like", value, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationIn(List<String> values) {
-            addCriterion("mv_duration in", values, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationNotIn(List<String> values) {
-            addCriterion("mv_duration not in", values, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationBetween(String value1, String value2) {
-            addCriterion("mv_duration between", value1, value2, "mvDuration");
-            return (Criteria) this;
-        }
-
-        public Criteria andMvDurationNotBetween(String value1, String value2) {
-            addCriterion("mv_duration not between", value1, value2, "mvDuration");
+        public Criteria andMvIntroNotBetween(String value1, String value2) {
+            addCriterion("mv_intro not between", value1, value2, "mvIntro");
             return (Criteria) this;
         }
 
@@ -672,6 +602,136 @@ public class MovieInfoExample {
 
         public Criteria andMvAppendixIdNotBetween(Long value1, Long value2) {
             addCriterion("mv_appendix_id not between", value1, value2, "mvAppendixId");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountIsNull() {
+            addCriterion("episode_count is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountIsNotNull() {
+            addCriterion("episode_count is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountEqualTo(Integer value) {
+            addCriterion("episode_count =", value, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountNotEqualTo(Integer value) {
+            addCriterion("episode_count <>", value, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountGreaterThan(Integer value) {
+            addCriterion("episode_count >", value, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("episode_count >=", value, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountLessThan(Integer value) {
+            addCriterion("episode_count <", value, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountLessThanOrEqualTo(Integer value) {
+            addCriterion("episode_count <=", value, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountIn(List<Integer> values) {
+            addCriterion("episode_count in", values, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountNotIn(List<Integer> values) {
+            addCriterion("episode_count not in", values, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountBetween(Integer value1, Integer value2) {
+            addCriterion("episode_count between", value1, value2, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEpisodeCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("episode_count not between", value1, value2, "episodeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathIsNull() {
+            addCriterion("mv_path is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathIsNotNull() {
+            addCriterion("mv_path is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathEqualTo(String value) {
+            addCriterion("mv_path =", value, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathNotEqualTo(String value) {
+            addCriterion("mv_path <>", value, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathGreaterThan(String value) {
+            addCriterion("mv_path >", value, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathGreaterThanOrEqualTo(String value) {
+            addCriterion("mv_path >=", value, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathLessThan(String value) {
+            addCriterion("mv_path <", value, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathLessThanOrEqualTo(String value) {
+            addCriterion("mv_path <=", value, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathLike(String value) {
+            addCriterion("mv_path like", value, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathNotLike(String value) {
+            addCriterion("mv_path not like", value, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathIn(List<String> values) {
+            addCriterion("mv_path in", values, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathNotIn(List<String> values) {
+            addCriterion("mv_path not in", values, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathBetween(String value1, String value2) {
+            addCriterion("mv_path between", value1, value2, "mvPath");
+            return (Criteria) this;
+        }
+
+        public Criteria andMvPathNotBetween(String value1, String value2) {
+            addCriterion("mv_path not between", value1, value2, "mvPath");
             return (Criteria) this;
         }
     }

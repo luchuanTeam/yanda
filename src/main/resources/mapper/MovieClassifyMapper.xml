@@ -2,30 +2,88 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yanda.mapper.MovieClassifyMapper">
 
-  <select id="findMovieListByClassify" resultMap="com.yanda.mapper.generated.MovieInfoMapper.BaseResultMap">
-    select
-	t1.*	
-    from t_movie_info t1 left join t_classify_info t2 on t1.classify_id = t2.classify_id
-    where 1=1
-    <if test="classifyId != 0">  
-    	and t1.classify_id = #{classifyId}
-    </if>
-    <if test="searchKey != null and searchVal != null">
-    	<choose>  
-           <when test="searchKey == 'all' ">
-           		and (t1.mv_title like concat('%',#{searchVal},'%') or t1.mv_desc like concat('%',#{searchVal},'%'))
-           	</when>  
-           <when test="searchKey != 'all'">
-           		and t1.mv_#{searchKey} like concat('%',#{searchVal},'%')
-           </when>  
-        </choose> 
-    </if>
-    <if test="order != null">  
-    	order by ${order}
-    </if>
-    <if test="order == null">  
-    	order by update_time desc;
-    </if>
-  </select>
-  	
+	<resultMap id="SimpleClassifyMap" type="com.yanda.entity.generated.ClassifyInfo">
+		<id column="classify_id" jdbcType="INTEGER" javaType="java.lang.Integer"
+			property="classifyId" />
+		<result column="parent_id" jdbcType="INTEGER" javaType="java.lang.Integer"
+			property="parentId" />
+		<result column="classify_name" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="classifyName" />
+		<result column="classify_desc" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="classifyDesc" />
+	</resultMap>
+	
+	<resultMap id="WebClassifyMap" type="com.yanda.entity.WebClassifyInfo">
+		<id column="classify_id" jdbcType="INTEGER" javaType="java.lang.Integer"
+			property="id" />
+		<result column="classify_name" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="label" />
+		<result column="classify_desc" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="desc" />
+	</resultMap>
+
+	<resultMap id="ClassifyDetailInfoMap" type="com.yanda.entity.ClassifyDetailInfo"
+		extends="SimpleClassifyMap">
+		<association column="parent_id"
+			javaType="com.yanda.entity.generated.ClassifyInfo" property="parent"
+			select="findParentById" />
+	</resultMap>
+
+
+
+
+	<!-- 根据栏目ID查询栏目信息 -->
+	<select id="findClassifyInfo" resultMap="ClassifyDetailInfoMap">
+		SELECT classify_id, classify_name, classify_desc, parent_id FROM
+		t_classify_info WHERE classify_id = #{ classifyId }
+	</select>
+	<!-- 根据分类ID获取父分类 -->
+	<select id="findParentById"
+		resultMap="SimpleClassifyMap">
+		SELECT classify_id, classify_name, classify_desc, parent_id FROM
+		t_classify_info WHERE classify_id = #{ parent_id }
+	</select>
+	<!-- 查询一级分类 -->
+	<select id="findOneLevelClassifyList"
+		resultMap="WebClassifyMap">
+		SELECT classify_id, classify_name, classify_desc FROM
+		t_classify_info WHERE parent_id = 0 order by classify_order asc;
+	</select>
+	<!-- 查询二级分类 -->
+	<select id="findClassifyList"
+		resultMap="WebClassifyMap">
+		SELECT classify_id, classify_name, classify_desc FROM
+		t_classify_info WHERE parent_id = #{ parentId } order by classify_order asc;
+	</select>
+
+
+	<select id="findMovieListByClassify"
+		resultMap="com.yanda.mapper.generated.MovieInfoMapper.BaseResultMap">
+		select
+		t1.*
+		from t_movie_info t1 left join t_classify_info t2 on t1.classify_id =
+		t2.classify_id
+		where 1=1
+		<if test="classifyId != 0">
+			and t1.classify_id = #{classifyId}
+		</if>
+		<if test="searchKey != null and searchVal != null">
+			<choose>
+				<when test="searchKey == 'all' ">
+					and (t1.mv_title like concat('%',#{searchVal},'%') or t1.mv_desc like
+					concat('%',#{searchVal},'%'))
+				</when>
+				<when test="searchKey != 'all'">
+					and t1.mv_#{searchKey} like concat('%',#{searchVal},'%')
+				</when>
+			</choose>
+		</if>
+		<if test="order != null">
+			order by ${order}
+		</if>
+		<if test="order == null">
+			order by update_time desc;
+		</if>
+	</select>
+
 </mapper>

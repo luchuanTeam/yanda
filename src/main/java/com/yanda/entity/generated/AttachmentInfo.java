@@ -33,7 +33,7 @@ public class AttachmentInfo implements Serializable {
     private String fileExt;
 
     /**
-     * 附件地址
+     * 附件文件夹路径
      */
     @Column(name = "file_path")
     private String filePath;
@@ -139,18 +139,18 @@ public class AttachmentInfo implements Serializable {
     }
 
     /**
-     * 获取附件地址
+     * 获取附件文件夹路径
      *
-     * @return file_path - 附件地址
+     * @return file_path - 附件文件夹路径
      */
     public String getFilePath() {
         return filePath;
     }
 
     /**
-     * 设置附件地址
+     * 设置附件文件夹路径
      *
-     * @param filePath 附件地址
+     * @param filePath 附件文件夹路径
      */
     public void setFilePath(String filePath) {
         this.filePath = filePath == null ? null : filePath.trim();

@@ -85,7 +85,11 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 			
 			AttachmentInfo attachmentInfo = this.mapper.selectByPrimaryKey(recordId);
 			int result = this.mapper.deleteByPrimaryKey(recordId);
-			String filePath = generatedFilePath(attachmentInfo);
+			String filePath = attachmentInfo.getFilePath();
+			// 若是删除视频附件则只删除对应的文件不删除整个文件夹
+			if (attachmentInfo.getFileType() == FileType.VIDEO.getValue()) {
+				filePath += "/" + attachmentInfo.getNewFilename() + "." +attachmentInfo.getFileExt();
+			}
 			FileUtils.deleteDirectory(new File(filePath));
 			return result;
 			

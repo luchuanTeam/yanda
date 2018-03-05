@@ -1,11 +1,9 @@
 package com.yanda.controller;
 
-import java.io.File;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yanda.component.FileConfig;
-import com.yanda.entity.FileType;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
@@ -29,8 +25,7 @@ public class BannerController extends BaseController {
 
 	@Autowired
 	private BannerServiceImpl bannerService;
-	@Autowired
-	private FileConfig fileConfig;
+
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JsonResult listBanners(HttpServletRequest request) {
@@ -44,41 +39,15 @@ public class BannerController extends BaseController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public JsonResult add(HttpServletRequest request, @RequestBody BannerInfo bannerInfo) {
-
-		String oldFilename = request.getParameter("oldFilename");
-		String newFilename = request.getParameter("newFilename");
-		if (StringUtil.isEmpty(newFilename)) {
-			return result(-1, "图片地址为空");
-		}
-		File tempFile = new File(fileConfig.getTempPath(), newFilename);
-		if (StringUtil.isEmpty(newFilename) || !tempFile.exists()) {
-			return result(-1, "找不到上传的图片");
-		}
-
 		try {
-			Date crTime = new Date();
-			// 获取图片的扩展名
-			String ext = StringUtils.substringAfter(newFilename, ".");
-			// 获取图片名
-			String filename = StringUtils.substringBefore(newFilename, ".");
-
-			AttachmentInfo attachmentInfo = new AttachmentInfo();
-			attachmentInfo.setOldFilename(StringUtils.substringBefore(oldFilename, "."));
-			attachmentInfo.setNewFilename(filename);
-			attachmentInfo.setCreateTime(crTime);
-			attachmentInfo.setFileExt(ext);
-			attachmentInfo.setFilePath(fileConfig.getUploadPath() + "/" + fileConfig.getBaseImgDir() + "/" + filename);
-			attachmentInfo.setFileType(FileType.IMG.getValue());
-
-			bannerInfo.setCreateTime(crTime);
-			bannerInfo.setUpdateTime(crTime);
+			AttachmentInfo attachmentInfo = handleImgAttach(request);
+			bannerInfo.setCreateTime(attachmentInfo.getCreateTime());
+			bannerInfo.setUpdateTime(attachmentInfo.getCreateTime());
 			bannerService.addBanner(attachmentInfo, bannerInfo);
 			return result(200, "success");
 		} catch (Exception e) {
-			LOG.error("拷贝临时图片【" + newFilename + "】到发布路径异常", e);
+			LOG.error("拷贝临时图片到发布路径异常", e);
 			return result(-1, "发布图片失败！");
-		} finally {
-			tempFile.delete();
 		}
 	}
 

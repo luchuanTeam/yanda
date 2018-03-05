@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yanda.mapper.generated.MovieInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.MovieInfo" >
+<mapper namespace="com.yanda.mapper.generated.EpisodeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.EpisodeInfo" >
     <!--
       WARNING - @mbg.generated
     -->
     <constructor >
-      <idArg column="mv_id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="mv_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="mv_intro" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="classify_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="episode_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="episode_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="episode_intro" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="episode_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="img_appendix_id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="mv_appendix_id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="episode_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="mv_path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="mv_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -54,10 +53,10 @@
     <!--
       WARNING - @mbg.generated
     -->
-    mv_id, mv_name, mv_intro, create_time, update_time, classify_id, img_appendix_id, 
-    mv_appendix_id, episode_count, mv_path
+    episode_id, episode_name, episode_intro, episode_num, img_appendix_id, mv_appendix_id, 
+    mv_id, create_time, update_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.MovieInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.EpisodeInfoExample" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -67,7 +66,7 @@
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from t_mv_info
+    from t_mv_episode
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

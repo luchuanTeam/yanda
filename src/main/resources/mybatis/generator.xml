@@ -97,7 +97,11 @@
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>
-		<table tableName="t_movie_info" domainObjectName="MovieInfo" 
+		<table tableName="t_mv_info" domainObjectName="MovieInfo" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="true" selectByExampleQueryId="true">
+		</table>
+		<table tableName="t_mv_episode" domainObjectName="EpisodeInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>
