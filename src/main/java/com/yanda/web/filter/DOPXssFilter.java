@@ -15,7 +15,7 @@ import com.yanda.wrapper.XssHttpServletRequestWrapper;
 
 /**
  * @ClassName DOPXssFilter
- * @Description TODO(防Xss攻击)
+ * @Description 防Xss攻击（待完善）
  * @author chenli
  * @Date 2017年2月20日 上午9:16:38
  * @version 1.0.0

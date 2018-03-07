@@ -16,27 +16,48 @@ import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.BannerInfo;
 import com.yanda.exception.DOPException;
-import com.yanda.service.impl.BannerServiceImpl;
+import com.yanda.service.BannerService;
 import com.yanda.util.StringUtil;
 
+
+/**
+ * 轮播图相关接口控制类
+ * BannerController.java
+ * @author chenli
+ * @time 2018年3月7日 下午9:39:59
+ */
 @RestController
 @RequestMapping(value = "/banner")
 public class BannerController extends BaseController {
 
 	@Autowired
-	private BannerServiceImpl bannerService;
+	private BannerService bannerService;
 
-
+	
+	/**
+	 * 获取轮播图列表数据
+	 * @param request 请求体
+	 * @param pageNum 页码
+	 * @param pageSize 分页大小
+	 * @param bannerDesc 轮播图描述
+	 * @return
+	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JsonResult listBanners(HttpServletRequest request) {
 		String pageNum = getValue(request, "pageNum", "1");
 		String pageSize = getValue(request, "pageSize", "1");
-		String bannerDesc = getValue(request, "bannerDesc");
+		String bannerDesc = getNotEmptyValue(request, "bannerDesc");
 		PageResult<BannerInfo> bannerInfos = bannerService.list(Integer.valueOf(pageNum), Integer.valueOf(pageSize),
 				bannerDesc);
 		return result(200, "success", bannerInfos);
 	}
-
+	
+	/**
+	 * 添加一张轮播图图
+	 * @param request 请求体
+	 * @param bannerInfo 轮播图实体对象
+	 * @return
+	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public JsonResult add(HttpServletRequest request, @RequestBody BannerInfo bannerInfo) {
 		try {
@@ -50,7 +71,13 @@ public class BannerController extends BaseController {
 			return result(-1, "发布图片失败！");
 		}
 	}
-
+	
+	/**
+	 * 删除一张轮播图
+	 * @param request 请求体
+	 * @param id 轮播图实体id
+	 * @return
+	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	public JsonResult delete(HttpServletRequest request, @PathVariable("id") Long id) {
 
@@ -62,7 +89,13 @@ public class BannerController extends BaseController {
 			return result(-1, e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * 批量删除轮播图
+	 * @param request 请求体
+	 * @param ids 轮播图实体ids字符串以","拼接
+	 * @return
+	 */
 	@RequestMapping(value = "/batchDelete/{ids}", method = RequestMethod.POST)
 	public JsonResult batchDelete(HttpServletRequest request, @PathVariable("ids") String ids) {
 		try {
@@ -76,7 +109,13 @@ public class BannerController extends BaseController {
 			return result(-1, e.getMessage());
 		}
 	}
-
+	
+	/**
+	 * 更新轮播图
+	 * @param request 请求体
+	 * @param bannerInfo 轮播图实体
+	 * @return
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public JsonResult update(HttpServletRequest request, @RequestBody BannerInfo bannerInfo) {
 		bannerInfo.setUpdateTime(new Date());

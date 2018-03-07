@@ -48,5 +48,14 @@ public class BannerServiceImpl extends BaseServiceImpl<BannerInfoMapper ,BannerI
 		bannerInfo.setAppendixId(attachmentInfo.getAppendixId());
 		this.save(bannerInfo);
 	}
-
+	
+	@Transactional(rollbackFor={DOPException.class})
+	@Override
+	public int deleteById(Long id) throws DOPException {
+		BannerInfo bannerInfo = this.mapper.selectByPrimaryKey(id);
+		attachmentService.deleteById(bannerInfo.getAppendixId());
+		return super.deleteById(id);
+	}
+	
+	
 }

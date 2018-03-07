@@ -46,7 +46,13 @@ public class AttachmentController extends BaseController {
 	private FileConfig fileConfig;
 	@Autowired
 	private AttachmentServiceImpl attachmentService;
-
+	
+	/**
+	 * 图片上传
+	 * @param request 请求
+	 * @param file 上传的文件
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/doImgUpload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonResult doImgUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
@@ -79,14 +85,19 @@ public class AttachmentController extends BaseController {
 		}
 	}
 	
+	/**
+	 * 视频上传
+	 * @param request 请求体
+	 * @param file 上传的文件
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/doVideoUpload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonResult doVideoUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
 		if (file.isEmpty())
 			return result(-1, "上传失败，请选择要上传的视频!");
-//		if (!file.getContentType().contains("image"))
-//			return result(-1, "上传的文件不是视频类型，请重新上传!");
-		LOG.info("文件类型="+file.getContentType());
+		if (!file.getContentType().contains("video"))
+			return result(-1, "上传的文件不是视频类型，请重新上传!");
 		// 获取图片的文件名+后缀
 		String fileName = file.getOriginalFilename();
 		try {
@@ -114,13 +125,13 @@ public class AttachmentController extends BaseController {
 	
 	/**
 	 * 读取附件
-	 * @param request
-	 * @param response
+	 * @param request 请求体
+	 * @param response 响应体
 	 */
 	@RequestMapping(value = "/readFile", method = RequestMethod.GET)
 	public void readFile(HttpServletRequest request, HttpServletResponse response) {
-		String id = getValue(request, "id");
-		String size = getValue(request, "size");
+		String id = getNotEmptyValue(request, "id");
+		String size = getNotEmptyValue(request, "size");
 
 		if (StringUtil.isEmpty(id)) {
 			return;
@@ -174,6 +185,11 @@ public class AttachmentController extends BaseController {
 	}
 	
 	
+	/**
+	 * 根据附件的类型初始化响应体，若是图片则显示图片，若是其他文件则下载
+	 * @param response
+	 * @param attach
+	 */
 	private void initResponseType(HttpServletResponse response, AttachmentInfo attach) {
 		String fileExt = attach.getFileExt();
 		String fileShowName = attach.getOldFilename() + "." + fileExt;

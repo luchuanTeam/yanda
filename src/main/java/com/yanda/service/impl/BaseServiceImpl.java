@@ -9,10 +9,22 @@ import com.yanda.exception.DOPException;
 import com.yanda.service.BaseService;
 import com.yanda.util.MyMapper;
 
-public abstract class BaseServiceImpl<D extends MyMapper<T>, T extends Serializable, ID> implements BaseService<T, ID> {
 
+/**
+ * 服务类增删改查默认实现抽象类
+ * BaseServiceImpl.java
+ * @author chenli
+ * @time 2018年3月7日 下午10:33:39
+ */
+public abstract class BaseServiceImpl<D extends MyMapper<T>, T extends Serializable, ID> implements BaseService<T, ID> {
+	/**
+	 * 日志记录，继承BaseServiceImpl的服务类可直接调用
+	 */
 	protected Logger LOG = Logger.getLogger(this.getClass());
 	
+	/**
+	 * 泛型mapper类
+	 */
 	@Autowired
     protected D mapper;
 	

@@ -33,6 +33,7 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 	@Autowired
 	private AttachmentService attachmentService;
 
+
 	@Override
 	public PageResult<MovieInfo> findMovieListByClassify(int classifyId, String searchKey, String searchVal, String order,
 			int pageNum, int pageSize) {
@@ -43,13 +44,15 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		
 		return pageResult;
 	}
-
+	
 	@Override
 	public String findMovieClassifyFullName(int classifyId) {
+		// 此处根据id获取到该分类信息以及该分类的父级分类信息
 		ClassifyDetailInfo detailInfo = movieClassifyMapper.findClassifyInfo(classifyId);
 		String fullName = detailInfo.getClassifyName();
 		if (detailInfo.getParent() != null) {
 			fullName = detailInfo.getParent().getClassifyName() + "/" + fullName;
+			// 若父级分类不是最顶层的分类继续递归获取上一级分类，否则返回分类全路径
 			if (detailInfo.getParent().getParentId() != 0) {
 				return findMovieClassifyFullName(detailInfo.getParent().getParentId());
 			} else {
@@ -67,13 +70,13 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		example.createCriteria().andMvNameLike("%" + searchVal + "%");
 		example.setOrderByClause("update_time desc");
 		List<MovieInfo> mvList = mapper.selectByExample(example);
-		List<MovieDetailInfo> mDetailInfos = getMovieDetailInfos(mvList);
+		List<MovieDetailInfo> mDetailInfos = this.getMovieDetailInfos(mvList);
 		PageResult<MovieDetailInfo> pageResult = new PageResult<>(pageInfo.getTotal(), pageInfo.getPages(),
 				pageInfo.getPageSize(), mDetailInfos);
 		return pageResult;
 	}
 	
-	
+	@Override
 	public List<MovieDetailInfo> getMovieDetailInfos(List<MovieInfo> mvList) {
 		List<MovieDetailInfo> mDetailInfos = new LinkedList<>();
 		for (MovieInfo mvInfo : mvList) {
@@ -96,6 +99,9 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 	@Override
 	public int deleteById(Long id) throws DOPException {
 		MovieInfo movieInfo = this.mapper.selectByPrimaryKey(id);
+		if (movieInfo.getEpisodeCount() > 0) {
+			throw new DOPException("视频下还有视频集，不能删除该视频");
+		}
 		attachmentService.deleteById(movieInfo.getImgAppendixId());
 		try {
 			FileUtils.deleteDirectory(new File(movieInfo.getMvPath()));

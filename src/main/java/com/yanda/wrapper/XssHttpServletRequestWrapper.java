@@ -12,7 +12,7 @@ import org.springframework.web.util.HtmlUtils;
 
 /**
  * @ClassName XssHttpServletRequestWrapper
- * @Description TODO(这里用一句话描述这个类的作用)
+ * @Description http请求体的包装类，对其方法进行包装
  * @author chenli
  * @Date 2017年2月20日 上午9:16:12
  * @version 1.0.0

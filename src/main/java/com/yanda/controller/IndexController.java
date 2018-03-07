@@ -5,6 +5,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
+/**
+ * 默认入口控制类，用于返回请求的页面
+ * IndexController.java
+ * @author chenli
+ * @time 2018年3月7日 下午10:18:10
+ */
 @Controller
 public class IndexController extends BaseController {
 	

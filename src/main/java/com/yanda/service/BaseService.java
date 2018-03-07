@@ -4,6 +4,14 @@ import java.io.Serializable;
 
 import com.yanda.exception.DOPException;
 
+
+/**
+ * 增删改查接口服务类
+ * 所有服务类都要集成此接口，方便通过接口依赖注入的服务类调用相关方法
+ * BaseService.java
+ * @author chenli
+ * @time 2018年3月7日 下午11:09:08
+ */
 public interface BaseService<T extends Serializable, ID> {
 	
 	/**

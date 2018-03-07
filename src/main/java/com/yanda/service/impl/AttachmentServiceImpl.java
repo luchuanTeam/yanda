@@ -33,7 +33,10 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 	public AttachmentServiceImpl() {
 		super();
 	}
-
+	
+	/**
+	 * 缩略图尺寸Set
+	 */
 	public static final Set<Integer> iconSize = new LinkedHashSet<Integer>() {
 
 		private static final long serialVersionUID = 2915123611231596820L;
@@ -50,6 +53,11 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 	private FileConfig fileConfig;
 
 	
+	/**
+	 * 先将临时文件拷贝到附件对应的实际目录，再保存实体记录
+	 * 如果附件是图片要生成不同尺寸的缩略图
+	 * @param record 附件实体
+	 */
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public int save(AttachmentInfo record) throws DOPException {
@@ -78,6 +86,10 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 		} 
 	}
 	
+	/**
+	 * 先删除附件，再删除附件记录
+	 * @param recordId 附件id
+	 */
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public int deleteById(Long recordId) throws DOPException {

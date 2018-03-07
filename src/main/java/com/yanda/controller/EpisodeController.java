@@ -17,21 +17,42 @@ import com.yanda.service.EpisodeService;
 import com.yanda.service.MovieService;
 import com.yanda.util.StringUtil;
 
+/**
+ * 视频集相关接口控制类
+ * 特别说明： 视频里包含视频集
+ * EpisodeController.java
+ * @author chenli
+ * @time 2018年3月7日 下午10:07:56
+ */
 @RestController
 @RequestMapping(value = "/episode")
 public class EpisodeController extends BaseController {
-
+	/**
+	 * 视频服务类
+	 */
 	@Autowired
 	private MovieService movieService;
+	/**
+	 * 视频集服务类
+	 */
 	@Autowired
 	private EpisodeService episodeService;
-
+	
+	/**
+	 * 根据视频id获取视频集列表 ， 可根据视频集名称查询
+	 * @param request 请求体
+	 * @param pageNum 页码
+	 * @param pageSize 分页大小
+	 * @param episodeName 视频集名称
+	 * @param mvId 视频id
+	 * @return
+	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public JsonResult listBanners(HttpServletRequest request) {
 		String pageNum = getValue(request, "pageNum", "1");
 		String pageSize = getValue(request, "pageSize", "1");
-		String episodeName = getValue(request, "episodeName");
-		String mvId = getValue(request, "mvId");
+		String episodeName = getNotEmptyValue(request, "episodeName");
+		String mvId = getNotEmptyValue(request, "mvId");
 		if (StringUtil.isEmpty(mvId)) {
 			return result(-1, "视频编号为空");
 		}
@@ -43,10 +64,10 @@ public class EpisodeController extends BaseController {
 	}
 
 	/**
-	 * 添加一集视频
+	 * 根据视频id向视频里添加一集视频
 	 * 
-	 * @param request
-	 * @param bannerInfo
+	 * @param request 请求体
+	 * @param episodeInfo 视频集 
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
