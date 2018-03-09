@@ -20,6 +20,8 @@
 			property="label" />
 		<result column="classify_desc" jdbcType="VARCHAR" javaType="java.lang.String"
 			property="desc" />
+		<result column="icon_url" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="iconUrl" />
 	</resultMap>
 
 	<resultMap id="ClassifyDetailInfoMap" type="com.yanda.entity.ClassifyDetailInfo"
@@ -52,7 +54,7 @@
 	<!-- 查询二级分类 -->
 	<select id="findClassifyList"
 		resultMap="WebClassifyMap">
-		SELECT classify_id, classify_name, classify_desc FROM
+		SELECT classify_id, classify_name, classify_desc, icon_url FROM
 		t_classify_info WHERE parent_id = #{ parentId } order by classify_order asc;
 	</select>
 
