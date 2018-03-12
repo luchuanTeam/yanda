@@ -23,17 +23,25 @@ public class CommentInfo implements Serializable {
     private Long episodeId;
 
     @Column(name = "agree_count")
-    private Integer agreeCount;
+    private Integer agreeCount;				//点赞数
+
+    @Column(name = "parent_id")
+    private Long parentId;					//父评论的commentId，如果是直接评论的话默认值是 0
+
+    @Column(name = "comment_count")
+    private Integer commentCount;			// 子评论的数目
 
     private static final long serialVersionUID = 1L;
 
-    public CommentInfo(Long commentId, String commentContent, Date createTime, Long userId, Long episodeId, Integer agreeCount) {
+    public CommentInfo(Long commentId, String commentContent, Date createTime, Long userId, Long episodeId, Integer agreeCount, Long parentId, Integer commentCount) {
         this.commentId = commentId;
         this.commentContent = commentContent;
         this.createTime = createTime;
         this.userId = userId;
         this.episodeId = episodeId;
         this.agreeCount = agreeCount;
+        this.parentId = parentId;
+        this.commentCount = commentCount;
     }
 
     public CommentInfo() {
@@ -122,5 +130,33 @@ public class CommentInfo implements Serializable {
      */
     public void setAgreeCount(Integer agreeCount) {
         this.agreeCount = agreeCount;
+    }
+
+    /**
+     * @return parent_id
+     */
+    public Long getParentId() {
+        return parentId;
+    }
+
+    /**
+     * @param parentId
+     */
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    /**
+     * @return comment_count
+     */
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    /**
+     * @param commentCount
+     */
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 }
