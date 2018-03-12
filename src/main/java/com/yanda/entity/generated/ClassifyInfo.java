@@ -28,15 +28,9 @@ public class ClassifyInfo implements Serializable {
     @Column(name = "update_time")
     private Date updateTime;
 
-    /**
-     * 分类对应的图标地址
-     */
-    @Column(name = "icon_url")
-    private String iconUrl;
-
     private static final long serialVersionUID = 1L;
 
-    public ClassifyInfo(Integer classifyId, String classifyName, String classifyDesc, Integer parentId, String classifyOrder, Date createTime, Date updateTime, String iconUrl) {
+    public ClassifyInfo(Integer classifyId, String classifyName, String classifyDesc, Integer parentId, String classifyOrder, Date createTime, Date updateTime) {
         this.classifyId = classifyId;
         this.classifyName = classifyName;
         this.classifyDesc = classifyDesc;
@@ -44,7 +38,6 @@ public class ClassifyInfo implements Serializable {
         this.classifyOrder = classifyOrder;
         this.createTime = createTime;
         this.updateTime = updateTime;
-        this.iconUrl = iconUrl;
     }
 
     public ClassifyInfo() {
@@ -147,23 +140,5 @@ public class ClassifyInfo implements Serializable {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    /**
-     * 获取分类对应的图标地址
-     *
-     * @return icon_url - 分类对应的图标地址
-     */
-    public String getIconUrl() {
-        return iconUrl;
-    }
-
-    /**
-     * 设置分类对应的图标地址
-     *
-     * @param iconUrl 分类对应的图标地址
-     */
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl == null ? null : iconUrl.trim();
     }
 }
