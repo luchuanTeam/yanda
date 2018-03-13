@@ -52,9 +52,10 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentInfoMapper, Comme
 			commentInfo.setParentId(Long.valueOf("0"));	
 		} else {								// 如果有parentId 属性，为 父评论添加 子评论数目
 			CommentInfo parent = this.selectById(commentInfo.getParentId());
-			Integer agreeCount = parent.getAgreeCount();
-			agreeCount ++;
-			this.save(parent);
+			Integer commentCount = parent.getCommentCount();
+			commentCount ++;
+			parent.setCommentCount(commentCount);
+			this.update(parent);
 		}
 		this.save(commentInfo);
 	}

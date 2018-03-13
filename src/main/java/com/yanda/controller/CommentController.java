@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,13 +52,12 @@ public class CommentController extends BaseController {
 		}
 	}
 	
-	@Transactional(rollbackFor={DOPException.class})
 	@RequestMapping(value = "/saveComment", method = RequestMethod.POST)
 	public JsonResult saveComment(HttpServletRequest request, @RequestBody CommentInfo commentInfo) {
 		commentInfo.setCreateTime(new Date());
 		commentInfo.setAgreeCount(0);	
 		try {
-			commentService.save(commentInfo);
+			commentService.saveComment(commentInfo);
 			return result(200, "success", "评论成功");
 		} catch (DOPException e) {
 			e.printStackTrace();
