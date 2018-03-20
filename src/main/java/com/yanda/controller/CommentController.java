@@ -55,7 +55,8 @@ public class CommentController extends BaseController {
 	@RequestMapping(value = "/saveComment", method = RequestMethod.POST)
 	public JsonResult saveComment(HttpServletRequest request, @RequestBody CommentInfo commentInfo) {
 		commentInfo.setCreateTime(new Date());
-		commentInfo.setAgreeCount(0);	
+		commentInfo.setAgreeCount(0);		// 新增评论点赞数为 0
+		commentInfo.setCommentCount(0);		// 子评论数也为 0
 		try {
 			commentService.saveComment(commentInfo);
 			return result(200, "success", "评论成功");
