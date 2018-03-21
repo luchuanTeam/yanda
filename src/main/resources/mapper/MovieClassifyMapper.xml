@@ -48,7 +48,7 @@
 	<!-- 查询一级分类 -->
 	<select id="findOneLevelClassifyList"
 		resultMap="WebClassifyMap">
-		SELECT classify_id, classify_name, classify_desc FROM
+		SELECT classify_id, classify_name, classify_desc, icon_url FROM
 		t_classify_info WHERE parent_id = 0 order by classify_order asc;
 	</select>
 	<!-- 查询二级分类 -->

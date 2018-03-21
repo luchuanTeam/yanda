@@ -155,7 +155,7 @@ public class AttachmentController extends BaseController {
 				&& AttachmentServiceImpl.iconSize.contains(Integer.valueOf(size))) {
 			fileName += "_" + size + "." + attach.getFileExt();
 		} else {
-			fileName += fileName + "." + attach.getFileExt();
+			fileName += "." + attach.getFileExt();
 		}
 		
 		byte[] buff = new byte[1024];

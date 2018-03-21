@@ -13,6 +13,7 @@ import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
 import com.yanda.entity.generated.MovieInfo;
+import com.yanda.exception.DOPException;
 import com.yanda.service.EpisodeService;
 import com.yanda.service.MovieService;
 import com.yanda.util.StringUtil;
@@ -101,6 +102,22 @@ public class EpisodeController extends BaseController {
 			LOG.error("添加视频集异常", e);
 			return result(-1, e.getMessage());
 		}
+	}
+	
+	/**
+	 * 根据视频ID和视频集数获取视频集信息
+	 * @param request
+	 * @param id
+	 * @return
+	 * @throws DOPException 
+	 */
+	@RequestMapping(value = "/getEpisode", method = RequestMethod.GET)
+	public EpisodeInfo getEpisode(HttpServletRequest request) throws DOPException {
+		String mvId = getNotEmptyValue(request, "mvId");
+		if (StringUtil.isEmpty(mvId))
+			return null;
+		String episodeNum = getValue(request, "episodeNum", "1");
+		return episodeService.selectByMvIdAndEpisodeNum(Long.valueOf(mvId), Integer.valueOf(episodeNum));
 	}
 
 }

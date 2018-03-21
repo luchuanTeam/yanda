@@ -19,6 +19,7 @@ import com.yanda.entity.WebClassifyInfo;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.entity.generated.MovieInfoExample;
+import com.yanda.entity.generated.MovieInfoExample.Criteria;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.MovieClassifyMapper;
 import com.yanda.mapper.generated.MovieInfoMapper;
@@ -122,4 +123,22 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 	public List<WebClassifyInfo> findClassifyList(int parentId) {
 		return movieClassifyMapper.findClassifyList(parentId);
 	}
+
+	@Override
+	public PageResult<MovieDetailInfo> getPubMovies(int classifyId, int pageNum, int pageSize) {
+		Page<MovieInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
+		MovieInfoExample example = new MovieInfoExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andEpisodeCountGreaterThanOrEqualTo(1);
+		if (0 != classifyId) {
+			criteria.andClassifyIdEqualTo(classifyId);
+		}
+		example.setOrderByClause("update_time desc");
+		List<MovieInfo> mvList = mapper.selectByExample(example);
+		List<MovieDetailInfo> mDetailInfos = this.getMovieDetailInfos(mvList);
+		PageResult<MovieDetailInfo> pageResult = new PageResult<>(pageInfo.getTotal(), pageInfo.getPages(),
+				pageInfo.getPageSize(), mDetailInfos);
+		return pageResult;
+	}
+
 }

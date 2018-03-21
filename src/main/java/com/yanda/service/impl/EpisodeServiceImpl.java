@@ -1,8 +1,11 @@
 package com.yanda.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -46,6 +49,16 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		episodeInfo.setMvAppendixId(videoAttach.getAppendixId());
 		movieService.update(movieInfo);
 		this.save(episodeInfo);
+	}
+
+	@Override
+	public EpisodeInfo selectByMvIdAndEpisodeNum(Long mvId, int episodeNum) {
+		EpisodeInfoExample example = new EpisodeInfoExample();
+		example.createCriteria().andMvIdEqualTo(mvId).andEpisodeNumEqualTo(episodeNum);
+		List<EpisodeInfo> episodeInfo = mapper.selectByExample(example);
+		if (CollectionUtils.isEmpty(episodeInfo))
+			return null;
+		return episodeInfo.get(0);
 	}
 
 }

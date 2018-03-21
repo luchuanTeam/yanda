@@ -17,44 +17,52 @@ import com.yanda.entity.PageResult;
 import com.yanda.entity.WebClassifyInfo;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.MovieInfo;
+import com.yanda.exception.DOPException;
 import com.yanda.service.MovieService;
 
-
 /**
- * 视频相关接口控制类
- * MovieController.java
+ * 视频相关接口控制类 MovieController.java
+ * 
  * @author chenli
  * @time 2018年3月7日 下午10:23:34
  */
 @RestController
 @RequestMapping(value = "/movie")
 public class MovieController extends BaseController {
-	
+
 	@Autowired
 	private MovieService movieService;
-	
+
 	/**
 	 * 获取包含视频分类路径的视频列表，可根据视频名称查询
-	 * @param request 请求体
-	 * @param pageNum 页码
-	 * @param pageSize 分页大小
-	 * @param mvName 视频名称
+	 * 
+	 * @param request
+	 *            请求体
+	 * @param pageNum
+	 *            页码
+	 * @param pageSize
+	 *            分页大小
+	 * @param mvName
+	 *            视频名称
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public JsonResult listBanners(HttpServletRequest request) {
+	public JsonResult listMovies(HttpServletRequest request) {
 		String pageNum = getValue(request, "pageNum", "1");
 		String pageSize = getValue(request, "pageSize", "4");
-		String bannerDesc = getNotEmptyValue(request, "mvName");
-		PageResult<MovieDetailInfo> mvDetailInfos = movieService.list(Integer.valueOf(pageNum), Integer.valueOf(pageSize),
-				bannerDesc);
+		String mvName = getNotEmptyValue(request, "mvName");
+		PageResult<MovieDetailInfo> mvDetailInfos = movieService.list(Integer.valueOf(pageNum),
+				Integer.valueOf(pageSize), mvName);
 		return result(200, "success", mvDetailInfos);
 	}
-	
+
 	/**
 	 * 添加一条视频记录
-	 * @param request 请求体
-	 * @param movieInfo 视频实体
+	 * 
+	 * @param request
+	 *            请求体
+	 * @param movieInfo
+	 *            视频实体
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -70,14 +78,16 @@ public class MovieController extends BaseController {
 		} catch (Exception e) {
 			LOG.error("拷贝临时图片到发布路径异常", e);
 			return result(-1, e.getMessage());
-		} 
+		}
 	}
-	
+
 	/**
-	 * 删除一条视频
-	 * 注意：删除的视频下不能包含有视频集
-	 * @param request 请求体
-	 * @param id 视频id
+	 * 删除一条视频 注意：删除的视频下不能包含有视频集
+	 * 
+	 * @param request
+	 *            请求体
+	 * @param id
+	 *            视频id
 	 * @return
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
@@ -91,9 +101,10 @@ public class MovieController extends BaseController {
 			return result(-1, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 获取一级分类
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -101,9 +112,10 @@ public class MovieController extends BaseController {
 	public List<WebClassifyInfo> getClassify(HttpServletRequest request) {
 		return movieService.findOneLevelClassifyList();
 	}
-	
+
 	/**
 	 * 根据一级分类id获取二级分类
+	 * 
 	 * @param request
 	 * @param id
 	 * @return
@@ -111,5 +123,41 @@ public class MovieController extends BaseController {
 	@RequestMapping(value = "/getClassify/{id}")
 	public List<WebClassifyInfo> getClassifyById(HttpServletRequest request, @PathVariable Integer id) {
 		return movieService.findClassifyList(id);
+	}
+
+	/**
+	 * 根据视频ID获取视频
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 * @throws DOPException
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public MovieInfo getMovie(HttpServletRequest request, @PathVariable Long id) throws DOPException {
+		return movieService.selectById(id);
+	}
+
+	/**
+	 * 获取包含视频分类路径的视频列表，可根据视频名称查询
+	 * 
+	 * @param request
+	 *            请求体
+	 * @param pageNum
+	 *            页码
+	 * @param pageSize
+	 *            分页大小
+	 * @param mvName
+	 *            视频名称
+	 * @return
+	 */
+	@RequestMapping(value = "/getPubMovies", method = RequestMethod.GET)
+	public JsonResult getMovies(HttpServletRequest request) {
+		String pageNum = getValue(request, "pageNum", "1");
+		String pageSize = getValue(request, "pageSize", "4");
+		String classifyId = getValue(request, "classifyId", "0");
+		PageResult<MovieDetailInfo> mvDetailInfos = movieService.getPubMovies(Integer.valueOf(classifyId),
+				Integer.valueOf(pageNum), Integer.valueOf(pageSize));
+		return result(200, "success", mvDetailInfos);
 	}
 }
