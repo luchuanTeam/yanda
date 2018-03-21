@@ -1,6 +1,7 @@
 package com.yanda.controller;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,16 +40,17 @@ public class CommentController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/addAgreeCount", method = RequestMethod.POST)
-	public JsonResult addAgreeCount(HttpServletRequest request) {
-		String commentId = getNotEmptyValue(request, "commentId");
-		if (StringUtil.isEmpty(commentId)) {
-			return result(-1, "评论编号为空");
+	public JsonResult addAgreeCount(HttpServletRequest request, @RequestBody Map<String, Object> map) {
+		String userId = (String) map.get("userId");
+		if (StringUtil.isEmpty(userId)) {
+			return result(-1, "请先登录");
 		}
 		try {
-			commentService.addAgreeCount(Long.valueOf(commentId));
+			map.remove("userId");
+			commentService.addAgreeCount(map);
 			return result(200, "success", "点赞成功");
 		} catch (NumberFormatException | DOPException e) {
-			return result(-1, "点赞失败");
+			return result(-1, e.getMessage());
 		}
 	}
 	
