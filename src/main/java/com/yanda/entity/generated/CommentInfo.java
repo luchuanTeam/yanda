@@ -23,13 +23,13 @@ public class CommentInfo implements Serializable {
     private Long episodeId;
 
     @Column(name = "agree_count")
-    private Integer agreeCount;				//点赞数
+    private Integer agreeCount;
 
     @Column(name = "parent_id")
-    private Long parentId;					//父评论的commentId，如果是直接评论的话默认值是 0
+    private Long parentId;
 
     @Column(name = "comment_count")
-    private Integer commentCount;			// 子评论的数目
+    private Integer commentCount;
 
     private static final long serialVersionUID = 1L;
 
