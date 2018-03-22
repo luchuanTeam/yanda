@@ -32,7 +32,7 @@ public class CommentController extends BaseController {
 		String parentId = getValue(request, "parentId", "0");
 		String episodeId = getNotEmptyValue(request, "episodeId");
 		if (StringUtil.isEmpty(episodeId)) {
-			return result(-1, "视频编号为空");
+			return result(-1, "视频编号为空"); 
 		}
 		PageResult<CommentInfo> comments = commentService.list(Integer.valueOf(pageNum), Integer.valueOf(pageSize)
 				, Long.valueOf(episodeId), Long.valueOf(parentId), criteria);

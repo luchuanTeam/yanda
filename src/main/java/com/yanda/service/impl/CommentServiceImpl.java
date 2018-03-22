@@ -53,7 +53,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentInfoMapper, Comme
 	public void saveComment(CommentInfo commentInfo) throws DOPException {
 		if (commentInfo.getParentId() == null) {		// 如果传送数据中没有 parentId 属性，说明是直接评论
 			commentInfo.setParentId(Long.valueOf("0"));	
-		} else {								// 如果有parentId 属性，为 父评论添加 子评论数目
+		} else if(commentInfo.getParentId() != 0){		// 如果有parentId 属性，为 父评论添加 子评论数目
 			CommentInfo parent = this.selectById(commentInfo.getParentId());
 			Integer commentCount = parent.getCommentCount();
 			commentCount ++;
