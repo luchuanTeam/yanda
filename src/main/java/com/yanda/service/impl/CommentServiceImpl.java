@@ -1,8 +1,6 @@
 package com.yanda.service.impl;
 
 
-import java.util.Map;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,11 +21,11 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentInfoMapper, Comme
 		Page<CommentInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
 		CommentInfoExample example = new CommentInfoExample();
 		if(criteria.equals("2")) {
-			criteria = "create_time asc";
+			criteria = "create_time desc";
 		} else if(criteria.equals("3")) {
 			criteria = "agree_count desc";
 		} else {
-			criteria = "create_time desc";
+			criteria = "create_time asc";
 		}
 		example.createCriteria().andEpisodeIdEqualTo(episodeId).andParentIdEqualTo(parentId);
 		example.setOrderByClause(criteria);
@@ -38,14 +36,13 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentInfoMapper, Comme
 	}
 
 	@Override
-	public synchronized void addAgreeCount(Map<String, Object> map) throws DOPException {
-		for(String key: map.keySet()) {
-			CommentInfo commentInfo = this.selectById(Long.valueOf(key));
-			Integer agreeCount = commentInfo.getAgreeCount();
-			agreeCount++;
-			commentInfo.setAgreeCount(agreeCount);
-			this.update(commentInfo);
-		}
+	public synchronized void addAgreeCount(Long commentId) throws DOPException {
+		CommentInfo commentInfo = this.selectById(commentId);
+		Integer agreeCount = commentInfo.getAgreeCount();
+		agreeCount++;
+		commentInfo.setAgreeCount(agreeCount);
+		this.save(commentInfo);
+
 	}
 
 	@Transactional(rollbackFor={DOPException.class})
