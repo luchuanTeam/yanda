@@ -28,9 +28,12 @@ public class ClassifyInfo implements Serializable {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Column(name = "icon_url")
+    private String iconUrl;
+
     private static final long serialVersionUID = 1L;
 
-    public ClassifyInfo(Integer classifyId, String classifyName, String classifyDesc, Integer parentId, String classifyOrder, Date createTime, Date updateTime) {
+    public ClassifyInfo(Integer classifyId, String classifyName, String classifyDesc, Integer parentId, String classifyOrder, Date createTime, Date updateTime, String iconUrl) {
         this.classifyId = classifyId;
         this.classifyName = classifyName;
         this.classifyDesc = classifyDesc;
@@ -38,6 +41,7 @@ public class ClassifyInfo implements Serializable {
         this.classifyOrder = classifyOrder;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.iconUrl = iconUrl;
     }
 
     public ClassifyInfo() {
@@ -140,5 +144,19 @@ public class ClassifyInfo implements Serializable {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    /**
+     * @return icon_url
+     */
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    /**
+     * @param iconUrl
+     */
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl == null ? null : iconUrl.trim();
     }
 }

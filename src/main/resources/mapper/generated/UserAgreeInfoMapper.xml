@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yanda.mapper.generated.ClassifyInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.ClassifyInfo" >
+<mapper namespace="com.yanda.mapper.generated.UserAgreeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.UserAgreeInfo" >
     <!--
       WARNING - @mbg.generated
     -->
     <constructor >
-      <idArg column="classify_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="classify_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="classify_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="parent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="classify_order" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="icon_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="userId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="commentId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="hasAgree" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -52,10 +48,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    classify_id, classify_name, classify_desc, parent_id, classify_order, create_time, 
-    update_time, icon_url
+    id, userId, commentId, hasAgree
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.ClassifyInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.UserAgreeInfoExample" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -65,7 +60,7 @@
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from t_classify_info
+    from t_user_agree
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

@@ -1,6 +1,7 @@
 package com.yanda.service.impl;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,23 +10,28 @@ import com.github.pagehelper.PageHelper;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.CommentInfo;
 import com.yanda.entity.generated.CommentInfoExample;
+import com.yanda.entity.generated.UserAgreeInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.CommentInfoMapper;
 import com.yanda.service.CommentService;
+import com.yanda.service.UserAgreeService;
 
 @Service
 public class CommentServiceImpl extends BaseServiceImpl<CommentInfoMapper, CommentInfo, Long> implements CommentService {
 
+	@Autowired
+	private UserAgreeService userAgreeService;
+	
 	@Override
 	public PageResult<CommentInfo> list(int pageNum, int pageSize, Long episodeId, Long parentId, String criteria) {
 		Page<CommentInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
 		CommentInfoExample example = new CommentInfoExample();
 		if(criteria.equals("2")) {
-			criteria = "create_time desc";
+			criteria = "create_time asc";
 		} else if(criteria.equals("3")) {
 			criteria = "agree_count desc";
 		} else {
-			criteria = "create_time asc";
+			criteria = "create_time desc";
 		}
 		example.createCriteria().andEpisodeIdEqualTo(episodeId).andParentIdEqualTo(parentId);
 		example.setOrderByClause(criteria);
@@ -36,13 +42,32 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentInfoMapper, Comme
 	}
 
 	@Override
-	public synchronized void addAgreeCount(Long commentId) throws DOPException {
+	@Transactional(rollbackFor={DOPException.class})
+	public synchronized void toggleAgreeCount(Long commentId, Long userId) throws DOPException {
 		CommentInfo commentInfo = this.selectById(commentId);
 		Integer agreeCount = commentInfo.getAgreeCount();
-		agreeCount++;
+		UserAgreeInfo userAgreeInfo = userAgreeService.selectByCommentIdAndUserId(commentId, userId);
+		if(userAgreeInfo == null) {
+			userAgreeInfo = new UserAgreeInfo(userId, commentId, 1);
+			agreeCount++;
+			userAgreeService.save(userAgreeInfo);
+		} else {
+			Integer hasAgree = userAgreeInfo.getHasagree();
+			if(hasAgree == null || hasAgree == 0) {
+				agreeCount++;
+				hasAgree = 1;
+			} else {
+				agreeCount--;
+				hasAgree = 0;
+			}
+			userAgreeInfo.setHasagree(hasAgree);
+			userAgreeService.update(userAgreeInfo);
+		}
+		
+		
 		commentInfo.setAgreeCount(agreeCount);
-		this.save(commentInfo);
-
+		this.update(commentInfo);
+		
 	}
 
 	@Transactional(rollbackFor={DOPException.class})
