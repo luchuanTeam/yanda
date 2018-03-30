@@ -67,4 +67,12 @@ public interface MovieService extends BaseService<MovieInfo, Long> {
 	 * @return 返回包含分类全路径的视频列表
 	 */
 	List<MovieDetailInfo> getMovieDetailInfos(List<MovieInfo> mvList);
+	
+	/**
+	 * 获取视频集大于0的视频列表, 可通过分类ID查询该分类下的视频 当分类ID=0时查询全部分类的视频
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	PageResult<MovieDetailInfo> getPubMovies(int classifyId, int pageNum, int pageSize);
 }

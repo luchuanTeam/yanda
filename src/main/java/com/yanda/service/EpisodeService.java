@@ -29,4 +29,11 @@ public interface EpisodeService extends BaseService<EpisodeInfo, Long> {
 	 */
 	void addEpisode(AttachmentInfo imgAttach, AttachmentInfo videoAttach, MovieInfo movieInfo, EpisodeInfo episodeInfo) throws DOPException;
 	
+	/**
+	 * 根据视频ID和视频集数查询视频集
+	 * @param mvId
+	 * @param episodeNum
+	 * @return
+	 */
+	EpisodeInfo selectByMvIdAndEpisodeNum(Long mvId, int episodeNum);
 }
