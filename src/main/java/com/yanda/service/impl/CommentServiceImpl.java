@@ -43,28 +43,26 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentInfoMapper, Comme
 
 	@Override
 	@Transactional(rollbackFor={DOPException.class})
-	public synchronized void toggleAgreeCount(Long commentId, Long userId) throws DOPException {
+	public synchronized void toggleAgreeCount(Long commentId, Long episodeId ,Long userId) throws DOPException {
 		CommentInfo commentInfo = this.selectById(commentId);
 		Integer agreeCount = commentInfo.getAgreeCount();
 		UserAgreeInfo userAgreeInfo = userAgreeService.selectByCommentIdAndUserId(commentId, userId);
 		if(userAgreeInfo == null) {
-			userAgreeInfo = new UserAgreeInfo(userId, commentId, 1);
+			userAgreeInfo = new UserAgreeInfo(userId, commentId, episodeId, 1);
 			agreeCount++;
 			userAgreeService.save(userAgreeInfo);
 		} else {
-			Integer hasAgree = userAgreeInfo.getHasagree();
-			if(hasAgree == null || hasAgree == 0) {
+			Integer hasAgree = userAgreeInfo.getHasAgree();
+			if(hasAgree == 0) {
 				agreeCount++;
 				hasAgree = 1;
 			} else {
 				agreeCount--;
 				hasAgree = 0;
 			}
-			userAgreeInfo.setHasagree(hasAgree);
+			userAgreeInfo.setHasAgree(hasAgree);
 			userAgreeService.update(userAgreeInfo);
 		}
-		
-		
 		commentInfo.setAgreeCount(agreeCount);
 		this.update(commentInfo);
 		

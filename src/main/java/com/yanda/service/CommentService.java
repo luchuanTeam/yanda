@@ -24,7 +24,7 @@ public interface CommentService extends BaseService<CommentInfo, Long> {
 	 * @param userId
 	 * @throws DOPException 
 	 */
-	void toggleAgreeCount(Long commentId, Long userId) throws DOPException;
+	void toggleAgreeCount(Long commentId, Long episodeId, Long userId) throws DOPException;
 	
 	/**
 	 * 保存评论

@@ -43,13 +43,16 @@ public class CommentController extends BaseController {
 	public JsonResult toggleAgreeCount(HttpServletRequest request, @RequestBody Map<String, String> object) {
 		String userId = object.get("userId");
 		String commentId = object.get("commentId");
+		String episodeId = object.get("episodeId");
 		if (StringUtil.isEmpty(userId)) {
 			return result(-1, "请先登录");
 		} else if (StringUtil.isEmpty(commentId)) {
 			return result(-1, "评论编号为空");
-		} 
+		} else if (StringUtil.isEmpty(episodeId)) {
+			return result(-1, "视频编号为空");
+		}
 		try {
-			commentService.toggleAgreeCount(Long.valueOf(commentId), Long.valueOf(userId));
+			commentService.toggleAgreeCount(Long.valueOf(commentId), Long.valueOf(episodeId), Long.valueOf(userId));
 			return result(200, "success", "点赞成功");
 		} catch (NumberFormatException | DOPException e) {
 			return result(-1, "点赞失败");

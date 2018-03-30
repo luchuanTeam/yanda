@@ -3,40 +3,42 @@ package com.yanda.entity.generated;
 import java.io.Serializable;
 import javax.persistence.*;
 
-/**
- * 记录用户对某一评论是否点赞过的表
- * @author weipeng
- *
- */
 @Table(name = "t_user_agree")
 public class UserAgreeInfo implements Serializable {
     @Id
     private Long id;
 
-    @Column(name = "userId")
-    private Long userid;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @Column(name = "commentId")
-    private Long commentid;
+    @Column(name = "comment_id")
+    private Long commentId;
 
-    @Column(name = "hasAgree")
-    private Integer hasagree;
+    @Column(name = "episode_id")
+    private Long episodeId;
+
+    @Column(name = "has_agree")
+    private Integer hasAgree;
 
     private static final long serialVersionUID = 1L;
 
-    public UserAgreeInfo(Long id, Long userid, Long commentid, Integer hasagree) {
+    public UserAgreeInfo(Long id, Long userId, Long commentId, Long episodeId, Integer hasAgree) {
         this.id = id;
-        this.userid = userid;
-        this.commentid = commentid;
-        this.hasagree = hasagree;
+        this.userId = userId;
+        this.commentId = commentId;
+        this.episodeId = episodeId;
+        this.hasAgree = hasAgree;
     }
-
-    public UserAgreeInfo(Long userid, Long commentid, Integer hasagree) {
+    
+    public UserAgreeInfo(Long userId, Long commentId, Long episodeId, Integer hasAgree) {
 		super();
-		this.userid = userid;
-		this.commentid = commentid;
-		this.hasagree = hasagree;
+		this.userId = userId;
+		this.commentId = commentId;
+		this.episodeId = episodeId;
+		this.hasAgree = hasAgree;
 	}
+
+
 
 	public UserAgreeInfo() {
         super();
@@ -57,44 +59,58 @@ public class UserAgreeInfo implements Serializable {
     }
 
     /**
-     * @return userId
+     * @return user_id
      */
-    public Long getUserid() {
-        return userid;
+    public Long getUserId() {
+        return userId;
     }
 
     /**
-     * @param userid
+     * @param userId
      */
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**
-     * @return commentId
+     * @return comment_id
      */
-    public Long getCommentid() {
-        return commentid;
+    public Long getCommentId() {
+        return commentId;
     }
 
     /**
-     * @param commentid
+     * @param commentId
      */
-    public void setCommentid(Long commentid) {
-        this.commentid = commentid;
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
 
     /**
-     * @return hasAgree
+     * @return episode_id
      */
-    public Integer getHasagree() {
-        return hasagree;
+    public Long getEpisodeId() {
+        return episodeId;
     }
 
     /**
-     * @param hasagree
+     * @param episodeId
      */
-    public void setHasagree(Integer hasagree) {
-        this.hasagree = hasagree;
+    public void setEpisodeId(Long episodeId) {
+        this.episodeId = episodeId;
+    }
+
+    /**
+     * @return has_agree
+     */
+    public Integer getHasAgree() {
+        return hasAgree;
+    }
+
+    /**
+     * @param hasAgree
+     */
+    public void setHasAgree(Integer hasAgree) {
+        this.hasAgree = hasAgree;
     }
 }

@@ -164,183 +164,243 @@ public class UserAgreeInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andUseridIsNull() {
-            addCriterion("userId is null");
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andUseridIsNotNull() {
-            addCriterion("userId is not null");
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUseridEqualTo(Long value) {
-            addCriterion("userId =", value, "userid");
+        public Criteria andUserIdEqualTo(Long value) {
+            addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotEqualTo(Long value) {
-            addCriterion("userId <>", value, "userid");
+        public Criteria andUserIdNotEqualTo(Long value) {
+            addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridGreaterThan(Long value) {
-            addCriterion("userId >", value, "userid");
+        public Criteria andUserIdGreaterThan(Long value) {
+            addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridGreaterThanOrEqualTo(Long value) {
-            addCriterion("userId >=", value, "userid");
+        public Criteria andUserIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridLessThan(Long value) {
-            addCriterion("userId <", value, "userid");
+        public Criteria andUserIdLessThan(Long value) {
+            addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridLessThanOrEqualTo(Long value) {
-            addCriterion("userId <=", value, "userid");
+        public Criteria andUserIdLessThanOrEqualTo(Long value) {
+            addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridIn(List<Long> values) {
-            addCriterion("userId in", values, "userid");
+        public Criteria andUserIdIn(List<Long> values) {
+            addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotIn(List<Long> values) {
-            addCriterion("userId not in", values, "userid");
+        public Criteria andUserIdNotIn(List<Long> values) {
+            addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridBetween(Long value1, Long value2) {
-            addCriterion("userId between", value1, value2, "userid");
+        public Criteria andUserIdBetween(Long value1, Long value2) {
+            addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotBetween(Long value1, Long value2) {
-            addCriterion("userId not between", value1, value2, "userid");
+        public Criteria andUserIdNotBetween(Long value1, Long value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidIsNull() {
-            addCriterion("commentId is null");
+        public Criteria andCommentIdIsNull() {
+            addCriterion("comment_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidIsNotNull() {
-            addCriterion("commentId is not null");
+        public Criteria andCommentIdIsNotNull() {
+            addCriterion("comment_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidEqualTo(Long value) {
-            addCriterion("commentId =", value, "commentid");
+        public Criteria andCommentIdEqualTo(Long value) {
+            addCriterion("comment_id =", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidNotEqualTo(Long value) {
-            addCriterion("commentId <>", value, "commentid");
+        public Criteria andCommentIdNotEqualTo(Long value) {
+            addCriterion("comment_id <>", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidGreaterThan(Long value) {
-            addCriterion("commentId >", value, "commentid");
+        public Criteria andCommentIdGreaterThan(Long value) {
+            addCriterion("comment_id >", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidGreaterThanOrEqualTo(Long value) {
-            addCriterion("commentId >=", value, "commentid");
+        public Criteria andCommentIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("comment_id >=", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidLessThan(Long value) {
-            addCriterion("commentId <", value, "commentid");
+        public Criteria andCommentIdLessThan(Long value) {
+            addCriterion("comment_id <", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidLessThanOrEqualTo(Long value) {
-            addCriterion("commentId <=", value, "commentid");
+        public Criteria andCommentIdLessThanOrEqualTo(Long value) {
+            addCriterion("comment_id <=", value, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidIn(List<Long> values) {
-            addCriterion("commentId in", values, "commentid");
+        public Criteria andCommentIdIn(List<Long> values) {
+            addCriterion("comment_id in", values, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidNotIn(List<Long> values) {
-            addCriterion("commentId not in", values, "commentid");
+        public Criteria andCommentIdNotIn(List<Long> values) {
+            addCriterion("comment_id not in", values, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidBetween(Long value1, Long value2) {
-            addCriterion("commentId between", value1, value2, "commentid");
+        public Criteria andCommentIdBetween(Long value1, Long value2) {
+            addCriterion("comment_id between", value1, value2, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andCommentidNotBetween(Long value1, Long value2) {
-            addCriterion("commentId not between", value1, value2, "commentid");
+        public Criteria andCommentIdNotBetween(Long value1, Long value2) {
+            addCriterion("comment_id not between", value1, value2, "commentId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeIsNull() {
-            addCriterion("hasAgree is null");
+        public Criteria andEpisodeIdIsNull() {
+            addCriterion("episode_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeIsNotNull() {
-            addCriterion("hasAgree is not null");
+        public Criteria andEpisodeIdIsNotNull() {
+            addCriterion("episode_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeEqualTo(Integer value) {
-            addCriterion("hasAgree =", value, "hasagree");
+        public Criteria andEpisodeIdEqualTo(Long value) {
+            addCriterion("episode_id =", value, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeNotEqualTo(Integer value) {
-            addCriterion("hasAgree <>", value, "hasagree");
+        public Criteria andEpisodeIdNotEqualTo(Long value) {
+            addCriterion("episode_id <>", value, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeGreaterThan(Integer value) {
-            addCriterion("hasAgree >", value, "hasagree");
+        public Criteria andEpisodeIdGreaterThan(Long value) {
+            addCriterion("episode_id >", value, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("hasAgree >=", value, "hasagree");
+        public Criteria andEpisodeIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("episode_id >=", value, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeLessThan(Integer value) {
-            addCriterion("hasAgree <", value, "hasagree");
+        public Criteria andEpisodeIdLessThan(Long value) {
+            addCriterion("episode_id <", value, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeLessThanOrEqualTo(Integer value) {
-            addCriterion("hasAgree <=", value, "hasagree");
+        public Criteria andEpisodeIdLessThanOrEqualTo(Long value) {
+            addCriterion("episode_id <=", value, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeIn(List<Integer> values) {
-            addCriterion("hasAgree in", values, "hasagree");
+        public Criteria andEpisodeIdIn(List<Long> values) {
+            addCriterion("episode_id in", values, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeNotIn(List<Integer> values) {
-            addCriterion("hasAgree not in", values, "hasagree");
+        public Criteria andEpisodeIdNotIn(List<Long> values) {
+            addCriterion("episode_id not in", values, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeBetween(Integer value1, Integer value2) {
-            addCriterion("hasAgree between", value1, value2, "hasagree");
+        public Criteria andEpisodeIdBetween(Long value1, Long value2) {
+            addCriterion("episode_id between", value1, value2, "episodeId");
             return (Criteria) this;
         }
 
-        public Criteria andHasagreeNotBetween(Integer value1, Integer value2) {
-            addCriterion("hasAgree not between", value1, value2, "hasagree");
+        public Criteria andEpisodeIdNotBetween(Long value1, Long value2) {
+            addCriterion("episode_id not between", value1, value2, "episodeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeIsNull() {
+            addCriterion("has_agree is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeIsNotNull() {
+            addCriterion("has_agree is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeEqualTo(Integer value) {
+            addCriterion("has_agree =", value, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeNotEqualTo(Integer value) {
+            addCriterion("has_agree <>", value, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeGreaterThan(Integer value) {
+            addCriterion("has_agree >", value, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("has_agree >=", value, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeLessThan(Integer value) {
+            addCriterion("has_agree <", value, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeLessThanOrEqualTo(Integer value) {
+            addCriterion("has_agree <=", value, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeIn(List<Integer> values) {
+            addCriterion("has_agree in", values, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeNotIn(List<Integer> values) {
+            addCriterion("has_agree not in", values, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeBetween(Integer value1, Integer value2) {
+            addCriterion("has_agree between", value1, value2, "hasAgree");
+            return (Criteria) this;
+        }
+
+        public Criteria andHasAgreeNotBetween(Integer value1, Integer value2) {
+            addCriterion("has_agree not between", value1, value2, "hasAgree");
             return (Criteria) this;
         }
     }
