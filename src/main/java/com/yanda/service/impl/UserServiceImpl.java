@@ -17,10 +17,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 	@Override
 	public UserInfo login(String userName, String password) {
 		UserInfoExample example = new UserInfoExample();
-		example.createCriteria().andUserNameEqualTo(userName).andPasswordEqualTo(password);
-		Criteria criteria2 = example.createCriteria();
-		criteria2.andMobileEqualTo(userName).andPasswordEqualTo(password);
-		example.or(criteria2);
+		example.or().andUserNameEqualTo(userName).andPasswordEqualTo(password);
+		example.or().andMobileEqualTo(userName).andPasswordEqualTo(password);
 		UserInfo userInfo = mapper.selectOneByExample(example);
 		return userInfo;
 		
