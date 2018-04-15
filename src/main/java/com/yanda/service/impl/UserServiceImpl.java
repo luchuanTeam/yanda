@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.yanda.entity.generated.UserInfo;
 import com.yanda.entity.generated.UserInfoExample;
-import com.yanda.entity.generated.UserInfoExample.Criteria;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.UserInfoMapper;
 import com.yanda.service.UserService;
@@ -31,6 +30,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 		userInfo.setPassword(password);
 		userInfo.setUpdateTime(new Date());
 		userInfo.setUserName(userName);
+		userInfo.setAvatar("");
 		this.save(userInfo);
 	}
 

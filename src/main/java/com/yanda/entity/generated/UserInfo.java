@@ -13,6 +13,7 @@ public class UserInfo implements Serializable {
     @Column(name = "user_name")
     private String userName;
 
+    @Column(name = "mobile")
     private String mobile;
 
     @Column(name = "create_time")
@@ -21,17 +22,22 @@ public class UserInfo implements Serializable {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "avatar")
+    private String avatar;
 
     private static final long serialVersionUID = 1L;
 
-    public UserInfo(Integer userId, String userName, String mobile, Date createTime, Date updateTime, String password) {
+    public UserInfo(Integer userId, String userName, String mobile, Date createTime, Date updateTime, String password, String avatar) {
         this.userId = userId;
         this.userName = userName;
         this.mobile = mobile;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.password = password;
+        this.avatar = avatar;
     }
 
     public UserInfo() {
@@ -120,5 +126,19 @@ public class UserInfo implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    /**
+     * @return avatar
+     */
+    public String getAvatar() {
+        return avatar;
+    }
+
+    /**
+     * @param avatar
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
     }
 }

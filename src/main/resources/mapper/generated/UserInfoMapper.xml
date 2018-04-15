@@ -12,6 +12,7 @@
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="avatar" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -50,7 +51,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    user_id, user_name, mobile, create_time, update_time, password
+    user_id, user_name, mobile, create_time, update_time, password, avatar
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.UserInfoExample" >
     <!--
