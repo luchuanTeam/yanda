@@ -25,6 +25,7 @@ import com.yanda.mapper.MovieClassifyMapper;
 import com.yanda.mapper.generated.MovieInfoMapper;
 import com.yanda.service.AttachmentService;
 import com.yanda.service.MovieService;
+import com.yanda.util.StringUtil;
 
 @Service
 public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo, Long> implements MovieService {
@@ -81,8 +82,12 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 	public List<MovieDetailInfo> getMovieDetailInfos(List<MovieInfo> mvList) {
 		List<MovieDetailInfo> mDetailInfos = new LinkedList<>();
 		for (MovieInfo mvInfo : mvList) {
+			
 			MovieDetailInfo detailInfo = new MovieDetailInfo(mvInfo);
-			detailInfo.setClassifyName(this.findMovieClassifyFullName(mvInfo.getClassifyId()));
+			if (StringUtil.isEmpty(detailInfo.getClassifyName())) {
+				//在数据库表冗余了分类名称字段，不从库进行查询，对历史数据进行查库
+				detailInfo.setClassifyName(this.findMovieClassifyFullName(mvInfo.getClassifyId()));
+			}
 			mDetailInfos.add(detailInfo);
 		}
 		return mDetailInfos;
@@ -96,6 +101,15 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		this.save(movieInfo);
 	}
 	
+	@Override
+	public void updateMovie(MovieInfo movieInfo, AttachmentInfo attachmentInfo) throws DOPException {
+		if (null != attachmentInfo) {
+			attachmentService.save(attachmentInfo);
+			movieInfo.setImgAppendixId(attachmentInfo.getAppendixId());
+		} 
+		this.update(movieInfo);
+	}
+	
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public int deleteById(Long id) throws DOPException {
@@ -105,7 +119,9 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		}
 		attachmentService.deleteById(movieInfo.getImgAppendixId());
 		try {
-			FileUtils.deleteDirectory(new File(movieInfo.getMvPath()));
+			if (StringUtil.isNotEmpty(movieInfo.getMvPath())) {
+				FileUtils.deleteDirectory(new File(movieInfo.getMvPath()));
+			}
 		} catch (IOException e) {
 			String tips = "删除视频文件目录失败";
 			LOG.error(tips, e);
@@ -140,5 +156,6 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 				pageInfo.getPageSize(), mDetailInfos);
 		return pageResult;
 	}
+
 
 }

@@ -1,5 +1,6 @@
 package com.yanda.service;
 
+import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
@@ -36,4 +37,12 @@ public interface EpisodeService extends BaseService<EpisodeInfo, Long> {
 	 * @return
 	 */
 	EpisodeInfo selectByMvIdAndEpisodeNum(Long mvId, int episodeNum);
+	
+	/**
+	 * 根据视频ID和集数查询某一集的具体信息
+	 * @param mvId
+	 * @param num
+	 * @return
+	 */
+	EpisodeDetailInfo findEpisodeDetailInfoByMvIdAndNum(Long mvId, int episodeNum);
 }

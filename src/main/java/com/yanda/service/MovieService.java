@@ -50,6 +50,16 @@ public interface MovieService extends BaseService<MovieInfo, Long> {
 	void addMovie(MovieInfo movieInfo, AttachmentInfo attachmentInfo) throws DOPException;
 	
 	/**
+	 * 更新一条视频
+	 * 保存图片附件、新增视频两个操作为事务性操作，其中一个报错都需要回滚
+	 * 将两个实体传入是为了在一个方法里进行数据库操作，形成一个事务
+	 * @param movieInfo 视频实体记录
+	 * @param attachmentInfo 图片附件实体记录
+	 * @throws DOPException
+	 */
+	void updateMovie(MovieInfo movieInfo, AttachmentInfo attachmentInfo) throws DOPException;
+	
+	/**
 	 * 获取一级分类列表
 	 * @return
 	 */

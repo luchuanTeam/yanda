@@ -16,21 +16,22 @@ public class MovieDetailInfo extends MovieInfo {
 
 	public MovieDetailInfo(MovieInfo movieInfo) {
 		super(movieInfo.getMvId(), movieInfo.getMvName(), movieInfo.getMvIntro(), movieInfo.getCreateTime(),
-				movieInfo.getUpdateTime(), movieInfo.getClassifyId(), movieInfo.getImgAppendixId(), movieInfo.getMvAppendixId(), movieInfo.getEpisodeCount(), movieInfo.getMvPath());
+				movieInfo.getUpdateTime(), movieInfo.getClassifyId(), movieInfo.getClassifyName(), movieInfo.getImgAppendixId(), movieInfo.getMvAppendixId(), movieInfo.getEpisodeCount(), movieInfo.getMvPath());
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * 分类名字
+	 * 图片附件
 	 */
-	private String classifyName;
+	private String imgAttach;
 
-	public String getClassifyName() {
-		return classifyName;
+	public String getImgAttach() {
+		return imgAttach;
 	}
 
-	public void setClassifyName(String classifyName) {
-		this.classifyName = classifyName;
+	public void setImgAttach(String imgAttach) {
+		this.imgAttach = imgAttach;
 	}
+
 
 }
