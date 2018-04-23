@@ -141,4 +141,13 @@ public class UserInfo implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar == null ? null : avatar.trim();
     }
+
+	@Override
+	public String toString() {
+		return "UserInfo [userId=" + userId + ", userName=" + userName + ", mobile=" + mobile + ", createTime="
+				+ createTime + ", updateTime=" + updateTime + ", password=" + password + ", avatar=" + avatar + "]";
+	}
+    
+    
+    
 }

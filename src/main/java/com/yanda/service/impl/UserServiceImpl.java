@@ -40,9 +40,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 		example.createCriteria().andUserNameEqualTo(userName);
 		UserInfo userInfo = mapper.selectOneByExample(example);
 		if(userInfo == null) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 }
