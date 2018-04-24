@@ -43,6 +43,9 @@ public class MovieInfo implements Serializable {
     @Column(name = "classify_id")
     private Integer classifyId;
 
+    @Column(name = "classify_name")
+    private String classifyName;
+
     /**
      * 图片附件ID
      */
@@ -69,13 +72,14 @@ public class MovieInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public MovieInfo(Long mvId, String mvName, String mvIntro, Date createTime, Date updateTime, Integer classifyId, Long imgAppendixId, Long mvAppendixId, Integer episodeCount, String mvPath) {
+    public MovieInfo(Long mvId, String mvName, String mvIntro, Date createTime, Date updateTime, Integer classifyId, String classifyName, Long imgAppendixId, Long mvAppendixId, Integer episodeCount, String mvPath) {
         this.mvId = mvId;
         this.mvName = mvName;
         this.mvIntro = mvIntro;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.classifyId = classifyId;
+        this.classifyName = classifyName;
         this.imgAppendixId = imgAppendixId;
         this.mvAppendixId = mvAppendixId;
         this.episodeCount = episodeCount;
@@ -192,6 +196,20 @@ public class MovieInfo implements Serializable {
      */
     public void setClassifyId(Integer classifyId) {
         this.classifyId = classifyId;
+    }
+
+    /**
+     * @return classify_name
+     */
+    public String getClassifyName() {
+        return classifyName;
+    }
+
+    /**
+     * @param classifyName
+     */
+    public void setClassifyName(String classifyName) {
+        this.classifyName = classifyName == null ? null : classifyName.trim();
     }
 
     /**

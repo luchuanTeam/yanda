@@ -172,13 +172,13 @@ public class AttachmentController extends BaseController {
 				length = bis.read(buff);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error("下载附件异常", e);
 		} finally {
 			if (bis != null) {
 				try {
 					bis.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOG.error("关闭输入流异常", e);
 				}
 			}
 		}

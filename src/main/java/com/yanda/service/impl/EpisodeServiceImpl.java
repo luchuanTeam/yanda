@@ -9,12 +9,14 @@ import org.springframework.util.CollectionUtils;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
 import com.yanda.entity.generated.EpisodeInfoExample;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.exception.DOPException;
+import com.yanda.mapper.MovieAttachmentMapper;
 import com.yanda.mapper.generated.EpisodeInfoMapper;
 import com.yanda.service.AttachmentService;
 import com.yanda.service.EpisodeService;
@@ -27,6 +29,8 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 	private AttachmentService attachmentService;
 	@Autowired
 	private MovieService movieService;
+	@Autowired
+	private MovieAttachmentMapper movieAttachmentMapper;
 	
 	@Override
 	public PageResult<EpisodeInfo> list(int pageNum, int pageSize, Long mvId, String searchVal) {
@@ -59,6 +63,11 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		if (CollectionUtils.isEmpty(episodeInfo))
 			return null;
 		return episodeInfo.get(0);
+	}
+
+	@Override
+	public EpisodeDetailInfo findEpisodeDetailInfoByMvIdAndNum(Long mvId, int episodeNum) {
+		return movieAttachmentMapper.findEpisodeDetailInfoByMvIdAndNum(mvId, episodeNum);
 	}
 
 }

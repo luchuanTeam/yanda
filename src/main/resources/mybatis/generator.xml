@@ -93,15 +93,15 @@
                 SqlServer :相当于selectKey的SQL为：SELECT SCOPE_IDENTITY()
                 SYBASE    :相当于selectKey的SQL为：SELECT @@IDENTITY
                 JDBC      :相当于在生成的insert元素上添加useGeneratedKeys="true"和keyProperty属性-->
-		<table tableName="t_banner_info" domainObjectName="BannerInfo" 
+		<!-- <table tableName="t_banner_info" domainObjectName="BannerInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
-		</table>
+		</table> -->
 		<table tableName="t_mv_info" domainObjectName="MovieInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>
-		<table tableName="t_mv_episode" domainObjectName="EpisodeInfo" 
+		<!-- <table tableName="t_mv_episode" domainObjectName="EpisodeInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>
@@ -125,7 +125,7 @@
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 			<generatedKey column="appendix_id" sqlStatement="MySql" identity="true"/>
-		</table>
+		</table> -->
 
 	</context>
 </generatorConfiguration>

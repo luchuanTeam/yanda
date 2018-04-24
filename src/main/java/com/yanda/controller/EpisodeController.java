@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
@@ -112,12 +113,12 @@ public class EpisodeController extends BaseController {
 	 * @throws DOPException 
 	 */
 	@RequestMapping(value = "/getEpisode", method = RequestMethod.GET)
-	public EpisodeInfo getEpisode(HttpServletRequest request) throws DOPException {
+	public EpisodeDetailInfo getEpisode(HttpServletRequest request) throws DOPException {
 		String mvId = getNotEmptyValue(request, "mvId");
 		if (StringUtil.isEmpty(mvId))
 			return null;
 		String episodeNum = getValue(request, "episodeNum", "1");
-		return episodeService.selectByMvIdAndEpisodeNum(Long.valueOf(mvId), Integer.valueOf(episodeNum));
+		return episodeService.findEpisodeDetailInfoByMvIdAndNum(Long.valueOf(mvId), Integer.valueOf(episodeNum));
 	}
 
 }

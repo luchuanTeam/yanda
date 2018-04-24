@@ -12,6 +12,7 @@
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="classify_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="classify_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="img_appendix_id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="mv_appendix_id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="episode_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -54,7 +55,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    mv_id, mv_name, mv_intro, create_time, update_time, classify_id, img_appendix_id, 
+    mv_id, mv_name, mv_intro, create_time, update_time, classify_id, classify_name, img_appendix_id, 
     mv_appendix_id, episode_count, mv_path
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.MovieInfoExample" >

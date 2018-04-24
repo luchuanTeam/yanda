@@ -1,5 +1,6 @@
 package com.yanda.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.service.MovieService;
+import com.yanda.util.StringUtil;
 
 /**
  * 视频相关接口控制类 MovieController.java
@@ -74,6 +76,34 @@ public class MovieController extends BaseController {
 			movieInfo.setUpdateTime(attachmentInfo.getCreateTime());
 			movieInfo.setEpisodeCount(0);
 			movieService.addMovie(movieInfo, attachmentInfo);
+			return result(200, "success");
+		} catch (Exception e) {
+			LOG.error("拷贝临时图片到发布路径异常", e);
+			return result(-1, e.getMessage());
+		}
+	}
+	
+	/**
+	 * 更新一条视频记录
+	 * 
+	 * @param request
+	 *            请求体
+	 * @param movieInfo
+	 *            视频实体
+	 * @return
+	 */
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public JsonResult update(HttpServletRequest request, @RequestBody MovieInfo movieInfo) {
+
+		try {
+			String oldFilename = request.getParameter("oldFilename");
+			String newFilename = request.getParameter("newFilename");
+			AttachmentInfo attachmentInfo = null;
+			if (StringUtil.isNotEmpty(oldFilename) && StringUtil.isNotEmpty(newFilename)) {
+				attachmentInfo = handleImgAttach(request);
+			}
+			movieInfo.setUpdateTime(new Date());
+			movieService.updateMovie(movieInfo, attachmentInfo);
 			return result(200, "success");
 		} catch (Exception e) {
 			LOG.error("拷贝临时图片到发布路径异常", e);

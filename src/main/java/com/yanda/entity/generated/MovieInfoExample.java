@@ -485,6 +485,76 @@ public class MovieInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andClassifyNameIsNull() {
+            addCriterion("classify_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameIsNotNull() {
+            addCriterion("classify_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameEqualTo(String value) {
+            addCriterion("classify_name =", value, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameNotEqualTo(String value) {
+            addCriterion("classify_name <>", value, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameGreaterThan(String value) {
+            addCriterion("classify_name >", value, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameGreaterThanOrEqualTo(String value) {
+            addCriterion("classify_name >=", value, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameLessThan(String value) {
+            addCriterion("classify_name <", value, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameLessThanOrEqualTo(String value) {
+            addCriterion("classify_name <=", value, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameLike(String value) {
+            addCriterion("classify_name like", value, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameNotLike(String value) {
+            addCriterion("classify_name not like", value, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameIn(List<String> values) {
+            addCriterion("classify_name in", values, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameNotIn(List<String> values) {
+            addCriterion("classify_name not in", values, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameBetween(String value1, String value2) {
+            addCriterion("classify_name between", value1, value2, "classifyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andClassifyNameNotBetween(String value1, String value2) {
+            addCriterion("classify_name not between", value1, value2, "classifyName");
+            return (Criteria) this;
+        }
+
         public Criteria andImgAppendixIdIsNull() {
             addCriterion("img_appendix_id is null");
             return (Criteria) this;
