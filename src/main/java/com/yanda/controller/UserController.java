@@ -52,9 +52,10 @@ public class UserController extends BaseController {
 		Cookie cookie = new Cookie(sessionId, token);
 		cookie.setMaxAge(COOKIE_AGE);   //设置cookie时限为2天
 		response.addCookie(cookie);
-		Map<String, String> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		map.put("sessionId", sessionId);
 		map.put("token", token);
+		map.put("userInfo", userInfo);
 		return result(200, "success", map);
 	}
 	
