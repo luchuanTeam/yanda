@@ -11,7 +11,7 @@ import com.yanda.exception.DOPException;
 
 public interface MovieService extends BaseService<MovieInfo, Long> {
 	/**
-	 * 通过分类id获取视频列表
+	 * 通过分类id获取视频列表  -- 废除，获取列表请使用getPubMovies
 	 * @param classifyId 分类id
 	 * @param searchKey 用于搜索的字段名
 	 * @param searchVal 用于搜索的字段值
@@ -20,6 +20,7 @@ public interface MovieService extends BaseService<MovieInfo, Long> {
 	 * @param pageSize 分页大小
 	 * @return
 	 */
+	@Deprecated
 	PageResult<MovieInfo> findMovieListByClassify(int classifyId, String searchKey, String searchVal, String order,
 			int pageNum, int pageSize);
 	

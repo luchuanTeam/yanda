@@ -1,8 +1,14 @@
 package com.yanda.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageResult<E> {
+public class PageResult<E> implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8081554124195093695L;
+
 	/**
 	 * 总数
 	 */
@@ -18,6 +24,13 @@ public class PageResult<E> {
 	 */
 	private Integer pageSize;
 	
+	
+	
+	
+	public PageResult() {
+		super();
+	}
+
 	public PageResult(long total, Integer pageNum, Integer pageSize, List<E> list) {
 		super();
 		this.total = total;

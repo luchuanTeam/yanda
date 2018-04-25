@@ -19,6 +19,8 @@ import com.yanda.entity.generated.UserInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.service.UserService;
 import com.yanda.util.DesEncryptUtil;
+import com.yanda.util.StringUtil;
+
 
 @RestController
 @RequestMapping(value = "/user")
@@ -33,11 +35,11 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public JsonResult login(HttpServletRequest request, HttpServletResponse response) {
 		String userName = getNotEmptyValue(request, "userName");
-		if(userName == null) {
+		if(StringUtil.isEmpty(userName)) {
 			return result(-1, "请填写登录账户");
 		}
 		String password = getNotEmptyValue(request, "password");
-		if (password == null) {
+		if (StringUtil.isEmpty(password)) {
 			return result(-1, "请填写登录密码");
 		}
 		UserInfo userInfo = userService.login(userName, password);
@@ -92,18 +94,29 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public JsonResult register(HttpServletRequest request) {
 		String userName = getNotEmptyValue(request, "userName");
-		if(userName == null) {
+		if(StringUtil.isEmpty(userName)) {
 			return result(-1, "请填写登录账户");
 		}
 		String password = getNotEmptyValue(request, "password");
-		if (password == null) {
+		if (StringUtil.isEmpty(password)) {
 			return result(-1, "请填写登录密码");
+		}
+		String mobile = getNotEmptyValue(request, "mobile");
+		if (StringUtil.isEmpty(mobile)) {
+			return result(-1, "请填写手机号");
 		}
 		boolean flag = userService.findUserNameIsExist(userName);
 		if(!flag) {
 			try {
-				userService.register(userName, password);
-				return result(200, "success");
+				UserInfo userInfo = new UserInfo();
+				Date crTime = new Date();
+				userInfo.setUserName(userName);
+				userInfo.setPassword(password);
+				userInfo.setMobile(mobile);
+				userInfo.setCreateTime(crTime);
+				userInfo.setUpdateTime(crTime);
+				userService.save(userInfo);
+				return result(200, "注册成功");
 			} catch (DOPException e) {
 				return result(-1, e.getMessage());
 			}
