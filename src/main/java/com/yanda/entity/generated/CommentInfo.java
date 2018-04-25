@@ -31,9 +31,14 @@ public class CommentInfo implements Serializable {
     @Column(name = "comment_count")
     private Integer commentCount;
 
+    @Column(name = "user_name")
+    private String userName;
+
+    private String avatar;
+
     private static final long serialVersionUID = 1L;
 
-    public CommentInfo(Long commentId, String commentContent, Date createTime, Long userId, Long episodeId, Integer agreeCount, Long parentId, Integer commentCount) {
+    public CommentInfo(Long commentId, String commentContent, Date createTime, Long userId, Long episodeId, Integer agreeCount, Long parentId, Integer commentCount, String userName, String avatar) {
         this.commentId = commentId;
         this.commentContent = commentContent;
         this.createTime = createTime;
@@ -42,6 +47,8 @@ public class CommentInfo implements Serializable {
         this.agreeCount = agreeCount;
         this.parentId = parentId;
         this.commentCount = commentCount;
+        this.userName = userName;
+        this.avatar = avatar;
     }
 
     public CommentInfo() {
@@ -158,5 +165,33 @@ public class CommentInfo implements Serializable {
      */
     public void setCommentCount(Integer commentCount) {
         this.commentCount = commentCount;
+    }
+
+    /**
+     * @return user_name
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * @param userName
+     */
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
+
+    /**
+     * @return avatar
+     */
+    public String getAvatar() {
+        return avatar;
+    }
+
+    /**
+     * @param avatar
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
     }
 }
