@@ -61,6 +61,10 @@
 		    <artifactId>mapper-spring-boot-starter</artifactId>
 		    <version>1.2.3</version>
 		</dependency>
+		<dependency>  
+            <groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-starter-data-redis</artifactId>  
+        </dependency>
 
 		<dependency>
 		    <groupId>commons-io</groupId>
@@ -87,7 +91,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		
 	</dependencies>
 	
 	<!-- 用于mian方法运行 -->
@@ -113,8 +116,8 @@
 					<executable>true</executable>
 					<layout>ZIP</layout>
 					<excludeGroupIds>
-						org.springframework, org.springframework.boot, org.springframework.data,
-						org.apache.tomcat.embed, org.apache.tomcat, org.apache.xmlbeans, org.apache.commons, org.apache.poi,
+						org.springframework, org.springframework.boot, org.springframework.data, org.springframework.ws,
+						org.apache.tomcat.embed, org.apache.tomcat, org.apache.xmlbeans, org.apache.commons, org.apache.poi, org.apache.httpcomponents, org.apache.geronimo.bundles, org.apache.neethi, org.apache.ws.xmlschema,
 						org.mybatis.spring.boot, org.mybatis,
 						org.hibernate.common, org.hibernate.javax.persistence, org.hibernate,
 						org.webjars.bower,
@@ -129,6 +132,9 @@
 						org.javassist,
 						org.scala-lang,
 						org.yaml,
+						org.apache.cxf,
+						org.ow2.asm,
+						org.codehaus.woodstox,
 						commons-httpclient, commons-beanutils, commons-codec, commons-collections, commons-io, commons-lang, commons-logging,
 						mysql,
 						javax.servlet,
@@ -136,26 +142,30 @@
 						com.trs,
 						dom4j,
 						jaxen,
-						net.sf.json-lib,
-						net.sf.ezmorph,
-						com.jayway,
+						net.sf.json-lib, net.sf.ezmorph, net.sourceforge.jexcelapi, net.sourceforge.nekohtml,
+						com.jayway, com.sun.xml.bind,
 						com.fasterxml,
 						ch.qos.logback,
 						javax.validation,
+						javax.xml.bind,
 						nz.net.ultraq.thymeleaf,
 						antlr,
 						aopalliance,
 						aspectj,
 						com.fasterxml.jackson.core,
-						javax.transaction,
+						javax.transaction, javax.persistence,
 						junit,
-						net.sourceforge.jexcelapi,
 						log4j,
 						stax,
-						xml-apis,
+						xml-apis, xml-resolver,
+						xerces,
 						ognl,
 						com.github.pagehelper,
-						com.github.jsqlparser
+						com.github.jsqlparser,
+						com.vaadin.external.google,
+						wsdl4j,
+						redis.clients,
+						tk.mybatis
 					</excludeGroupIds>
 				</configuration>
 			</plugin>

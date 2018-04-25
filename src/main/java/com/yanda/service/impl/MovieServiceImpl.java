@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,10 +37,11 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 	@Autowired
 	private AttachmentService attachmentService;
 
-
+	
 	@Override
 	public PageResult<MovieInfo> findMovieListByClassify(int classifyId, String searchKey, String searchVal, String order,
 			int pageNum, int pageSize) {
+		
 		Page<MovieInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
 		movieClassifyMapper.findMovieListByClassify(classifyId, searchKey, searchVal, order);
 		PageResult<MovieInfo> pageResult = new PageResult<>(pageInfo.getTotal(), pageInfo.getPages(),
@@ -64,9 +67,11 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 			return fullName;
 		}
 	}
-
+	
+	@Cacheable(value = "movieList")
 	@Override
 	public PageResult<MovieDetailInfo> list(int pageNum, int pageSize, String searchVal) {
+		LOG.info("根据分页数和视频名称查询的视频数据列表将从数据库中获取...");
 		Page<MovieInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
 		MovieInfoExample example = new MovieInfoExample();
 		example.createCriteria().andMvNameLike("%" + searchVal + "%");
@@ -93,16 +98,20 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		return mDetailInfos;
 	}
 	
+	@CacheEvict(value = "movieList", allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public void addMovie(MovieInfo movieInfo, AttachmentInfo attachmentInfo) throws DOPException {
+		LOG.info("添加视频，清空视频缓存数据...");
 		attachmentService.save(attachmentInfo);
 		movieInfo.setImgAppendixId(attachmentInfo.getAppendixId());
 		this.save(movieInfo);
 	}
 	
+	@CacheEvict(value = "movieList", allEntries=true, beforeInvocation=true)
 	@Override
 	public void updateMovie(MovieInfo movieInfo, AttachmentInfo attachmentInfo) throws DOPException {
+		LOG.info("更新视频，清空视频缓存数据...");
 		if (null != attachmentInfo) {
 			attachmentService.save(attachmentInfo);
 			movieInfo.setImgAppendixId(attachmentInfo.getAppendixId());
@@ -110,9 +119,11 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		this.update(movieInfo);
 	}
 	
+	@CacheEvict(value = "movieList", allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public int deleteById(Long id) throws DOPException {
+		LOG.info("删除视频，清空视频缓存数据...");
 		MovieInfo movieInfo = this.mapper.selectByPrimaryKey(id);
 		if (movieInfo.getEpisodeCount() > 0) {
 			throw new DOPException("视频下还有视频集，不能删除该视频");
@@ -129,19 +140,25 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		}
 		return super.deleteById(id);
 	}
-
+	
+	@Cacheable(value = "classifyList")
 	@Override
 	public List<WebClassifyInfo> findOneLevelClassifyList() {
+		LOG.info("分类列表将从数据库中获取...");
 		return movieClassifyMapper.findOneLevelClassifyList();
 	}
-
+	
+	@Cacheable(value = "classifyList")
 	@Override
 	public List<WebClassifyInfo> findClassifyList(int parentId) {
+		LOG.info("根据父分类ID获取的分类列表将从数据库中获取...");
 		return movieClassifyMapper.findClassifyList(parentId);
 	}
-
+	
+	@Cacheable(value = "movieList")
 	@Override
 	public PageResult<MovieDetailInfo> getPubMovies(int classifyId, int pageNum, int pageSize) {
+		LOG.info("根据分页数和分类ID查询的视频数据列表将从数据库中获取...");
 		Page<MovieInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
 		MovieInfoExample example = new MovieInfoExample();
 		Criteria criteria = example.createCriteria();

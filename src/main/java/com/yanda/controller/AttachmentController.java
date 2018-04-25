@@ -172,7 +172,7 @@ public class AttachmentController extends BaseController {
 				length = bis.read(buff);
 			}
 		} catch (IOException e) {
-			LOG.error("下载附件异常", e);
+			LOG.error("下载附件异常:" + e.getMessage());
 		} finally {
 			if (bis != null) {
 				try {

@@ -3,6 +3,8 @@ package com.yanda.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -32,8 +34,10 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 	@Autowired
 	private MovieAttachmentMapper movieAttachmentMapper;
 	
+	@Cacheable(value = "episodeList")
 	@Override
 	public PageResult<EpisodeInfo> list(int pageNum, int pageSize, Long mvId, String searchVal) {
+		LOG.info("根据分页数和视频集名称查询的视频集数据列表将从数据库中获取...");
 		Page<EpisodeInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
 		EpisodeInfoExample example = new EpisodeInfoExample();
 		example.createCriteria().andMvIdEqualTo(mvId).andEpisodeNameLike("%" + searchVal + "%");
@@ -43,10 +47,12 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		return pageResult;
 	}
 	
+	@CacheEvict(value = "episodeList", allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public void addEpisode(AttachmentInfo imgAttach, AttachmentInfo videoAttach, MovieInfo movieInfo, EpisodeInfo episodeInfo)
 			throws DOPException {
+		LOG.info("添加视频集，清空视频集缓存数据...");
 		attachmentService.save(imgAttach);
 		attachmentService.save(videoAttach);
 		episodeInfo.setImgAppendixId(imgAttach.getAppendixId());
@@ -64,10 +70,13 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 			return null;
 		return episodeInfo.get(0);
 	}
-
+	
+	@Cacheable(value = "episodeList")
 	@Override
 	public EpisodeDetailInfo findEpisodeDetailInfoByMvIdAndNum(Long mvId, int episodeNum) {
+		LOG.info("根据视频集ID和集数查询的视频集将从数据库中获取...");
 		return movieAttachmentMapper.findEpisodeDetailInfoByMvIdAndNum(mvId, episodeNum);
 	}
+	
 
 }
