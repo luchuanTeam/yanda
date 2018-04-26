@@ -78,5 +78,16 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		return movieAttachmentMapper.findEpisodeDetailInfoByMvIdAndNum(mvId, episodeNum);
 	}
 	
+	@CacheEvict(value = "episodeList", allEntries=true, beforeInvocation=true)
+	@Transactional(rollbackFor={DOPException.class})
+	@Override
+	public int deleteById(Long id) throws DOPException {
+		LOG.info("删除视频集，清空视频集缓存数据...");
+		EpisodeInfo episodeInfo = this.mapper.selectByPrimaryKey(id);
+		attachmentService.deleteById(episodeInfo.getImgAppendixId());
+		attachmentService.deleteById(episodeInfo.getMvAppendixId());
+		return super.deleteById(id);
+	}
+	
 
 }
