@@ -3,6 +3,7 @@ package com.yanda.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -101,6 +102,29 @@ public class EpisodeController extends BaseController {
 			return result(200, "success");
 		} catch (Exception e) {
 			LOG.error("添加视频集异常", e);
+			return result(-1, e.getMessage());
+		}
+	}
+	
+	/**
+	 * 根据视频id删除一集视频
+	 * 
+	 * @param request 请求体
+	 * @param episodeInfo 视频集 ID
+	 * @return
+	 */
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+	public JsonResult delete(HttpServletRequest request, @PathVariable Long id) {
+
+		if (id == null) {
+			return result(-1, "视频集编号为空");
+		}
+
+		try {
+			episodeService.deleteById(id);
+			return result(200, "success");
+		} catch (Exception e) {
+			LOG.error("删除视频集异常", e);
 			return result(-1, e.getMessage());
 		}
 	}
