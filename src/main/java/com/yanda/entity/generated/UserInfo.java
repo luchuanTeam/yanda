@@ -13,8 +13,17 @@ public class UserInfo implements Serializable {
     @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "mobile")
+    private String password;
+
+    @Column(name = "nick_name")
+    private String nickName;
+
     private String mobile;
+
+    /**
+     * 用户性别 1：男  2：女  3：未知
+     */
+    private Integer sex;
 
     @Column(name = "create_time")
     private Date createTime;
@@ -22,22 +31,26 @@ public class UserInfo implements Serializable {
     @Column(name = "update_time")
     private Date updateTime;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "avatar")
     private String avatar;
+
+    /**
+     * 账号状态  0：已停用  1：启用
+     */
+    private Integer status;
 
     private static final long serialVersionUID = 1L;
 
-    public UserInfo(Integer userId, String userName, String mobile, Date createTime, Date updateTime, String password, String avatar) {
+    public UserInfo(Integer userId, String userName, String password, String nickName, String mobile, Integer sex, Date createTime, Date updateTime, String avatar, Integer status) {
         this.userId = userId;
         this.userName = userName;
+        this.password = password;
+        this.nickName = nickName;
         this.mobile = mobile;
+        this.sex = sex;
         this.createTime = createTime;
         this.updateTime = updateTime;
-        this.password = password;
         this.avatar = avatar;
+        this.status = status;
     }
 
     public UserInfo() {
@@ -73,6 +86,34 @@ public class UserInfo implements Serializable {
     }
 
     /**
+     * @return password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password
+     */
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    /**
+     * @return nick_name
+     */
+    public String getNickName() {
+        return nickName;
+    }
+
+    /**
+     * @param nickName
+     */
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
+    }
+
+    /**
      * @return mobile
      */
     public String getMobile() {
@@ -84,6 +125,24 @@ public class UserInfo implements Serializable {
      */
     public void setMobile(String mobile) {
         this.mobile = mobile == null ? null : mobile.trim();
+    }
+
+    /**
+     * 获取用户性别 1：男  2：女  3：未知
+     *
+     * @return sex - 用户性别 1：男  2：女  3：未知
+     */
+    public Integer getSex() {
+        return sex;
+    }
+
+    /**
+     * 设置用户性别 1：男  2：女  3：未知
+     *
+     * @param sex 用户性别 1：男  2：女  3：未知
+     */
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
     /**
@@ -115,20 +174,6 @@ public class UserInfo implements Serializable {
     }
 
     /**
-     * @return password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password
-     */
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    /**
      * @return avatar
      */
     public String getAvatar() {
@@ -142,12 +187,21 @@ public class UserInfo implements Serializable {
         this.avatar = avatar == null ? null : avatar.trim();
     }
 
-	@Override
-	public String toString() {
-		return "UserInfo [userId=" + userId + ", userName=" + userName + ", mobile=" + mobile + ", createTime="
-				+ createTime + ", updateTime=" + updateTime + ", password=" + password + ", avatar=" + avatar + "]";
-	}
-    
-    
-    
+    /**
+     * 获取账号状态  0：已停用  1：启用
+     *
+     * @return status - 账号状态  0：已停用  1：启用
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置账号状态  0：已停用  1：启用
+     *
+     * @param status 账号状态  0：已停用  1：启用
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }

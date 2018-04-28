@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yanda.mapper.generated.UserInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.UserInfo" >
+<mapper namespace="com.yanda.mapper.generated.RoleInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.RoleInfo" >
     <!--
       WARNING - @mbg.generated
     -->
     <constructor >
-      <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="nick_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="mobile" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="sex" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="avatar" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="role_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ename" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="role_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -54,10 +48,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    user_id, user_name, password, nick_name, mobile, sex, create_time, update_time, avatar, 
-    status
+    role_id, ename, cname, role_desc
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.UserInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.RoleInfoExample" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -67,7 +60,7 @@
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from t_user_info
+    from t_role_info
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

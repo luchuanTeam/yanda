@@ -1,5 +1,7 @@
 package com.yanda.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +145,55 @@ public class EpisodeController extends BaseController {
 			return null;
 		String episodeNum = getValue(request, "episodeNum", "1");
 		return episodeService.findEpisodeDetailInfoByMvIdAndNum(Long.valueOf(mvId), Integer.valueOf(episodeNum));
+	}
+	
+	/**
+	 * 根据视频ID获取视频
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 * @throws DOPException
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public EpisodeInfo getEpisodeById(HttpServletRequest request, @PathVariable Long id) throws DOPException {
+		return episodeService.selectById(id);
+	}
+	
+	/**
+	 * 更新一条视频集记录
+	 * 
+	 * @param request
+	 *            请求体
+	 * @param movieInfo
+	 *            视频实体
+	 * @return
+	 */
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public JsonResult update(HttpServletRequest request, @RequestBody EpisodeInfo episodeInfo) {
+
+		try {
+			String oldFilename = request.getParameter("oldFilename");
+			String newFilename = request.getParameter("newFilename");
+			AttachmentInfo imgAttach = null;
+			if (StringUtil.isNotEmpty(oldFilename) && StringUtil.isNotEmpty(newFilename)) {
+				imgAttach = handleImgAttach(request);
+			}
+			
+			String mvOldFilename = request.getParameter("mvOldFilename");
+			String mvNewFilename = request.getParameter("mvNewFilename");
+			AttachmentInfo mvAttach = null;
+			if (StringUtil.isNotEmpty(mvOldFilename) && StringUtil.isNotEmpty(mvNewFilename)) {
+				mvAttach = handleImgAttach(request);
+			}
+			
+			episodeInfo.setUpdateTime(new Date());
+			episodeService.updateEpisode(imgAttach, mvAttach, episodeInfo);
+			return result(200, "success");
+		} catch (Exception e) {
+			LOG.error("拷贝临时图片到发布路径异常", e);
+			return result(-1, e.getMessage());
+		}
 	}
 
 }

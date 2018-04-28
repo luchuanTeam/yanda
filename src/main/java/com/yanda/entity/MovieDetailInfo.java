@@ -1,5 +1,6 @@
 package com.yanda.entity;
 
+import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.MovieInfo;
 
 public class MovieDetailInfo extends MovieInfo {
@@ -23,13 +24,13 @@ public class MovieDetailInfo extends MovieInfo {
 	/**
 	 * 图片附件
 	 */
-	private String imgAttach;
+	private AttachmentInfo imgAttach;
 
-	public String getImgAttach() {
+	public AttachmentInfo getImgAttach() {
 		return imgAttach;
 	}
 
-	public void setImgAttach(String imgAttach) {
+	public void setImgAttach(AttachmentInfo imgAttach) {
 		this.imgAttach = imgAttach;
 	}
 

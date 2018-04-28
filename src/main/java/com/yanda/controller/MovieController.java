@@ -190,4 +190,21 @@ public class MovieController extends BaseController {
 				Integer.valueOf(pageNum), Integer.valueOf(pageSize));
 		return result(200, "success", mvDetailInfos);
 	}
+	
+	/**
+	 * 根据视频名称或简介搜索视频
+	 * 
+	 * @param request
+	 * @param id
+	 * @return
+	 * @throws DOPException
+	 */
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public JsonResult searchMovie(HttpServletRequest request) throws DOPException {
+		String searchVal = getNotEmptyValue(request, "searchVal");
+		if (StringUtil.isEmpty(searchVal))
+			return result(-1, "查询失败，请输入关键字查询");
+		List<MovieInfo> mvInfos = movieService.findMovieByNameOrIntro(searchVal);
+		return result(200, "success", mvInfos);
+	}
 }

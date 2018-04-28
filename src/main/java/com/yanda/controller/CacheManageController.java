@@ -35,5 +35,11 @@ public class CacheManageController extends BaseController {
 	public JsonResult clearClassify(HttpServletRequest request) {
 		return result(200, "清除分类缓存数据成功");
 	}
+	
+	@CacheEvict(value = "userList", allEntries=true, beforeInvocation=true)
+	@RequestMapping(value = "/clearUser")
+	public JsonResult clearUser(HttpServletRequest request) {
+		return result(200, "清除用户缓存数据成功");
+	}
 
 }

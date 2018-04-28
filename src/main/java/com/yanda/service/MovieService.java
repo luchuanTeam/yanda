@@ -86,4 +86,11 @@ public interface MovieService extends BaseService<MovieInfo, Long> {
 	 * @return
 	 */
 	PageResult<MovieDetailInfo> getPubMovies(int classifyId, int pageNum, int pageSize);
+	
+	/**
+	 * 根据视频名称或者视频简介查询视频
+	 * @param searchVal
+	 * @return
+	 */
+	List<MovieInfo> findMovieByNameOrIntro(String searchVal);
 }

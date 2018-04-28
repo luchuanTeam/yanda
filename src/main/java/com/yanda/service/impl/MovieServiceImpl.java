@@ -98,7 +98,7 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		return mDetailInfos;
 	}
 	
-	@CacheEvict(value = "movieList", allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = {"movieList", "report"}, allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public void addMovie(MovieInfo movieInfo, AttachmentInfo attachmentInfo) throws DOPException {
@@ -119,7 +119,7 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		this.update(movieInfo);
 	}
 	
-	@CacheEvict(value = "movieList", allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = {"movieList", "report"}, allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public int deleteById(Long id) throws DOPException {
@@ -172,6 +172,14 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		PageResult<MovieDetailInfo> pageResult = new PageResult<>(pageInfo.getTotal(), pageInfo.getPages(),
 				pageInfo.getPageSize(), mDetailInfos);
 		return pageResult;
+	}
+
+	@Override
+	public List<MovieInfo> findMovieByNameOrIntro(String searchVal) {
+		MovieInfoExample example = new MovieInfoExample();
+		example.or().andMvNameLike(searchVal);
+		example.or().andMvIntroLike(searchVal);
+		return this.mapper.selectByExample(example);
 	}
 
 

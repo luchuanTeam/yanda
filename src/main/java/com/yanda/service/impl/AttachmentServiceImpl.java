@@ -102,7 +102,7 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 			if (attachmentInfo.getFileType() == FileType.VIDEO.getValue()) {
 				filePath += "/" + attachmentInfo.getNewFilename() + "." +attachmentInfo.getFileExt();
 			}
-			FileUtils.deleteDirectory(new File(filePath));
+			FileUtils.forceDeleteOnExit(new File(filePath));
 			return result;
 			
 		} catch (IOException e) {

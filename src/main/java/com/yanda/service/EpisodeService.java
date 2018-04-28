@@ -45,4 +45,15 @@ public interface EpisodeService extends BaseService<EpisodeInfo, Long> {
 	 * @return
 	 */
 	EpisodeDetailInfo findEpisodeDetailInfoByMvIdAndNum(Long mvId, int episodeNum);
+	
+	/**
+	 * 更新视频集
+	 * 保存图片附件、视频附件、更新视频集四个操作为事务性操作，其中一个报错都需要回滚
+	 * 将三个实体传入是为了在一个方法里进行数据库操作，形成一个事务
+	 * @param imgAttach 视频集对应的图片附件
+	 * @param videoAttach 视频集对应的视频附件
+	 * @param episodeInfo 视频集实体记录
+	 * @throws DOPException
+	 */
+	void updateEpisode(AttachmentInfo imgAttach, AttachmentInfo videoAttach, EpisodeInfo episodeInfo) throws DOPException;
 }

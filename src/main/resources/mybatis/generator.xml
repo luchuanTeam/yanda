@@ -97,35 +97,43 @@
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table> -->
-		<table tableName="t_mv_info" domainObjectName="MovieInfo" 
+		<!-- <table tableName="t_mv_info" domainObjectName="MovieInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
-		</table>
+		</table> -->
 		<!-- <table tableName="t_mv_episode" domainObjectName="EpisodeInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
-		</table>
-		<table tableName="t_user_info" domainObjectName="UserInfo" 
+		</table>-->
+		<!-- <table tableName="t_user_info" domainObjectName="UserInfo" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="true" selectByExampleQueryId="true">
+		</table> -->
+		<table tableName="t_role_info" domainObjectName="RoleInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>
-		<table tableName="t_classify_info" domainObjectName="ClassifyInfo" 
+		<table tableName="t_user_role" domainObjectName="UserRoleInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>
-		<table tableName="t_comment_info" domainObjectName="CommentInfo" 
+		<!-- <table tableName="t_classify_info" domainObjectName="ClassifyInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
-		</table>
-		<table tableName="t_user_agree" domainObjectName="UserAgreeInfo" 
+		</table> -->
+		<!-- <table tableName="t_comment_info" domainObjectName="CommentInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
-		</table>
-		<table tableName="t_attachment_info" domainObjectName="AttachmentInfo" 
+		</table> -->
+		<!-- <table tableName="t_user_agree" domainObjectName="UserAgreeInfo" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="true" selectByExampleQueryId="true">
+		</table> -->
+		<!-- <table tableName="t_attachment_info" domainObjectName="AttachmentInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 			<generatedKey column="appendix_id" sqlStatement="MySql" identity="true"/>
-		</table> -->
+		</table> --> 
 
 	</context>
 </generatorConfiguration>

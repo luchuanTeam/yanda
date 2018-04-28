@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yanda.mapper.UserCustomMapper">
+
+	<resultMap id="UserDetailInfo" type="com.yanda.entity.UserDetailInfo">
+      <id column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" property="userName" />
+      <result column="password" jdbcType="VARCHAR" javaType="java.lang.String" property="password" />
+      <result column="nick_name" jdbcType="VARCHAR" javaType="java.lang.String" property="nickName" />
+      <result column="mobile" jdbcType="VARCHAR" javaType="java.lang.String" property="mobile" />
+      <result column="sex" jdbcType="INTEGER" javaType="java.lang.Integer" property="sex" />
+      <result column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" property="createTime" />
+      <result column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" property="updateTime" />
+      <result column="avatar" jdbcType="VARCHAR" javaType="java.lang.String" property="avatar" />
+      <result column="status" jdbcType="INTEGER" javaType="java.lang.Integer" property="status" />
+      
+      <collection property="role" column="user_id" javaType="ArrayList" 
+                ofType="com.yanda.entity.generated.RoleInfo" select="findUserRoleByUserId"/>
+	</resultMap>
+
+	<select id="findUserDetailByUserId" resultMap="UserDetailInfo">
+		select * from t_user_info where user_id = #{userId}
+	</select>
+	
+	<select id="findUserRoleByUserId" resultMap="com.yanda.mapper.generated.RoleInfoMapper.BaseResultMap">
+		select t2.* from t_user_role t1 left join t_role_info t2 on t1.role_id = t2.role_id where t1.user_id = #{user_id}
+	</select>
+
+</mapper>

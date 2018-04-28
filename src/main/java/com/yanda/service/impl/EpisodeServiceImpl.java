@@ -47,7 +47,7 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		return pageResult;
 	}
 	
-	@CacheEvict(value = "episodeList", allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = {"episodeList", "movieList"}, allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public void addEpisode(AttachmentInfo imgAttach, AttachmentInfo videoAttach, MovieInfo movieInfo, EpisodeInfo episodeInfo)
@@ -78,16 +78,39 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		return movieAttachmentMapper.findEpisodeDetailInfoByMvIdAndNum(mvId, episodeNum);
 	}
 	
-	@CacheEvict(value = "episodeList", allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = {"episodeList", "movieList"}, allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public int deleteById(Long id) throws DOPException {
 		LOG.info("删除视频集，清空视频集缓存数据...");
 		EpisodeInfo episodeInfo = this.mapper.selectByPrimaryKey(id);
+		MovieInfo mvInfo = movieService.selectById(episodeInfo.getMvId());
+		int episodeCount = mvInfo.getEpisodeCount();
+		if (episodeCount > 0) 
+			episodeCount --;
+		mvInfo.setEpisodeCount(episodeCount);
+		movieService.update(mvInfo);
 		attachmentService.deleteById(episodeInfo.getImgAppendixId());
 		attachmentService.deleteById(episodeInfo.getMvAppendixId());
 		return super.deleteById(id);
 	}
 	
-
+	@CacheEvict(value = "episodeList", allEntries=true, beforeInvocation=true)
+	@Transactional(rollbackFor={DOPException.class, Exception.class})
+	@Override
+	public void updateEpisode(AttachmentInfo imgAttach, AttachmentInfo videoAttach, EpisodeInfo episodeInfo)
+			throws DOPException {
+		LOG.info("更新视频集，清空视频集缓存数据...");
+		if (null != imgAttach) {
+			attachmentService.save(imgAttach);
+			episodeInfo.setImgAppendixId(imgAttach.getAppendixId());
+		} 
+		if (null != videoAttach) {
+			attachmentService.save(videoAttach);
+			episodeInfo.setMvAppendixId(imgAttach.getAppendixId());
+		}
+		this.update(episodeInfo);
+	}
+	
+	
 }
