@@ -43,7 +43,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 		userInfo.setPassword(password);
 		userInfo.setUpdateTime(new Date());
 		userInfo.setUserName(userName);
-		userInfo.setAvatar("");
+		userInfo.setAvatar("http://www.yanda123.com/app/people.png");
+		userInfo.setNickName(userName);
+		userInfo.setStatus(1);
+		userInfo.setSex(1);
+		userInfo.setMobile("");
 		this.save(userInfo);
 	}
 
