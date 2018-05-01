@@ -1,6 +1,7 @@
 package com.yanda.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
+import com.yanda.entity.SimpleEpisode;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
 import com.yanda.entity.generated.MovieInfo;
@@ -132,23 +134,19 @@ public class EpisodeController extends BaseController {
 	}
 	
 	/**
-	 * 根据视频ID和视频集数获取视频集信息
+	 * 根据视频集ID获取视频集详细信息
 	 * @param request
 	 * @param id
 	 * @return
 	 * @throws DOPException 
 	 */
-	@RequestMapping(value = "/getEpisode", method = RequestMethod.GET)
-	public EpisodeDetailInfo getEpisode(HttpServletRequest request) throws DOPException {
-		String mvId = getNotEmptyValue(request, "mvId");
-		if (StringUtil.isEmpty(mvId))
-			return null;
-		String episodeNum = getValue(request, "episodeNum", "1");
-		return episodeService.findEpisodeDetailInfoByMvIdAndNum(Long.valueOf(mvId), Integer.valueOf(episodeNum));
+	@RequestMapping(value = "/getDetailEpisode/{id}", method = RequestMethod.GET)
+	public EpisodeDetailInfo getEpisode(HttpServletRequest request, @PathVariable Long id) throws DOPException {
+		return episodeService.findEpisodeDetailInfoById(id);
 	}
 	
 	/**
-	 * 根据视频ID获取视频
+	 * 根据视频集ID获取视频集
 	 * 
 	 * @param request
 	 * @param id
@@ -194,6 +192,18 @@ public class EpisodeController extends BaseController {
 			LOG.error("拷贝临时图片到发布路径异常", e);
 			return result(-1, e.getMessage());
 		}
+	}
+	
+	/**
+	 * 获取视频集id、集数
+	 * @param request
+	 * @param mvId
+	 * @return
+	 * @throws DOPException
+	 */
+	@RequestMapping(value = "/episodes/{mvId}", method = RequestMethod.GET)
+	public List<SimpleEpisode> getEpisodesByMvId(HttpServletRequest request, @PathVariable Long mvId) throws DOPException {
+		return episodeService.getSimpleEpisodeByMvId(mvId);
 	}
 
 }

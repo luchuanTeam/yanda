@@ -754,6 +754,136 @@ public class UserInfoExample {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
+
+        public Criteria andIsWechatIsNull() {
+            addCriterion("is_wechat is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatIsNotNull() {
+            addCriterion("is_wechat is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatEqualTo(Boolean value) {
+            addCriterion("is_wechat =", value, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatNotEqualTo(Boolean value) {
+            addCriterion("is_wechat <>", value, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatGreaterThan(Boolean value) {
+            addCriterion("is_wechat >", value, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_wechat >=", value, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatLessThan(Boolean value) {
+            addCriterion("is_wechat <", value, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_wechat <=", value, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatIn(List<Boolean> values) {
+            addCriterion("is_wechat in", values, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatNotIn(List<Boolean> values) {
+            addCriterion("is_wechat not in", values, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_wechat between", value1, value2, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsWechatNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_wechat not between", value1, value2, "isWechat");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdIsNull() {
+            addCriterion("open_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdIsNotNull() {
+            addCriterion("open_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdEqualTo(String value) {
+            addCriterion("open_id =", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotEqualTo(String value) {
+            addCriterion("open_id <>", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdGreaterThan(String value) {
+            addCriterion("open_id >", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdGreaterThanOrEqualTo(String value) {
+            addCriterion("open_id >=", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdLessThan(String value) {
+            addCriterion("open_id <", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdLessThanOrEqualTo(String value) {
+            addCriterion("open_id <=", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdLike(String value) {
+            addCriterion("open_id like", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotLike(String value) {
+            addCriterion("open_id not like", value, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdIn(List<String> values) {
+            addCriterion("open_id in", values, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotIn(List<String> values) {
+            addCriterion("open_id not in", values, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdBetween(String value1, String value2) {
+            addCriterion("open_id between", value1, value2, "openId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenIdNotBetween(String value1, String value2) {
+            addCriterion("open_id not between", value1, value2, "openId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

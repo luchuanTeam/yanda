@@ -38,9 +38,21 @@ public class UserInfo implements Serializable {
      */
     private Integer status;
 
+    /**
+     * 是否微信用户
+     */
+    @Column(name = "is_wechat")
+    private Boolean isWechat;
+
+    /**
+     * 用户绑定的微信openid
+     */
+    @Column(name = "open_id")
+    private String openId;
+
     private static final long serialVersionUID = 1L;
 
-    public UserInfo(Integer userId, String userName, String password, String nickName, String mobile, Integer sex, Date createTime, Date updateTime, String avatar, Integer status) {
+    public UserInfo(Integer userId, String userName, String password, String nickName, String mobile, Integer sex, Date createTime, Date updateTime, String avatar, Integer status, Boolean isWechat, String openId) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -51,6 +63,8 @@ public class UserInfo implements Serializable {
         this.updateTime = updateTime;
         this.avatar = avatar;
         this.status = status;
+        this.isWechat = isWechat;
+        this.openId = openId;
     }
 
     public UserInfo() {
@@ -203,5 +217,41 @@ public class UserInfo implements Serializable {
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    /**
+     * 获取是否微信用户
+     *
+     * @return is_wechat - 是否微信用户
+     */
+    public Boolean getIsWechat() {
+        return isWechat;
+    }
+
+    /**
+     * 设置是否微信用户
+     *
+     * @param isWechat 是否微信用户
+     */
+    public void setIsWechat(Boolean isWechat) {
+        this.isWechat = isWechat;
+    }
+
+    /**
+     * 获取用户绑定的微信openid
+     *
+     * @return open_id - 用户绑定的微信openid
+     */
+    public String getOpenId() {
+        return openId;
+    }
+
+    /**
+     * 设置用户绑定的微信openid
+     *
+     * @param openId 用户绑定的微信openid
+     */
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 }

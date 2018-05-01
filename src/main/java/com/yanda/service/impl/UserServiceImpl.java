@@ -1,11 +1,13 @@
 package com.yanda.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -85,6 +87,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 	@Override
 	public UserDetailInfo findUserDetailByUserId(int userId) {
 		return userCustomMapper.findUserDetailByUserId(userId);
+	}
+
+	@Override
+	public UserInfo findWechatIsExist(String openId) {
+		UserInfoExample example = new UserInfoExample();
+		example.createCriteria().andOpenIdEqualTo(openId);
+		List<UserInfo> users = this.mapper.selectByExample(example);
+		if (CollectionUtils.isEmpty(users))
+			return null;
+		return users.get(0);
 	}
 
 	

@@ -93,4 +93,5 @@ public interface MovieService extends BaseService<MovieInfo, Long> {
 	 * @return
 	 */
 	List<MovieInfo> findMovieByNameOrIntro(String searchVal);
+	
 }

@@ -162,7 +162,7 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		Page<MovieInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
 		MovieInfoExample example = new MovieInfoExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andEpisodeCountGreaterThanOrEqualTo(1);
+		criteria.andEpisodeCountGreaterThanOrEqualTo(1).andIsPublicEqualTo(true);
 		if (0 != classifyId) {
 			criteria.andClassifyIdEqualTo(classifyId);
 		}
@@ -177,8 +177,8 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 	@Override
 	public List<MovieInfo> findMovieByNameOrIntro(String searchVal) {
 		MovieInfoExample example = new MovieInfoExample();
-		example.or().andMvNameLike(searchVal);
-		example.or().andMvIntroLike(searchVal);
+		example.or().andMvNameLike(searchVal).andIsPublicEqualTo(true);
+		example.or().andMvIntroLike(searchVal).andIsPublicEqualTo(true);
 		return this.mapper.selectByExample(example);
 	}
 

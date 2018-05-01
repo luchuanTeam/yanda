@@ -13,12 +13,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.PageResult;
+import com.yanda.entity.SimpleEpisode;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
 import com.yanda.entity.generated.EpisodeInfoExample;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.MovieAttachmentMapper;
+import com.yanda.mapper.MovieEpisodeMapper;
 import com.yanda.mapper.generated.EpisodeInfoMapper;
 import com.yanda.service.AttachmentService;
 import com.yanda.service.EpisodeService;
@@ -33,6 +35,8 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 	private MovieService movieService;
 	@Autowired
 	private MovieAttachmentMapper movieAttachmentMapper;
+	@Autowired
+	private MovieEpisodeMapper movieEpisodeMapper;
 	
 	@Cacheable(value = "episodeList")
 	@Override
@@ -73,9 +77,9 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 	
 	@Cacheable(value = "episodeList")
 	@Override
-	public EpisodeDetailInfo findEpisodeDetailInfoByMvIdAndNum(Long mvId, int episodeNum) {
+	public EpisodeDetailInfo findEpisodeDetailInfoById(Long episodeId) {
 		LOG.info("根据视频集ID和集数查询的视频集将从数据库中获取...");
-		return movieAttachmentMapper.findEpisodeDetailInfoByMvIdAndNum(mvId, episodeNum);
+		return movieAttachmentMapper.findEpisodeDetailInfoById(episodeId);
 	}
 	
 	@CacheEvict(value = {"episodeList", "movieList"}, allEntries=true, beforeInvocation=true)
@@ -110,6 +114,11 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 			episodeInfo.setMvAppendixId(imgAttach.getAppendixId());
 		}
 		this.update(episodeInfo);
+	}
+
+	@Override
+	public List<SimpleEpisode> getSimpleEpisodeByMvId(Long mvId) {
+		return movieEpisodeMapper.findSimpleEpisodeByMvId(mvId);
 	}
 	
 	

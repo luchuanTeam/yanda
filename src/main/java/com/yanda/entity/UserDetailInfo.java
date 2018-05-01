@@ -1,6 +1,5 @@
 package com.yanda.entity;
 
-import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,15 +51,6 @@ public class UserDetailInfo extends UserInfo {
 	public UserDetailInfo() {
 		super();
 	}
-
-
-
-	public UserDetailInfo(Integer userId, String userName, String password, String nickName, String mobile, Integer sex,
-			Date createTime, Date updateTime, String avatar, Integer status, List<RoleInfo> role) {
-		super(userId, userName, password, nickName, mobile, sex, createTime, updateTime, avatar, status);
-		this.role = role;
-	}
-
 
 	
 }

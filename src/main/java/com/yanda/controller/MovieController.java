@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -206,5 +207,42 @@ public class MovieController extends BaseController {
 			return result(-1, "查询失败，请输入关键字查询");
 		List<MovieInfo> mvInfos = movieService.findMovieByNameOrIntro(searchVal);
 		return result(200, "success", mvInfos);
+	}
+	
+	/**
+	 * 发布或撤销发布视频
+	 * @param request
+	 * @param mvId
+	 * @param isPublic
+	 * @return
+	 * @throws DOPException
+	 */
+	@CacheEvict(value = "movieList", allEntries=true, beforeInvocation=true)
+	@RequestMapping(value = "/pub", method = RequestMethod.POST)
+	public JsonResult pubMovie(HttpServletRequest request) throws DOPException {
+		String mvId = getNotEmptyValue(request, "mvId");
+		if (StringUtil.isEmpty(mvId))
+			return result(-1, "视频编号为空"); 
+		String isPublic = getNotEmptyValue(request, "isPublic");
+		if (StringUtil.isEmpty(mvId))
+			return result(-1, "发布状态值为空"); 
+		
+		try {
+			Long id = Long.valueOf(mvId);
+			int ispublicVal = Integer.valueOf(isPublic).intValue();
+			MovieInfo movieInfo = new MovieInfo();
+			movieInfo.setMvId(id);
+			movieInfo.setIsPublic(ispublicVal == 1);
+			if (ispublicVal == 1) {
+				movieInfo.setPublicTime(new Date());
+			}
+			movieService.update(movieInfo);
+			
+		} catch (Exception e) {
+			LOG.error(e);
+			return result(-1, "更新发布状态失败");
+		}
+		
+		return result(200, "success");
 	}
 }

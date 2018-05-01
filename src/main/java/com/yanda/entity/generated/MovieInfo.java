@@ -70,9 +70,21 @@ public class MovieInfo implements Serializable {
     @Column(name = "mv_path")
     private String mvPath;
 
+    /**
+     * 是否已发布
+     */
+    @Column(name = "is_public")
+    private Boolean isPublic;
+
+    /**
+     * 发布时间
+     */
+    @Column(name = "public_time")
+    private Date publicTime;
+
     private static final long serialVersionUID = 1L;
 
-    public MovieInfo(Long mvId, String mvName, String mvIntro, Date createTime, Date updateTime, Integer classifyId, String classifyName, Long imgAppendixId, Long mvAppendixId, Integer episodeCount, String mvPath) {
+    public MovieInfo(Long mvId, String mvName, String mvIntro, Date createTime, Date updateTime, Integer classifyId, String classifyName, Long imgAppendixId, Long mvAppendixId, Integer episodeCount, String mvPath, Boolean isPublic, Date publicTime) {
         this.mvId = mvId;
         this.mvName = mvName;
         this.mvIntro = mvIntro;
@@ -84,6 +96,8 @@ public class MovieInfo implements Serializable {
         this.mvAppendixId = mvAppendixId;
         this.episodeCount = episodeCount;
         this.mvPath = mvPath;
+        this.isPublic = isPublic;
+        this.publicTime = publicTime;
     }
 
     public MovieInfo() {
@@ -282,5 +296,41 @@ public class MovieInfo implements Serializable {
      */
     public void setMvPath(String mvPath) {
         this.mvPath = mvPath == null ? null : mvPath.trim();
+    }
+
+    /**
+     * 获取是否已发布
+     *
+     * @return is_public - 是否已发布
+     */
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+
+    /**
+     * 设置是否已发布
+     *
+     * @param isPublic 是否已发布
+     */
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    /**
+     * 获取发布时间
+     *
+     * @return public_time - 发布时间
+     */
+    public Date getPublicTime() {
+        return publicTime;
+    }
+
+    /**
+     * 设置发布时间
+     *
+     * @param publicTime 发布时间
+     */
+    public void setPublicTime(Date publicTime) {
+        this.publicTime = publicTime;
     }
 }

@@ -16,6 +16,8 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="avatar" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="is_wechat" jdbcType="BOOLEAN" javaType="java.lang.Boolean" />
+      <arg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -55,7 +57,7 @@
       WARNING - @mbg.generated
     -->
     user_id, user_name, password, nick_name, mobile, sex, create_time, update_time, avatar, 
-    status
+    status, is_wechat, open_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.UserInfoExample" >
     <!--

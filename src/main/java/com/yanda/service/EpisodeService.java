@@ -1,7 +1,10 @@
 package com.yanda.service;
 
+import java.util.List;
+
 import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.PageResult;
+import com.yanda.entity.SimpleEpisode;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
 import com.yanda.entity.generated.MovieInfo;
@@ -44,7 +47,7 @@ public interface EpisodeService extends BaseService<EpisodeInfo, Long> {
 	 * @param num
 	 * @return
 	 */
-	EpisodeDetailInfo findEpisodeDetailInfoByMvIdAndNum(Long mvId, int episodeNum);
+	EpisodeDetailInfo findEpisodeDetailInfoById(Long episodeId);
 	
 	/**
 	 * 更新视频集
@@ -56,4 +59,11 @@ public interface EpisodeService extends BaseService<EpisodeInfo, Long> {
 	 * @throws DOPException
 	 */
 	void updateEpisode(AttachmentInfo imgAttach, AttachmentInfo videoAttach, EpisodeInfo episodeInfo) throws DOPException;
+	
+	/**
+	 * 通过视频ID获取该视频下的视频集（id、第几集）等信息
+	 * @param mvId
+	 * @return
+	 */
+	List<SimpleEpisode> getSimpleEpisodeByMvId(Long mvId);
 }

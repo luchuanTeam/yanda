@@ -804,6 +804,126 @@ public class MovieInfoExample {
             addCriterion("mv_path not between", value1, value2, "mvPath");
             return (Criteria) this;
         }
+
+        public Criteria andIsPublicIsNull() {
+            addCriterion("is_public is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicIsNotNull() {
+            addCriterion("is_public is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicEqualTo(Boolean value) {
+            addCriterion("is_public =", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicNotEqualTo(Boolean value) {
+            addCriterion("is_public <>", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicGreaterThan(Boolean value) {
+            addCriterion("is_public >", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_public >=", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicLessThan(Boolean value) {
+            addCriterion("is_public <", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_public <=", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicIn(List<Boolean> values) {
+            addCriterion("is_public in", values, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicNotIn(List<Boolean> values) {
+            addCriterion("is_public not in", values, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_public between", value1, value2, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_public not between", value1, value2, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeIsNull() {
+            addCriterion("public_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeIsNotNull() {
+            addCriterion("public_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeEqualTo(Date value) {
+            addCriterion("public_time =", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeNotEqualTo(Date value) {
+            addCriterion("public_time <>", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeGreaterThan(Date value) {
+            addCriterion("public_time >", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("public_time >=", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeLessThan(Date value) {
+            addCriterion("public_time <", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeLessThanOrEqualTo(Date value) {
+            addCriterion("public_time <=", value, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeIn(List<Date> values) {
+            addCriterion("public_time in", values, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeNotIn(List<Date> values) {
+            addCriterion("public_time not in", values, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeBetween(Date value1, Date value2) {
+            addCriterion("public_time between", value1, value2, "publicTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublicTimeNotBetween(Date value1, Date value2) {
+            addCriterion("public_time not between", value1, value2, "publicTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

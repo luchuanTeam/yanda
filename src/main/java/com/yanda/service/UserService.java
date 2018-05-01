@@ -46,4 +46,11 @@ public interface UserService extends BaseService<UserInfo, Long> {
      */
     UserDetailInfo findUserDetailByUserId(int userId);
     
+    /**
+     * 根据微信openid查询用户是否存在
+     * @param openId
+     * @return
+     */
+    UserInfo findWechatIsExist(String openId);
+    
 }

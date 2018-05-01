@@ -17,8 +17,8 @@
 			select="findAttachmentById" />
 	</resultMap>
 
-	<select id="findEpisodeDetailInfoByMvIdAndNum" resultMap="EpisodeDetailInfo">
-		select * from t_mv_episode where mv_id = #{mvId} and episode_num = #{num}
+	<select id="findEpisodeDetailInfoById" resultMap="EpisodeDetailInfo">
+		select * from t_mv_episode where episode_id = #{epsodeId}
 	</select>
 	
 	<select id="findAttachmentById" resultMap="com.yanda.mapper.generated.AttachmentInfoMapper.BaseResultMap">

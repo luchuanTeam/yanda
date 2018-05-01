@@ -17,7 +17,9 @@ public class MovieDetailInfo extends MovieInfo {
 
 	public MovieDetailInfo(MovieInfo movieInfo) {
 		super(movieInfo.getMvId(), movieInfo.getMvName(), movieInfo.getMvIntro(), movieInfo.getCreateTime(),
-				movieInfo.getUpdateTime(), movieInfo.getClassifyId(), movieInfo.getClassifyName(), movieInfo.getImgAppendixId(), movieInfo.getMvAppendixId(), movieInfo.getEpisodeCount(), movieInfo.getMvPath());
+				movieInfo.getUpdateTime(), movieInfo.getClassifyId(), movieInfo.getClassifyName(),
+				movieInfo.getImgAppendixId(), movieInfo.getMvAppendixId(), movieInfo.getEpisodeCount(),
+				movieInfo.getMvPath(), movieInfo.getIsPublic(), movieInfo.getPublicTime());
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,6 +35,5 @@ public class MovieDetailInfo extends MovieInfo {
 	public void setImgAttach(AttachmentInfo imgAttach) {
 		this.imgAttach = imgAttach;
 	}
-
 
 }

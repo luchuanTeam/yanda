@@ -13,11 +13,11 @@ import com.yanda.entity.EpisodeDetailInfo;
 public interface MovieAttachmentMapper {
 	
 	/**
-	 * 根据视频ID和集数查询某一集的具体信息
+	 * 根据视频集ID查询某一集的具体信息
 	 * @param mvId
 	 * @param num
 	 * @return
 	 */
-	EpisodeDetailInfo findEpisodeDetailInfoByMvIdAndNum(@Param("mvId") Long mvId, @Param("num") int num);
+	EpisodeDetailInfo findEpisodeDetailInfoById(@Param("epsodeId") Long epsodeId);
 	
 }

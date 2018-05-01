@@ -105,18 +105,18 @@
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table>-->
-		<!-- <table tableName="t_user_info" domainObjectName="UserInfo" 
+		<table tableName="t_user_info" domainObjectName="UserInfo" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
+			enableSelectByExample="true" selectByExampleQueryId="true">
+		</table>
+		<!-- <table tableName="t_role_info" domainObjectName="RoleInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
 		</table> -->
-		<table tableName="t_role_info" domainObjectName="RoleInfo" 
+		<!-- <table tableName="t_user_role" domainObjectName="UserRoleInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
-		</table>
-		<table tableName="t_user_role" domainObjectName="UserRoleInfo" 
-			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
-			enableSelectByExample="true" selectByExampleQueryId="true">
-		</table>
+		</table> -->
 		<!-- <table tableName="t_classify_info" domainObjectName="ClassifyInfo" 
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" 
 			enableSelectByExample="true" selectByExampleQueryId="true">
