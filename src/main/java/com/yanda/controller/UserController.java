@@ -234,6 +234,11 @@ public class UserController extends BaseController {
 		if (StringUtil.isEmpty(nickName)) {
 			nickName = userName;
 		}
+		String sexStr = getNotEmptyValue(request, "sex");
+		int sex = 3;
+		if (StringUtil.isNotEmpty(sexStr)) {
+			sex = Integer.valueOf(sexStr);
+		}
 
 		try {
 			UserInfo userInfo = new UserInfo();
@@ -243,6 +248,7 @@ public class UserController extends BaseController {
 			userInfo.setNickName(nickName);
 			userInfo.setCreateTime(crTime);
 			userInfo.setUpdateTime(crTime);
+			userInfo.setSex(sex);
 			userInfo.setAvatar(avatar);
 			userInfo.setIsWechat(true);
 			userInfo.setOpenId(openId);
