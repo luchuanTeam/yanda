@@ -159,4 +159,37 @@ public class ClassifyInfo implements Serializable {
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl == null ? null : iconUrl.trim();
     }
+
+    public enum Col {
+        classifyId("classify_id"),
+        classifyName("classify_name"),
+        classifyDesc("classify_desc"),
+        parentId("parent_id"),
+        classifyOrder("classify_order"),
+        createTime("create_time"),
+        updateTime("update_time"),
+        iconUrl("icon_url");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

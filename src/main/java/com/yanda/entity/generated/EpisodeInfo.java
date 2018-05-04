@@ -240,4 +240,38 @@ public class EpisodeInfo implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public enum Col {
+        episodeId("episode_id"),
+        episodeName("episode_name"),
+        episodeIntro("episode_intro"),
+        episodeNum("episode_num"),
+        imgAppendixId("img_appendix_id"),
+        mvAppendixId("mv_appendix_id"),
+        mvId("mv_id"),
+        createTime("create_time"),
+        updateTime("update_time");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

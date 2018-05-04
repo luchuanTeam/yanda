@@ -15,10 +15,18 @@ import tk.mybatis.mapper.common.MySqlMapper;
  * @time 2018年3月2日 上午9:02:34
  */
 public interface MyMapper<T> extends Mapper<T>, MySqlMapper<T> {
-	
 	/**
-	 * 根据查询实体构造的查询条件查询T列表
-	 * @param example 查询实体
+	 * 以下接口均是为了避免tk.mybtis扫描时报Mapped Statements collection already contains value的错误
 	 */
+	
+	
 	List<T> selectByExample(Object example);
+	
+	int deleteByExample(Object example);
+	
+	Long countByExample(Object example);
+	
+    int updateByExample(T obj, Object obj1);
+    
+    int updateByExampleSelective(T obj, Object obj1);
 }

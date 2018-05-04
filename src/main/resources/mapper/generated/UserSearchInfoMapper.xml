@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yanda.mapper.generated.UserRoleInfoMapper">
-  <resultMap id="BasePropertyResultMap" type="com.yanda.entity.generated.UserRoleInfo">
+<mapper namespace="com.yanda.mapper.generated.UserSearchInfoMapper">
+  <resultMap id="BasePropertyResultMap" type="com.yanda.entity.generated.UserSearchInfo">
     <!--
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="keyword" jdbcType="CHAR" property="keyword" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
   </resultMap>
-  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.UserRoleInfo">
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.UserSearchInfo">
     <!--
       WARNING - @mbg.generated
     -->
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="keyword" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="add_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="role_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="is_deleted" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -87,9 +91,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, user_id, role_id
+    id, keyword, add_time, user_id, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="com.yanda.entity.generated.UserRoleInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yanda.entity.generated.UserSearchInfoExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
     -->
@@ -98,7 +102,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_user_role
+    from t_user_search
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -117,7 +121,7 @@
     <foreach collection="selective" item="column" separator=",">
       ${column.value}
     </foreach>
-    from t_user_role
+    from t_user_search
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -125,20 +129,20 @@
       order by ${example.orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yanda.entity.generated.UserRoleInfoExample">
+  <delete id="deleteByExample" parameterType="com.yanda.entity.generated.UserSearchInfoExample">
     <!--
       WARNING - @mbg.generated
     -->
-    delete from t_user_role
+    delete from t_user_search
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.yanda.entity.generated.UserRoleInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.yanda.entity.generated.UserSearchInfoExample" resultType="java.lang.Long">
     <!--
       WARNING - @mbg.generated
     -->
-    select count(*) from t_user_role
+    select count(*) from t_user_search
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -147,16 +151,22 @@
     <!--
       WARNING - @mbg.generated
     -->
-    update t_user_role
+    update t_user_search
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.keyword != null">
+        keyword = #{record.keyword,jdbcType=CHAR},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.roleId != null">
-        role_id = #{record.roleId,jdbcType=INTEGER},
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BOOLEAN},
       </if>
     </set>
     <if test="_parameter != null">
@@ -167,10 +177,12 @@
     <!--
       WARNING - @mbg.generated
     -->
-    update t_user_role
+    update t_user_search
     set id = #{record.id,jdbcType=INTEGER},
+      keyword = #{record.keyword,jdbcType=CHAR},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
       user_id = #{record.userId,jdbcType=INTEGER},
-      role_id = #{record.roleId,jdbcType=INTEGER}
+      is_deleted = #{record.isDeleted,jdbcType=BOOLEAN}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,7 +195,7 @@
     <foreach collection="selective" item="column" separator=",">
       ${column.value}
     </foreach>
-    from t_user_role
+    from t_user_search
     where id = #{id,jdbcType=INTEGER}
   </select>
 </mapper>

@@ -1,39 +1,48 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yanda.mapper.generated.RoleInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.RoleInfo" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yanda.mapper.generated.RoleInfoMapper">
+  <resultMap id="BasePropertyResultMap" type="com.yanda.entity.generated.RoleInfo">
     <!--
       WARNING - @mbg.generated
     -->
-    <constructor >
-      <idArg column="role_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="ename" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="cname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="role_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="ename" jdbcType="VARCHAR" property="ename" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="role_desc" jdbcType="VARCHAR" property="roleDesc" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.RoleInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor>
+      <idArg column="role_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ename" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="role_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
-  <sql id="Example_Where_Clause" >
+  <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbg.generated
     -->
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -44,28 +53,143 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
     <!--
       WARNING - @mbg.generated
     -->
     role_id, ename, cname, role_desc
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.RoleInfoExample" >
+  <select id="selectByExample" parameterType="com.yanda.entity.generated.RoleInfoExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
     -->
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
-    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from t_role_info
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+  </select>
+  <select id="selectByExampleSelective" parameterType="map" resultMap="BasePropertyResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="example.distinct">
+      distinct
+    </if>
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    from t_role_info
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yanda.entity.generated.RoleInfoExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from t_role_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.yanda.entity.generated.RoleInfoExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from t_role_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_role_info
+    <set>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ename != null">
+        ename = #{record.ename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cname != null">
+        cname = #{record.cname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleDesc != null">
+        role_desc = #{record.roleDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_role_info
+    set role_id = #{record.roleId,jdbcType=INTEGER},
+      ename = #{record.ename,jdbcType=VARCHAR},
+      cname = #{record.cname,jdbcType=VARCHAR},
+      role_desc = #{record.roleDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKeySelective" parameterType="map" resultMap="BasePropertyResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    from t_role_info
+    where role_id = #{roleId,jdbcType=INTEGER}
   </select>
 </mapper>

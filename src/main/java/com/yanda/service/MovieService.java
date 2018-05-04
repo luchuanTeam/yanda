@@ -6,6 +6,7 @@ import com.yanda.entity.MovieDetailInfo;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.WebClassifyInfo;
 import com.yanda.entity.generated.AttachmentInfo;
+import com.yanda.entity.generated.ClassifyInfo;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.exception.DOPException;
 
@@ -93,5 +94,31 @@ public interface MovieService extends BaseService<MovieInfo, Long> {
 	 * @return
 	 */
 	List<MovieInfo> findMovieByNameOrIntro(String searchVal);
+	
+	/**
+	 * 视频检索
+	 * @param classifyId
+	 * @param keyword
+	 * @param page
+	 * @param size
+	 * @param sortWithOrder
+	 * @return
+	 */
+	PageResult<MovieInfo> querySelective(Integer classifyId, String keyword, Integer page, Integer size,
+			String sortWithOrder);
+	
+	/**
+	 * 视频分类检索
+	 * @param keyword
+	 * @return
+	 */
+	List<Integer> getClassifyIds(String keyword);
+	
+	/**
+	 * 根据分类ids查询分类列表
+	 * @param classifyIds
+	 * @return
+	 */
+	List<ClassifyInfo> findClassifyListByIds(List<Integer> classifyIds);
 	
 }

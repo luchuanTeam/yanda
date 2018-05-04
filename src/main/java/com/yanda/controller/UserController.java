@@ -24,6 +24,7 @@ import com.yanda.entity.generated.UserInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.service.UserService;
 import com.yanda.util.DesEncryptUtil;
+import com.yanda.util.RestTemplateUtil;
 import com.yanda.util.StringUtil;
 
 @RestController
@@ -35,6 +36,9 @@ public class UserController extends BaseController {
 
 	private static final String KEY_DATA = "12345678"; // 加密的密钥
 	private static final int COOKIE_AGE = 172800; // cookie的时限
+	private static final String appId = "wx8c025f88b3f63c44";
+	private static final String appSecret = "a308a19541497abdab9a2cad360188d3";
+	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public JsonResult login(HttpServletRequest request, HttpServletResponse response) {
@@ -50,7 +54,12 @@ public class UserController extends BaseController {
 		if (userInfo == null) {
 			return result(-1, "用户名密码错误");
 		}
+		if (userInfo.getStatus().intValue() != 1) {
+			return result(-1, "该账号已被停用");
+		}
+		
 		UserDetailInfo user = userService.findUserDetailByUserId(userInfo.getUserId());
+		
 		String str = new Date().getTime() + "&" + JSON.toJSONString(user);
 		String token = DesEncryptUtil.encryptToHex(str.getBytes(), KEY_DATA);
 		String sessionId = request.getSession().getId();
@@ -204,7 +213,12 @@ public class UserController extends BaseController {
 			return result(-1, "查询失败");
 		}
 	}
-
+	
+	/**
+	 * 通过openid查询该微信用户是否存在
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/findWechatIsExist", method = RequestMethod.GET)
 	public JsonResult findWechatIsExist(HttpServletRequest request) {
 		String openId = getNotEmptyValue(request, "openId");
@@ -257,6 +271,26 @@ public class UserController extends BaseController {
 		} catch (DOPException e) {
 			return result(-1, e.getMessage());
 		}
+	}
+	
+	/**
+	 * 调用微信接口获取openid
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getOpenIdFromWeiXin", method = RequestMethod.GET)
+	public JsonResult getOpenIdFromWeiXin(HttpServletRequest request) {
+		String js_code = getNotEmptyValue(request, "js_code");
+		if (StringUtil.isEmpty(js_code))
+			return result(-1, "js_code为空");
+		Map<String, Object> para = new HashMap<>();
+		para.put("appid", appId);
+		para.put("secret", appSecret);
+		para.put("js_code", js_code);
+		para.put("grant_type", "authorization_code");
+		String result = RestTemplateUtil.getForObject("https://api.weixin.qq.com/sns/jscode2session", String.class, para);
+		return result(200, "success", JSON.parse(result));
+
 	}
 
 }

@@ -1,7 +1,9 @@
 package com.yanda.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yanda.entity.JsonResult;
@@ -18,9 +21,13 @@ import com.yanda.entity.MovieDetailInfo;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.WebClassifyInfo;
 import com.yanda.entity.generated.AttachmentInfo;
+import com.yanda.entity.generated.ClassifyInfo;
 import com.yanda.entity.generated.MovieInfo;
+import com.yanda.entity.generated.UserSearchInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.service.MovieService;
+import com.yanda.service.UserSearchService;
+import com.yanda.util.SortUtil;
 import com.yanda.util.StringUtil;
 
 /**
@@ -35,6 +42,8 @@ public class MovieController extends BaseController {
 
 	@Autowired
 	private MovieService movieService;
+	@Autowired
+	private UserSearchService userSearchService;
 
 	/**
 	 * 获取包含视频分类路径的视频列表，可根据视频名称查询
@@ -83,7 +92,7 @@ public class MovieController extends BaseController {
 			return result(-1, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 更新一条视频记录
 	 * 
@@ -191,7 +200,7 @@ public class MovieController extends BaseController {
 				Integer.valueOf(pageNum), Integer.valueOf(pageSize));
 		return result(200, "success", mvDetailInfos);
 	}
-	
+
 	/**
 	 * 根据视频名称或简介搜索视频
 	 * 
@@ -201,32 +210,59 @@ public class MovieController extends BaseController {
 	 * @throws DOPException
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public JsonResult searchMovie(HttpServletRequest request) throws DOPException {
-		String searchVal = getNotEmptyValue(request, "searchVal");
-		if (StringUtil.isEmpty(searchVal))
-			return result(-1, "查询失败，请输入关键字查询");
-		List<MovieInfo> mvInfos = movieService.findMovieByNameOrIntro(searchVal);
-		return result(200, "success", mvInfos);
+	public JsonResult searchMovie(Integer classifyId, String keyword, Integer userId,
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "size", defaultValue = "10") Integer size, String sort, String order)
+			throws DOPException {
+		
+		String sortWithOrder = SortUtil.mvSort(sort, order);
+
+        //添加到搜索历史
+        if (userId != null && StringUtil.isNotEmpty(keyword)) {
+            UserSearchInfo searchHistoryVo = new UserSearchInfo();
+            searchHistoryVo.setAddTime(new Date());
+            searchHistoryVo.setKeyword(keyword);
+            searchHistoryVo.setUserId(userId);
+            userSearchService.save(searchHistoryVo);
+        }
+
+        //查询列表数据
+        PageResult<MovieInfo> pageResult = movieService.querySelective(classifyId, keyword, page, size, sortWithOrder);
+
+        // 查询商品所属类目列表。
+        List<Integer> classifyIds = movieService.getClassifyIds(keyword);
+        List<ClassifyInfo> classifyList = null;
+        if(classifyIds.size() != 0) {
+            classifyList = movieService.findClassifyListByIds(classifyIds);
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("mvList", pageResult.getList());
+        data.put("filterclassifyList", classifyList);
+        data.put("count", pageResult.getTotal());
+		
+		return result(200, "success", data);
 	}
-	
+
 	/**
 	 * 发布或撤销发布视频
+	 * 
 	 * @param request
 	 * @param mvId
 	 * @param isPublic
 	 * @return
 	 * @throws DOPException
 	 */
-	@CacheEvict(value = "movieList", allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = "movieList", allEntries = true, beforeInvocation = true)
 	@RequestMapping(value = "/pub", method = RequestMethod.POST)
 	public JsonResult pubMovie(HttpServletRequest request) throws DOPException {
 		String mvId = getNotEmptyValue(request, "mvId");
 		if (StringUtil.isEmpty(mvId))
-			return result(-1, "视频编号为空"); 
+			return result(-1, "视频编号为空");
 		String isPublic = getNotEmptyValue(request, "isPublic");
 		if (StringUtil.isEmpty(mvId))
-			return result(-1, "发布状态值为空"); 
-		
+			return result(-1, "发布状态值为空");
+
 		try {
 			Long id = Long.valueOf(mvId);
 			int ispublicVal = Integer.valueOf(isPublic).intValue();
@@ -237,12 +273,12 @@ public class MovieController extends BaseController {
 				movieInfo.setPublicTime(new Date());
 			}
 			movieService.update(movieInfo);
-			
+
 		} catch (Exception e) {
 			LOG.error(e);
 			return result(-1, "更新发布状态失败");
 		}
-		
+
 		return result(200, "success");
 	}
 }

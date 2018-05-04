@@ -333,4 +333,42 @@ public class MovieInfo implements Serializable {
     public void setPublicTime(Date publicTime) {
         this.publicTime = publicTime;
     }
+
+    public enum Col {
+        mvId("mv_id"),
+        mvName("mv_name"),
+        mvIntro("mv_intro"),
+        createTime("create_time"),
+        updateTime("update_time"),
+        classifyId("classify_id"),
+        classifyName("classify_name"),
+        imgAppendixId("img_appendix_id"),
+        mvAppendixId("mv_appendix_id"),
+        episodeCount("episode_count"),
+        mvPath("mv_path"),
+        isPublic("is_public"),
+        publicTime("public_time");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

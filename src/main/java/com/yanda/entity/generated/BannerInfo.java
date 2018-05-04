@@ -175,4 +175,36 @@ public class BannerInfo implements Serializable {
     public void setMvId(Long mvId) {
         this.mvId = mvId;
     }
+
+    public enum Col {
+        bannerId("banner_id"),
+        bannerDesc("banner_desc"),
+        createTime("create_time"),
+        updateTime("update_time"),
+        type("type"),
+        appendixId("appendix_id"),
+        mvId("mv_id");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

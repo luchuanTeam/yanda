@@ -2,6 +2,7 @@ package com.yanda.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,23 +20,29 @@ import com.yanda.entity.MovieDetailInfo;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.WebClassifyInfo;
 import com.yanda.entity.generated.AttachmentInfo;
+import com.yanda.entity.generated.ClassifyInfo;
+import com.yanda.entity.generated.ClassifyInfoExample;
 import com.yanda.entity.generated.MovieInfo;
+import com.yanda.entity.generated.MovieInfo.Col;
 import com.yanda.entity.generated.MovieInfoExample;
 import com.yanda.entity.generated.MovieInfoExample.Criteria;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.MovieClassifyMapper;
+import com.yanda.mapper.generated.ClassifyInfoMapper;
 import com.yanda.mapper.generated.MovieInfoMapper;
 import com.yanda.service.AttachmentService;
 import com.yanda.service.MovieService;
 import com.yanda.util.StringUtil;
 
 @Service
-public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo, Long> implements MovieService {
+public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo, Long> implements MovieService {
 	
 	@Autowired
 	private MovieClassifyMapper movieClassifyMapper;
 	@Autowired
 	private AttachmentService attachmentService;
+	@Autowired
+	private ClassifyInfoMapper classifyInfoMapper;
 
 	
 	@Override
@@ -180,6 +187,62 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper ,MovieInfo
 		example.or().andMvNameLike(searchVal).andIsPublicEqualTo(true);
 		example.or().andMvIntroLike(searchVal).andIsPublicEqualTo(true);
 		return this.mapper.selectByExample(example);
+	}
+
+	@Override
+	public PageResult<MovieInfo> querySelective(Integer classifyId, String keyword, Integer pageNum, Integer pageSize,
+			String sortWithOrder) {
+		
+		Page<MovieInfo> page = PageHelper.startPage(pageNum, pageSize);
+		
+		MovieInfoExample example = new MovieInfoExample();
+        Criteria criteria = example.createCriteria();
+
+        if(classifyId != null && classifyId != 0) {
+            criteria.andClassifyIdEqualTo(classifyId);
+        }
+        if(keyword != null){
+            criteria.andMvNameLike("%" + keyword + "%");
+        }
+        criteria.andIsPublicEqualTo(true);
+
+        if(sortWithOrder != null){
+            example.setOrderByClause(sortWithOrder);
+        }
+        
+        this.mapper.selectByExample(example);
+        
+        PageResult<MovieInfo> pageResult = new PageResult<>();
+        pageResult.setList(page.getResult());
+        pageResult.setTotal(page.getTotal());
+
+        return pageResult;
+
+	}
+
+	@Override
+	public List<Integer> getClassifyIds(String keyword) {
+		MovieInfoExample example = new MovieInfoExample();
+        Criteria criteria = example.createCriteria();
+        if(keyword != null){
+            criteria.andMvNameLike("%" + keyword + "%");
+        }
+        criteria.andIsPublicEqualTo(true);
+        
+        List<MovieInfo> mvList = this.mapper.selectByExampleSelective(example, Col.classifyId);
+        List<Integer> idList = new ArrayList<Integer>();
+        for(MovieInfo mv : mvList){
+        	idList.add(mv.getClassifyId());
+        }
+		return idList;
+	}
+
+	@Override
+	public List<ClassifyInfo> findClassifyListByIds(List<Integer> classifyIds) {
+
+		ClassifyInfoExample example = new ClassifyInfoExample();
+        example.or().andClassifyIdIn(classifyIds);
+		return classifyInfoMapper.selectByExampleSelective(example, com.yanda.entity.generated.ClassifyInfo.Col.classifyId, com.yanda.entity.generated.ClassifyInfo.Col.classifyName);
 	}
 
 

@@ -30,19 +30,15 @@ public class UserAgreeInfo implements Serializable {
         this.hasAgree = hasAgree;
     }
     
-    
-
     public UserAgreeInfo(Long userId, Long commentId, Long episodeId, Integer hasAgree) {
-		super();
-		this.userId = userId;
-		this.commentId = commentId;
-		this.episodeId = episodeId;
-		this.hasAgree = hasAgree;
-	}
+    	super();
+        this.userId = userId;
+        this.commentId = commentId;
+        this.episodeId = episodeId;
+        this.hasAgree = hasAgree;
+    }
 
-
-
-	public UserAgreeInfo() {
+    public UserAgreeInfo() {
         super();
     }
 
@@ -114,5 +110,35 @@ public class UserAgreeInfo implements Serializable {
      */
     public void setHasAgree(Integer hasAgree) {
         this.hasAgree = hasAgree;
+    }
+
+    public enum Col {
+        id("id"),
+        userId("user_id"),
+        commentId("comment_id"),
+        episodeId("episode_id"),
+        hasAgree("has_agree");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
     }
 }

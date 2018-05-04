@@ -112,4 +112,33 @@ public class RoleInfo implements Serializable {
     public void setRoleDesc(String roleDesc) {
         this.roleDesc = roleDesc == null ? null : roleDesc.trim();
     }
+
+    public enum Col {
+        roleId("role_id"),
+        ename("ename"),
+        cname("cname"),
+        roleDesc("role_desc");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

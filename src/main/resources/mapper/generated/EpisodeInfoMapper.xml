@@ -1,44 +1,58 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yanda.mapper.generated.EpisodeInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.EpisodeInfo" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yanda.mapper.generated.EpisodeInfoMapper">
+  <resultMap id="BasePropertyResultMap" type="com.yanda.entity.generated.EpisodeInfo">
     <!--
       WARNING - @mbg.generated
     -->
-    <constructor >
-      <idArg column="episode_id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="episode_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="episode_intro" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="episode_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="img_appendix_id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="mv_appendix_id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="mv_id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <id column="episode_id" jdbcType="BIGINT" property="episodeId" />
+    <result column="episode_name" jdbcType="VARCHAR" property="episodeName" />
+    <result column="episode_intro" jdbcType="VARCHAR" property="episodeIntro" />
+    <result column="episode_num" jdbcType="INTEGER" property="episodeNum" />
+    <result column="img_appendix_id" jdbcType="BIGINT" property="imgAppendixId" />
+    <result column="mv_appendix_id" jdbcType="BIGINT" property="mvAppendixId" />
+    <result column="mv_id" jdbcType="BIGINT" property="mvId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.EpisodeInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor>
+      <idArg column="episode_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="episode_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="episode_intro" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="episode_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="img_appendix_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="mv_appendix_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="mv_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
-  <sql id="Example_Where_Clause" >
+  <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbg.generated
     -->
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -49,29 +63,164 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
     <!--
       WARNING - @mbg.generated
     -->
     episode_id, episode_name, episode_intro, episode_num, img_appendix_id, mv_appendix_id, 
     mv_id, create_time, update_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yanda.entity.generated.EpisodeInfoExample" >
+  <select id="selectByExample" parameterType="com.yanda.entity.generated.EpisodeInfoExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
     -->
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
-    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from t_mv_episode
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+  </select>
+  <select id="selectByExampleSelective" parameterType="map" resultMap="BasePropertyResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="example.distinct">
+      distinct
+    </if>
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    from t_mv_episode
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yanda.entity.generated.EpisodeInfoExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from t_mv_episode
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.yanda.entity.generated.EpisodeInfoExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from t_mv_episode
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_mv_episode
+    <set>
+      <if test="record.episodeId != null">
+        episode_id = #{record.episodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.episodeName != null">
+        episode_name = #{record.episodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.episodeIntro != null">
+        episode_intro = #{record.episodeIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.episodeNum != null">
+        episode_num = #{record.episodeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgAppendixId != null">
+        img_appendix_id = #{record.imgAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mvAppendixId != null">
+        mv_appendix_id = #{record.mvAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mvId != null">
+        mv_id = #{record.mvId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_mv_episode
+    set episode_id = #{record.episodeId,jdbcType=BIGINT},
+      episode_name = #{record.episodeName,jdbcType=VARCHAR},
+      episode_intro = #{record.episodeIntro,jdbcType=VARCHAR},
+      episode_num = #{record.episodeNum,jdbcType=INTEGER},
+      img_appendix_id = #{record.imgAppendixId,jdbcType=BIGINT},
+      mv_appendix_id = #{record.mvAppendixId,jdbcType=BIGINT},
+      mv_id = #{record.mvId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKeySelective" parameterType="map" resultMap="BasePropertyResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    from t_mv_episode
+    where episode_id = #{episodeId,jdbcType=BIGINT}
   </select>
 </mapper>

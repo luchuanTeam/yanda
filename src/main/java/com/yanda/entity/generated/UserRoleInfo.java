@@ -67,4 +67,32 @@ public class UserRoleInfo implements Serializable {
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
+
+    public enum Col {
+        id("id"),
+        userId("user_id"),
+        roleId("role_id");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

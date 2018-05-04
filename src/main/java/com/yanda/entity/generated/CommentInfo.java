@@ -194,4 +194,39 @@ public class CommentInfo implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar == null ? null : avatar.trim();
     }
+
+    public enum Col {
+        commentId("comment_id"),
+        commentContent("comment_content"),
+        createTime("create_time"),
+        userId("user_id"),
+        episodeId("episode_id"),
+        agreeCount("agree_count"),
+        parentId("parent_id"),
+        commentCount("comment_count"),
+        nickName("nick_name"),
+        avatar("avatar");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

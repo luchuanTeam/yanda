@@ -191,4 +191,36 @@ public class AttachmentInfo implements Serializable {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public enum Col {
+        appendixId("appendix_id"),
+        oldFilename("old_filename"),
+        newFilename("new_filename"),
+        fileExt("file_ext"),
+        filePath("file_path"),
+        fileType("file_type"),
+        createTime("create_time");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

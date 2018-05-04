@@ -254,4 +254,41 @@ public class UserInfo implements Serializable {
     public void setOpenId(String openId) {
         this.openId = openId == null ? null : openId.trim();
     }
+
+    public enum Col {
+        userId("user_id"),
+        userName("user_name"),
+        password("password"),
+        nickName("nick_name"),
+        mobile("mobile"),
+        sex("sex"),
+        createTime("create_time"),
+        updateTime("update_time"),
+        avatar("avatar"),
+        status("status"),
+        isWechat("is_wechat"),
+        openId("open_id");
+
+        private final String column;
+
+        public String value() {
+            return this.column;
+        }
+
+        public String getValue() {
+            return this.column;
+        }
+
+        Col(String column) {
+            this.column = column;
+        }
+
+        public String desc() {
+            return this.column + " DESC";
+        }
+
+        public String asc() {
+            return this.column + " ASC";
+        }
+    }
 }

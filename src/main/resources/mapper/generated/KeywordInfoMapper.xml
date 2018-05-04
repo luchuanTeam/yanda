@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yanda.mapper.generated.UserRoleInfoMapper">
-  <resultMap id="BasePropertyResultMap" type="com.yanda.entity.generated.UserRoleInfo">
+<mapper namespace="com.yanda.mapper.generated.KeywordInfoMapper">
+  <resultMap id="BasePropertyResultMap" type="com.yanda.entity.generated.KeywordInfo">
     <!--
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+    <result column="is_hot" jdbcType="BOOLEAN" property="isHot" />
+    <result column="is_default" jdbcType="BOOLEAN" property="isDefault" />
+    <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
+    <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
   </resultMap>
-  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.UserRoleInfo">
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.KeywordInfo">
     <!--
       WARNING - @mbg.generated
     -->
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="role_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="keyword" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_hot" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
+      <arg column="is_default" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
+      <arg column="is_deleted" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
+      <arg column="sort_order" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -87,9 +93,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, user_id, role_id
+    id, keyword, is_hot, is_default, is_deleted, sort_order
   </sql>
-  <select id="selectByExample" parameterType="com.yanda.entity.generated.UserRoleInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yanda.entity.generated.KeywordInfoExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
     -->
@@ -98,7 +104,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_user_role
+    from t_search_keywords
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -117,7 +123,7 @@
     <foreach collection="selective" item="column" separator=",">
       ${column.value}
     </foreach>
-    from t_user_role
+    from t_search_keywords
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -125,20 +131,20 @@
       order by ${example.orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yanda.entity.generated.UserRoleInfoExample">
+  <delete id="deleteByExample" parameterType="com.yanda.entity.generated.KeywordInfoExample">
     <!--
       WARNING - @mbg.generated
     -->
-    delete from t_user_role
+    delete from t_search_keywords
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.yanda.entity.generated.UserRoleInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.yanda.entity.generated.KeywordInfoExample" resultType="java.lang.Long">
     <!--
       WARNING - @mbg.generated
     -->
-    select count(*) from t_user_role
+    select count(*) from t_search_keywords
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -147,16 +153,25 @@
     <!--
       WARNING - @mbg.generated
     -->
-    update t_user_role
+    update t_search_keywords
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+      <if test="record.keyword != null">
+        keyword = #{record.keyword,jdbcType=VARCHAR},
       </if>
-      <if test="record.roleId != null">
-        role_id = #{record.roleId,jdbcType=INTEGER},
+      <if test="record.isHot != null">
+        is_hot = #{record.isHot,jdbcType=BOOLEAN},
+      </if>
+      <if test="record.isDefault != null">
+        is_default = #{record.isDefault,jdbcType=BOOLEAN},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BOOLEAN},
+      </if>
+      <if test="record.sortOrder != null">
+        sort_order = #{record.sortOrder,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -167,10 +182,13 @@
     <!--
       WARNING - @mbg.generated
     -->
-    update t_user_role
+    update t_search_keywords
     set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      role_id = #{record.roleId,jdbcType=INTEGER}
+      keyword = #{record.keyword,jdbcType=VARCHAR},
+      is_hot = #{record.isHot,jdbcType=BOOLEAN},
+      is_default = #{record.isDefault,jdbcType=BOOLEAN},
+      is_deleted = #{record.isDeleted,jdbcType=BOOLEAN},
+      sort_order = #{record.sortOrder,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,7 +201,7 @@
     <foreach collection="selective" item="column" separator=",">
       ${column.value}
     </foreach>
-    from t_user_role
+    from t_search_keywords
     where id = #{id,jdbcType=INTEGER}
   </select>
 </mapper>
