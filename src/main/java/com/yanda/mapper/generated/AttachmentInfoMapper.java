@@ -20,4 +20,8 @@ public interface AttachmentInfoMapper extends MyMapper<AttachmentInfo> {
     int updateByExample(@Param("record") AttachmentInfo record, @Param("example") AttachmentInfoExample example);
 
     AttachmentInfo selectByPrimaryKeySelective(@Param("appendixId") Long appendixId, @Param("selective") AttachmentInfo.Col ... selective);
+
+    int upsert(AttachmentInfo record);
+
+    int upsertSelective(AttachmentInfo record);
 }

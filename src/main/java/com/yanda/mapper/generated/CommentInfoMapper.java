@@ -20,4 +20,8 @@ public interface CommentInfoMapper extends MyMapper<CommentInfo> {
     int updateByExample(@Param("record") CommentInfo record, @Param("example") CommentInfoExample example);
 
     CommentInfo selectByPrimaryKeySelective(@Param("commentId") Long commentId, @Param("selective") CommentInfo.Col ... selective);
+
+    int upsert(CommentInfo record);
+
+    int upsertSelective(CommentInfo record);
 }

@@ -71,5 +71,10 @@ public abstract class BaseServiceImpl<D extends MyMapper<T>, T extends Serializa
     public T selectById(ID id) throws DOPException {  
         return this.mapper.selectByPrimaryKey(id);  
     }
+    
+    @Override
+    public int upsertSelective(T t) throws DOPException {
+    	return this.mapper.upsertSelective(t);
+    }
 
 }

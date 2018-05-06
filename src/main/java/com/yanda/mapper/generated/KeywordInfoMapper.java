@@ -19,5 +19,9 @@ public interface KeywordInfoMapper extends MyMapper<KeywordInfo> {
 
     int updateByExample(@Param("record") KeywordInfo record, @Param("example") KeywordInfoExample example);
 
-    KeywordInfo selectByPrimaryKeySelective(@Param("id") Integer id, @Param("selective") KeywordInfo.Col ... selective);
+    KeywordInfo selectByPrimaryKeySelective(@Param("record") com.yanda.entity.generated.KeywordInfoKey key, @Param("selective") KeywordInfo.Col ... selective);
+
+    int upsert(KeywordInfo record);
+
+    int upsertSelective(KeywordInfo record);
 }

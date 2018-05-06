@@ -247,4 +247,164 @@
     from t_mv_info
     where mv_id = #{mvId,jdbcType=BIGINT}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.MovieInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_mv_info
+    (mv_id, mv_name, mv_intro, create_time, update_time, classify_id, classify_name, 
+      img_appendix_id, mv_appendix_id, episode_count, mv_path, is_public, public_time
+      )
+    values
+    (#{mvId,jdbcType=BIGINT}, #{mvName,jdbcType=VARCHAR}, #{mvIntro,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{classifyId,jdbcType=INTEGER}, 
+      #{classifyName,jdbcType=VARCHAR}, #{imgAppendixId,jdbcType=BIGINT}, #{mvAppendixId,jdbcType=BIGINT}, 
+      #{episodeCount,jdbcType=INTEGER}, #{mvPath,jdbcType=VARCHAR}, #{isPublic,jdbcType=BOOLEAN}, 
+      #{publicTime,jdbcType=TIMESTAMP})
+    on duplicate key update 
+    mv_id = #{mvId,jdbcType=BIGINT}, 
+    mv_name = #{mvName,jdbcType=VARCHAR}, 
+    mv_intro = #{mvIntro,jdbcType=VARCHAR}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}, 
+    classify_id = #{classifyId,jdbcType=INTEGER}, 
+    classify_name = #{classifyName,jdbcType=VARCHAR}, 
+    img_appendix_id = #{imgAppendixId,jdbcType=BIGINT}, 
+    mv_appendix_id = #{mvAppendixId,jdbcType=BIGINT}, 
+    episode_count = #{episodeCount,jdbcType=INTEGER}, 
+    mv_path = #{mvPath,jdbcType=VARCHAR}, 
+    is_public = #{isPublic,jdbcType=BOOLEAN}, 
+    public_time = #{publicTime,jdbcType=TIMESTAMP}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.MovieInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_mv_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mvId != null">
+        mv_id,
+      </if>
+      <if test="mvName != null">
+        mv_name,
+      </if>
+      <if test="mvIntro != null">
+        mv_intro,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="classifyId != null">
+        classify_id,
+      </if>
+      <if test="classifyName != null">
+        classify_name,
+      </if>
+      <if test="imgAppendixId != null">
+        img_appendix_id,
+      </if>
+      <if test="mvAppendixId != null">
+        mv_appendix_id,
+      </if>
+      <if test="episodeCount != null">
+        episode_count,
+      </if>
+      <if test="mvPath != null">
+        mv_path,
+      </if>
+      <if test="isPublic != null">
+        is_public,
+      </if>
+      <if test="publicTime != null">
+        public_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mvId != null">
+        #{mvId,jdbcType=BIGINT},
+      </if>
+      <if test="mvName != null">
+        #{mvName,jdbcType=VARCHAR},
+      </if>
+      <if test="mvIntro != null">
+        #{mvIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classifyId != null">
+        #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyName != null">
+        #{classifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAppendixId != null">
+        #{imgAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="mvAppendixId != null">
+        #{mvAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="episodeCount != null">
+        #{episodeCount,jdbcType=INTEGER},
+      </if>
+      <if test="mvPath != null">
+        #{mvPath,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null">
+        #{isPublic,jdbcType=BOOLEAN},
+      </if>
+      <if test="publicTime != null">
+        #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="mvId != null">
+        mv_id = #{mvId,jdbcType=BIGINT},
+      </if>
+      <if test="mvName != null">
+        mv_name = #{mvName,jdbcType=VARCHAR},
+      </if>
+      <if test="mvIntro != null">
+        mv_intro = #{mvIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classifyId != null">
+        classify_id = #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyName != null">
+        classify_name = #{classifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="imgAppendixId != null">
+        img_appendix_id = #{imgAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="mvAppendixId != null">
+        mv_appendix_id = #{mvAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="episodeCount != null">
+        episode_count = #{episodeCount,jdbcType=INTEGER},
+      </if>
+      <if test="mvPath != null">
+        mv_path = #{mvPath,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null">
+        is_public = #{isPublic,jdbcType=BOOLEAN},
+      </if>
+      <if test="publicTime != null">
+        public_time = #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
 </mapper>

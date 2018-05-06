@@ -19,5 +19,9 @@ public interface UserSearchInfoMapper extends MyMapper<UserSearchInfo> {
 
     int updateByExample(@Param("record") UserSearchInfo record, @Param("example") UserSearchInfoExample example);
 
-    UserSearchInfo selectByPrimaryKeySelective(@Param("id") Integer id, @Param("selective") UserSearchInfo.Col ... selective);
+    UserSearchInfo selectByPrimaryKeySelective(@Param("record") com.yanda.entity.generated.UserSearchInfoKey key, @Param("selective") UserSearchInfo.Col ... selective);
+
+    int upsert(UserSearchInfo record);
+
+    int upsertSelective(UserSearchInfo record);
 }

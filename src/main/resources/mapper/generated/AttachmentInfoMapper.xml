@@ -210,4 +210,101 @@
     from t_attachment_info
     where appendix_id = #{appendixId,jdbcType=BIGINT}
   </select>
+  <insert id="upsert" keyColumn="appendix_id" keyProperty="appendixId" parameterType="com.yanda.entity.generated.AttachmentInfo" useGeneratedKeys="true">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_attachment_info
+    (appendix_id, old_filename, new_filename, file_ext, file_path, file_type, create_time
+      )
+    values
+    (#{appendixId,jdbcType=BIGINT}, #{oldFilename,jdbcType=VARCHAR}, #{newFilename,jdbcType=VARCHAR}, 
+      #{fileExt,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{fileType,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+    on duplicate key update 
+    appendix_id = #{appendixId,jdbcType=BIGINT}, 
+    old_filename = #{oldFilename,jdbcType=VARCHAR}, 
+    new_filename = #{newFilename,jdbcType=VARCHAR}, 
+    file_ext = #{fileExt,jdbcType=VARCHAR}, 
+    file_path = #{filePath,jdbcType=VARCHAR}, 
+    file_type = #{fileType,jdbcType=INTEGER}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}
+  </insert>
+  <insert id="upsertSelective" keyColumn="appendix_id" keyProperty="appendixId" parameterType="com.yanda.entity.generated.AttachmentInfo" useGeneratedKeys="true">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_attachment_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appendixId != null">
+        appendix_id,
+      </if>
+      <if test="oldFilename != null">
+        old_filename,
+      </if>
+      <if test="newFilename != null">
+        new_filename,
+      </if>
+      <if test="fileExt != null">
+        file_ext,
+      </if>
+      <if test="filePath != null">
+        file_path,
+      </if>
+      <if test="fileType != null">
+        file_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appendixId != null">
+        #{appendixId,jdbcType=BIGINT},
+      </if>
+      <if test="oldFilename != null">
+        #{oldFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="newFilename != null">
+        #{newFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="fileExt != null">
+        #{fileExt,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="appendixId != null">
+        appendix_id = #{appendixId,jdbcType=BIGINT},
+      </if>
+      <if test="oldFilename != null">
+        old_filename = #{oldFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="newFilename != null">
+        new_filename = #{newFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="fileExt != null">
+        file_ext = #{fileExt,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        file_type = #{fileType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
 </mapper>

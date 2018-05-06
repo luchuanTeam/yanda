@@ -97,8 +97,11 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo
 			
 			MovieDetailInfo detailInfo = new MovieDetailInfo(mvInfo);
 			if (StringUtil.isEmpty(detailInfo.getClassifyName())) {
-				//在数据库表冗余了分类名称字段，不从库进行查询，对历史数据进行查库
-				detailInfo.setClassifyName(this.findMovieClassifyFullName(mvInfo.getClassifyId()));
+				//在数据库表冗余了分类名称字段，不从库进行查询，对历史数据进行查库并更新
+				String classifyName = this.findMovieClassifyFullName(mvInfo.getClassifyId());
+				mvInfo.setClassifyName(classifyName);
+				this.mapper.updateByPrimaryKeySelective(mvInfo);
+				detailInfo.setClassifyName(classifyName);
 			}
 			mDetailInfos.add(detailInfo);
 		}
@@ -148,14 +151,14 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo
 		return super.deleteById(id);
 	}
 	
-	@Cacheable(value = "classifyList")
+	@Cacheable(value = "webClassifyList")
 	@Override
 	public List<WebClassifyInfo> findOneLevelClassifyList() {
 		LOG.info("分类列表将从数据库中获取...");
 		return movieClassifyMapper.findOneLevelClassifyList();
 	}
 	
-	@Cacheable(value = "classifyList")
+	@Cacheable(value = "webClassifyList")
 	@Override
 	public List<WebClassifyInfo> findClassifyList(int parentId) {
 		LOG.info("根据父分类ID获取的分类列表将从数据库中获取...");

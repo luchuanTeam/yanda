@@ -29,14 +29,6 @@ public class UserAgreeInfo implements Serializable {
         this.episodeId = episodeId;
         this.hasAgree = hasAgree;
     }
-    
-    public UserAgreeInfo(Long userId, Long commentId, Long episodeId, Integer hasAgree) {
-    	super();
-        this.userId = userId;
-        this.commentId = commentId;
-        this.episodeId = episodeId;
-        this.hasAgree = hasAgree;
-    }
 
     public UserAgreeInfo() {
         super();

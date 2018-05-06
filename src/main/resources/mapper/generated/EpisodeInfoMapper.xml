@@ -223,4 +223,122 @@
     from t_mv_episode
     where episode_id = #{episodeId,jdbcType=BIGINT}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.EpisodeInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_mv_episode
+    (episode_id, episode_name, episode_intro, episode_num, img_appendix_id, mv_appendix_id, 
+      mv_id, create_time, update_time)
+    values
+    (#{episodeId,jdbcType=BIGINT}, #{episodeName,jdbcType=VARCHAR}, #{episodeIntro,jdbcType=VARCHAR}, 
+      #{episodeNum,jdbcType=INTEGER}, #{imgAppendixId,jdbcType=BIGINT}, #{mvAppendixId,jdbcType=BIGINT}, 
+      #{mvId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+    on duplicate key update 
+    episode_id = #{episodeId,jdbcType=BIGINT}, 
+    episode_name = #{episodeName,jdbcType=VARCHAR}, 
+    episode_intro = #{episodeIntro,jdbcType=VARCHAR}, 
+    episode_num = #{episodeNum,jdbcType=INTEGER}, 
+    img_appendix_id = #{imgAppendixId,jdbcType=BIGINT}, 
+    mv_appendix_id = #{mvAppendixId,jdbcType=BIGINT}, 
+    mv_id = #{mvId,jdbcType=BIGINT}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.EpisodeInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_mv_episode
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="episodeId != null">
+        episode_id,
+      </if>
+      <if test="episodeName != null">
+        episode_name,
+      </if>
+      <if test="episodeIntro != null">
+        episode_intro,
+      </if>
+      <if test="episodeNum != null">
+        episode_num,
+      </if>
+      <if test="imgAppendixId != null">
+        img_appendix_id,
+      </if>
+      <if test="mvAppendixId != null">
+        mv_appendix_id,
+      </if>
+      <if test="mvId != null">
+        mv_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="episodeId != null">
+        #{episodeId,jdbcType=BIGINT},
+      </if>
+      <if test="episodeName != null">
+        #{episodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="episodeIntro != null">
+        #{episodeIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="episodeNum != null">
+        #{episodeNum,jdbcType=INTEGER},
+      </if>
+      <if test="imgAppendixId != null">
+        #{imgAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="mvAppendixId != null">
+        #{mvAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="mvId != null">
+        #{mvId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="episodeId != null">
+        episode_id = #{episodeId,jdbcType=BIGINT},
+      </if>
+      <if test="episodeName != null">
+        episode_name = #{episodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="episodeIntro != null">
+        episode_intro = #{episodeIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="episodeNum != null">
+        episode_num = #{episodeNum,jdbcType=INTEGER},
+      </if>
+      <if test="imgAppendixId != null">
+        img_appendix_id = #{imgAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="mvAppendixId != null">
+        mv_appendix_id = #{mvAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="mvId != null">
+        mv_id = #{mvId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
 </mapper>

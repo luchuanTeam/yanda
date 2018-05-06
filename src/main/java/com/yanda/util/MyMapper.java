@@ -29,4 +29,6 @@ public interface MyMapper<T> extends Mapper<T>, MySqlMapper<T> {
     int updateByExample(T obj, Object obj1);
     
     int updateByExampleSelective(T obj, Object obj1);
+    
+    int upsertSelective(T obj);
 }

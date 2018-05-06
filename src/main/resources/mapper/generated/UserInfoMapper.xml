@@ -241,4 +241,153 @@
     from t_user_info
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.UserInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_user_info
+    (user_id, user_name, password, nick_name, mobile, sex, create_time, update_time, 
+      avatar, status, is_wechat, open_id)
+    values
+    (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{avatar,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{isWechat,jdbcType=BOOLEAN}, #{openId,jdbcType=VARCHAR}
+      )
+    on duplicate key update 
+    user_id = #{userId,jdbcType=INTEGER}, 
+    user_name = #{userName,jdbcType=VARCHAR}, 
+    password = #{password,jdbcType=VARCHAR}, 
+    nick_name = #{nickName,jdbcType=VARCHAR}, 
+    mobile = #{mobile,jdbcType=VARCHAR}, 
+    sex = #{sex,jdbcType=INTEGER}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}, 
+    avatar = #{avatar,jdbcType=VARCHAR}, 
+    status = #{status,jdbcType=INTEGER}, 
+    is_wechat = #{isWechat,jdbcType=BOOLEAN}, 
+    open_id = #{openId,jdbcType=VARCHAR}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.UserInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="isWechat != null">
+        is_wechat,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isWechat != null">
+        #{isWechat,jdbcType=BOOLEAN},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isWechat != null">
+        is_wechat = #{isWechat,jdbcType=BOOLEAN},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>

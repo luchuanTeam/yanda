@@ -223,7 +223,7 @@ public class MovieController extends BaseController {
             searchHistoryVo.setAddTime(new Date());
             searchHistoryVo.setKeyword(keyword);
             searchHistoryVo.setUserId(userId);
-            userSearchService.save(searchHistoryVo);
+            userSearchService.upsertSelective(searchHistoryVo);
         }
 
         //查询列表数据

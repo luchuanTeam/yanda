@@ -5,10 +5,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="keyword" jdbcType="CHAR" property="keyword" />
+    <id column="keyword" jdbcType="CHAR" property="keyword" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.UserSearchInfo">
@@ -16,10 +15,9 @@
       WARNING - @mbg.generated
     -->
     <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="keyword" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="keyword" javaType="java.lang.String" jdbcType="CHAR" />
+      <idArg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="add_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="is_deleted" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
     </constructor>
   </resultMap>
@@ -91,7 +89,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, keyword, add_time, user_id, is_deleted
+    keyword, user_id, add_time, is_deleted
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.UserSearchInfoExample" resultMap="BaseResultMap">
     <!--
@@ -153,17 +151,14 @@
     -->
     update t_user_search
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
       <if test="record.keyword != null">
         keyword = #{record.keyword,jdbcType=CHAR},
       </if>
-      <if test="record.addTime != null">
-        add_time = #{record.addTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=BOOLEAN},
@@ -178,10 +173,9 @@
       WARNING - @mbg.generated
     -->
     update t_user_search
-    set id = #{record.id,jdbcType=INTEGER},
-      keyword = #{record.keyword,jdbcType=CHAR},
-      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+    set keyword = #{record.keyword,jdbcType=CHAR},
       user_id = #{record.userId,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BOOLEAN}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -196,6 +190,72 @@
       ${column.value}
     </foreach>
     from t_user_search
-    where id = #{id,jdbcType=INTEGER}
+    where keyword = #{record.keyword,jdbcType=CHAR}
+      and user_id = #{record.userId,jdbcType=INTEGER}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.UserSearchInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_user_search
+    (keyword, user_id, add_time, is_deleted)
+    values
+    (#{keyword,jdbcType=CHAR}, #{userId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=BOOLEAN})
+    on duplicate key update 
+    keyword = #{keyword,jdbcType=CHAR}, 
+    user_id = #{userId,jdbcType=INTEGER}, 
+    add_time = #{addTime,jdbcType=TIMESTAMP}, 
+    is_deleted = #{isDeleted,jdbcType=BOOLEAN}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.UserSearchInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_user_search
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="keyword != null">
+        keyword,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="keyword != null">
+        #{keyword,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BOOLEAN},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BOOLEAN},
+      </if>
+    </trim>
+  </insert>
 </mapper>

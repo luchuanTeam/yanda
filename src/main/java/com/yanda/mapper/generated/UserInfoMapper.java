@@ -20,4 +20,8 @@ public interface UserInfoMapper extends MyMapper<UserInfo> {
     int updateByExample(@Param("record") UserInfo record, @Param("example") UserInfoExample example);
 
     UserInfo selectByPrimaryKeySelective(@Param("userId") Integer userId, @Param("selective") UserInfo.Col ... selective);
+
+    int upsert(UserInfo record);
+
+    int upsertSelective(UserInfo record);
 }

@@ -20,4 +20,8 @@ public interface ClassifyInfoMapper extends MyMapper<ClassifyInfo> {
     int updateByExample(@Param("record") ClassifyInfo record, @Param("example") ClassifyInfoExample example);
 
     ClassifyInfo selectByPrimaryKeySelective(@Param("classifyId") Integer classifyId, @Param("selective") ClassifyInfo.Col ... selective);
+
+    int upsert(ClassifyInfo record);
+
+    int upsertSelective(ClassifyInfo record);
 }

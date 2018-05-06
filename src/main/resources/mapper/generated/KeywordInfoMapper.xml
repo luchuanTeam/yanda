@@ -5,8 +5,8 @@
     <!--
       WARNING - @mbg.generated
     -->
+    <id column="keyword" jdbcType="VARCHAR" property="keyword" />
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
     <result column="is_hot" jdbcType="BOOLEAN" property="isHot" />
     <result column="is_default" jdbcType="BOOLEAN" property="isDefault" />
     <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
@@ -17,8 +17,8 @@
       WARNING - @mbg.generated
     -->
     <constructor>
+      <idArg column="keyword" javaType="java.lang.String" jdbcType="VARCHAR" />
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="keyword" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="is_hot" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
       <arg column="is_default" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
       <arg column="is_deleted" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
@@ -93,7 +93,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, keyword, is_hot, is_default, is_deleted, sort_order
+    keyword, id, is_hot, is_default, is_deleted, sort_order
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.KeywordInfoExample" resultMap="BaseResultMap">
     <!--
@@ -155,11 +155,11 @@
     -->
     update t_search_keywords
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
       <if test="record.keyword != null">
         keyword = #{record.keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.isHot != null">
         is_hot = #{record.isHot,jdbcType=BOOLEAN},
@@ -183,8 +183,8 @@
       WARNING - @mbg.generated
     -->
     update t_search_keywords
-    set id = #{record.id,jdbcType=INTEGER},
-      keyword = #{record.keyword,jdbcType=VARCHAR},
+    set keyword = #{record.keyword,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=INTEGER},
       is_hot = #{record.isHot,jdbcType=BOOLEAN},
       is_default = #{record.isDefault,jdbcType=BOOLEAN},
       is_deleted = #{record.isDeleted,jdbcType=BOOLEAN},
@@ -202,6 +202,93 @@
       ${column.value}
     </foreach>
     from t_search_keywords
-    where id = #{id,jdbcType=INTEGER}
+    where keyword = #{record.keyword,jdbcType=VARCHAR}
+      and id = #{record.id,jdbcType=INTEGER}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.KeywordInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_search_keywords
+    (keyword, id, is_hot, is_default, is_deleted, sort_order)
+    values
+    (#{keyword,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{isHot,jdbcType=BOOLEAN}, 
+      #{isDefault,jdbcType=BOOLEAN}, #{isDeleted,jdbcType=BOOLEAN}, #{sortOrder,jdbcType=INTEGER}
+      )
+    on duplicate key update 
+    keyword = #{keyword,jdbcType=VARCHAR}, 
+    id = #{id,jdbcType=INTEGER}, 
+    is_hot = #{isHot,jdbcType=BOOLEAN}, 
+    is_default = #{isDefault,jdbcType=BOOLEAN}, 
+    is_deleted = #{isDeleted,jdbcType=BOOLEAN}, 
+    sort_order = #{sortOrder,jdbcType=INTEGER}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.KeywordInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_search_keywords
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="keyword != null">
+        keyword,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="isHot != null">
+        is_hot,
+      </if>
+      <if test="isDefault != null">
+        is_default,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="sortOrder != null">
+        sort_order,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="keyword != null">
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=BOOLEAN},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=BOOLEAN},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BOOLEAN},
+      </if>
+      <if test="sortOrder != null">
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isHot != null">
+        is_hot = #{isHot,jdbcType=BOOLEAN},
+      </if>
+      <if test="isDefault != null">
+        is_default = #{isDefault,jdbcType=BOOLEAN},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BOOLEAN},
+      </if>
+      <if test="sortOrder != null">
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
 </mapper>

@@ -20,4 +20,8 @@ public interface EpisodeInfoMapper extends MyMapper<EpisodeInfo> {
     int updateByExample(@Param("record") EpisodeInfo record, @Param("example") EpisodeInfoExample example);
 
     EpisodeInfo selectByPrimaryKeySelective(@Param("episodeId") Long episodeId, @Param("selective") EpisodeInfo.Col ... selective);
+
+    int upsert(EpisodeInfo record);
+
+    int upsertSelective(EpisodeInfo record);
 }

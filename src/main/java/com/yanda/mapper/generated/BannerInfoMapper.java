@@ -20,4 +20,8 @@ public interface BannerInfoMapper extends MyMapper<BannerInfo> {
     int updateByExample(@Param("record") BannerInfo record, @Param("example") BannerInfoExample example);
 
     BannerInfo selectByPrimaryKeySelective(@Param("bannerId") Long bannerId, @Param("selective") BannerInfo.Col ... selective);
+
+    int upsert(BannerInfo record);
+
+    int upsertSelective(BannerInfo record);
 }

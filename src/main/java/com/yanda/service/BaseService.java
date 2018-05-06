@@ -41,6 +41,14 @@ public interface BaseService<T extends Serializable, ID> {
      * @return 实体 
      */  
     public T selectById(ID id) throws DOPException;
+    
+    /**
+     * 存在即更新
+     * @param t
+     * @return
+     * @throws DOPException
+     */
+    public int upsertSelective(T t) throws DOPException;
   
 	
 }

@@ -20,4 +20,8 @@ public interface RoleInfoMapper extends MyMapper<RoleInfo> {
     int updateByExample(@Param("record") RoleInfo record, @Param("example") RoleInfoExample example);
 
     RoleInfo selectByPrimaryKeySelective(@Param("roleId") Integer roleId, @Param("selective") RoleInfo.Col ... selective);
+
+    int upsert(RoleInfo record);
+
+    int upsertSelective(RoleInfo record);
 }

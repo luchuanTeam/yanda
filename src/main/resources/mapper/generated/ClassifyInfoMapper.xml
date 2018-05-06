@@ -217,4 +217,111 @@
     from t_classify_info
     where classify_id = #{classifyId,jdbcType=INTEGER}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.ClassifyInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_classify_info
+    (classify_id, classify_name, classify_desc, parent_id, classify_order, create_time, 
+      update_time, icon_url)
+    values
+    (#{classifyId,jdbcType=INTEGER}, #{classifyName,jdbcType=VARCHAR}, #{classifyDesc,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER}, #{classifyOrder,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{iconUrl,jdbcType=VARCHAR})
+    on duplicate key update 
+    classify_id = #{classifyId,jdbcType=INTEGER}, 
+    classify_name = #{classifyName,jdbcType=VARCHAR}, 
+    classify_desc = #{classifyDesc,jdbcType=VARCHAR}, 
+    parent_id = #{parentId,jdbcType=INTEGER}, 
+    classify_order = #{classifyOrder,jdbcType=VARCHAR}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}, 
+    icon_url = #{iconUrl,jdbcType=VARCHAR}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.ClassifyInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_classify_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classifyId != null">
+        classify_id,
+      </if>
+      <if test="classifyName != null">
+        classify_name,
+      </if>
+      <if test="classifyDesc != null">
+        classify_desc,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="classifyOrder != null">
+        classify_order,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="iconUrl != null">
+        icon_url,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classifyId != null">
+        #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyName != null">
+        #{classifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyDesc != null">
+        #{classifyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyOrder != null">
+        #{classifyOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iconUrl != null">
+        #{iconUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="classifyId != null">
+        classify_id = #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyName != null">
+        classify_name = #{classifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyDesc != null">
+        classify_desc = #{classifyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="classifyOrder != null">
+        classify_order = #{classifyOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iconUrl != null">
+        icon_url = #{iconUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>

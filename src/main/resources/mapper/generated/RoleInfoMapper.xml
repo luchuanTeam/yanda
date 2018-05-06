@@ -192,4 +192,69 @@
     from t_role_info
     where role_id = #{roleId,jdbcType=INTEGER}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.RoleInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_role_info
+    (role_id, ename, cname, role_desc)
+    values
+    (#{roleId,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, 
+      #{roleDesc,jdbcType=VARCHAR})
+    on duplicate key update 
+    role_id = #{roleId,jdbcType=INTEGER}, 
+    ename = #{ename,jdbcType=VARCHAR}, 
+    cname = #{cname,jdbcType=VARCHAR}, 
+    role_desc = #{roleDesc,jdbcType=VARCHAR}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.RoleInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_role_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="ename != null">
+        ename,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="roleDesc != null">
+        role_desc,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="ename != null">
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null">
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="ename != null">
+        ename = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null">
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null">
+        role_desc = #{roleDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>

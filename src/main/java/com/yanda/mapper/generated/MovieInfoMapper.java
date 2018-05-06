@@ -20,4 +20,8 @@ public interface MovieInfoMapper extends MyMapper<MovieInfo> {
     int updateByExample(@Param("record") MovieInfo record, @Param("example") MovieInfoExample example);
 
     MovieInfo selectByPrimaryKeySelective(@Param("mvId") Long mvId, @Param("selective") MovieInfo.Col ... selective);
+
+    int upsert(MovieInfo record);
+
+    int upsertSelective(MovieInfo record);
 }

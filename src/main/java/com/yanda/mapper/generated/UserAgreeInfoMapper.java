@@ -20,4 +20,8 @@ public interface UserAgreeInfoMapper extends MyMapper<UserAgreeInfo> {
     int updateByExample(@Param("record") UserAgreeInfo record, @Param("example") UserAgreeInfoExample example);
 
     UserAgreeInfo selectByPrimaryKeySelective(@Param("id") Long id, @Param("selective") UserAgreeInfo.Col ... selective);
+
+    int upsert(UserAgreeInfo record);
+
+    int upsertSelective(UserAgreeInfo record);
 }

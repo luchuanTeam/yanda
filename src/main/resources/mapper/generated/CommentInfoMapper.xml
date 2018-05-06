@@ -229,4 +229,132 @@
     from t_comment_info
     where comment_id = #{commentId,jdbcType=BIGINT}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.CommentInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_comment_info
+    (comment_id, comment_content, create_time, user_id, episode_id, agree_count, parent_id, 
+      comment_count, nick_name, avatar)
+    values
+    (#{commentId,jdbcType=BIGINT}, #{commentContent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=BIGINT}, #{episodeId,jdbcType=BIGINT}, #{agreeCount,jdbcType=INTEGER}, 
+      #{parentId,jdbcType=BIGINT}, #{commentCount,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR})
+    on duplicate key update 
+    comment_id = #{commentId,jdbcType=BIGINT}, 
+    comment_content = #{commentContent,jdbcType=VARCHAR}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    user_id = #{userId,jdbcType=BIGINT}, 
+    episode_id = #{episodeId,jdbcType=BIGINT}, 
+    agree_count = #{agreeCount,jdbcType=INTEGER}, 
+    parent_id = #{parentId,jdbcType=BIGINT}, 
+    comment_count = #{commentCount,jdbcType=INTEGER}, 
+    nick_name = #{nickName,jdbcType=VARCHAR}, 
+    avatar = #{avatar,jdbcType=VARCHAR}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.CommentInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_comment_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="commentContent != null">
+        comment_content,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="episodeId != null">
+        episode_id,
+      </if>
+      <if test="agreeCount != null">
+        agree_count,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="commentCount != null">
+        comment_count,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="commentContent != null">
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="episodeId != null">
+        #{episodeId,jdbcType=BIGINT},
+      </if>
+      <if test="agreeCount != null">
+        #{agreeCount,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="commentId != null">
+        comment_id = #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="commentContent != null">
+        comment_content = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="episodeId != null">
+        episode_id = #{episodeId,jdbcType=BIGINT},
+      </if>
+      <if test="agreeCount != null">
+        agree_count = #{agreeCount,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="commentCount != null">
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
 </mapper>

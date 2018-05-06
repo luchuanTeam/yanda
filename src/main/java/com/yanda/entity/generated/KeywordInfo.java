@@ -4,18 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Table(name = "t_search_keywords")
-public class KeywordInfo implements Serializable {
-    /**
-     * 主键id
-     */
-    @Id
-    private Integer id;
-
-    /**
-     * 关键词
-     */
-    private String keyword;
-
+public class KeywordInfo extends KeywordInfoKey implements Serializable {
     /**
      * 是否热门
      */
@@ -42,9 +31,8 @@ public class KeywordInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public KeywordInfo(Integer id, String keyword, Boolean isHot, Boolean isDefault, Boolean isDeleted, Integer sortOrder) {
-        this.id = id;
-        this.keyword = keyword;
+    public KeywordInfo(String keyword, Integer id, Boolean isHot, Boolean isDefault, Boolean isDeleted, Integer sortOrder) {
+        super(keyword, id);
         this.isHot = isHot;
         this.isDefault = isDefault;
         this.isDeleted = isDeleted;
@@ -53,42 +41,6 @@ public class KeywordInfo implements Serializable {
 
     public KeywordInfo() {
         super();
-    }
-
-    /**
-     * 获取主键id
-     *
-     * @return id - 主键id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * 设置主键id
-     *
-     * @param id 主键id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * 获取关键词
-     *
-     * @return keyword - 关键词
-     */
-    public String getKeyword() {
-        return keyword;
-    }
-
-    /**
-     * 设置关键词
-     *
-     * @param keyword 关键词
-     */
-    public void setKeyword(String keyword) {
-        this.keyword = keyword == null ? null : keyword.trim();
     }
 
     /**
@@ -164,8 +116,8 @@ public class KeywordInfo implements Serializable {
     }
 
     public enum Col {
-        id("id"),
         keyword("keyword"),
+        id("id"),
         isHot("is_hot"),
         isDefault("is_default"),
         isDeleted("is_deleted"),

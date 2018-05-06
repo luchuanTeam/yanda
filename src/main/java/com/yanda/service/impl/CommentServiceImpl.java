@@ -48,7 +48,11 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentInfoMapper, Comme
 		Integer agreeCount = commentInfo.getAgreeCount();
 		UserAgreeInfo userAgreeInfo = userAgreeService.selectByCommentIdAndUserId(commentId, userId);
 		if(userAgreeInfo == null) {
-			userAgreeInfo = new UserAgreeInfo(userId, commentId, episodeId, 1);
+			// 原则上不要去动自动生成的类，否则下次生成会覆盖掉
+			userAgreeInfo = new UserAgreeInfo();
+			userAgreeInfo.setUserId(userId);
+			userAgreeInfo.setCommentId(commentId);
+			userAgreeInfo.setHasAgree(1);
 			agreeCount++;
 			userAgreeService.save(userAgreeInfo);
 		} else {

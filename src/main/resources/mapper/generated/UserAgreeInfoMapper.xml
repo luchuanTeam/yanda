@@ -198,4 +198,79 @@
     from t_user_agree
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.UserAgreeInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_user_agree
+    (id, user_id, comment_id, episode_id, has_agree)
+    values
+    (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{commentId,jdbcType=BIGINT}, 
+      #{episodeId,jdbcType=BIGINT}, #{hasAgree,jdbcType=INTEGER})
+    on duplicate key update 
+    id = #{id,jdbcType=BIGINT}, 
+    user_id = #{userId,jdbcType=BIGINT}, 
+    comment_id = #{commentId,jdbcType=BIGINT}, 
+    episode_id = #{episodeId,jdbcType=BIGINT}, 
+    has_agree = #{hasAgree,jdbcType=INTEGER}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.UserAgreeInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_user_agree
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="episodeId != null">
+        episode_id,
+      </if>
+      <if test="hasAgree != null">
+        has_agree,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="commentId != null">
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="episodeId != null">
+        #{episodeId,jdbcType=BIGINT},
+      </if>
+      <if test="hasAgree != null">
+        #{hasAgree,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="commentId != null">
+        comment_id = #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="episodeId != null">
+        episode_id = #{episodeId,jdbcType=BIGINT},
+      </if>
+      <if test="hasAgree != null">
+        has_agree = #{hasAgree,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
 </mapper>
