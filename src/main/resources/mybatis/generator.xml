@@ -85,7 +85,7 @@
 			<!--<property name="rootInterface" value=""/> -->
 
 		</javaClientGenerator>
-	
+		<!--  
 		<table tableName="t_attachment_info" domainObjectName="AttachmentInfo">
 			<generatedKey column="appendix_id" sqlStatement="MySql" identity="true"/>
 		</table>
@@ -100,6 +100,8 @@
 		<table tableName="t_user_info" domainObjectName="UserInfo" />
 		<table tableName="t_user_role" domainObjectName="UserRoleInfo" />
 		<table tableName="t_user_search" domainObjectName="UserSearchInfo" />
+		-->
+		<table tableName="t_user_collect" domainObjectName="UserCollectInfo" />
 
 	</context>
 </generatorConfiguration>

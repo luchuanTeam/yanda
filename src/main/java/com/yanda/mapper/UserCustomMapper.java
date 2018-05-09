@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.yanda.entity.UserCollectDetailInfo;
 import com.yanda.entity.UserDetailInfo;
 import com.yanda.entity.generated.RoleInfo;
 
@@ -22,5 +23,12 @@ public interface UserCustomMapper {
 	 * @return
 	 */
 	List<RoleInfo> findUserRoleByUserId(@Param("user_id") int userId);
+	
+	/**
+	 * 根据用户id查询用户收藏
+	 * @param userId
+	 * @return
+	 */
+	UserCollectDetailInfo findUserCollectDetailByUserId(@Param("user_id") Long userId);
 	
 }
