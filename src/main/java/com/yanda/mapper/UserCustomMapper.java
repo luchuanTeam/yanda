@@ -29,6 +29,6 @@ public interface UserCustomMapper {
 	 * @param userId
 	 * @return
 	 */
-	UserCollectDetailInfo findUserCollectDetailByUserId(@Param("user_id") Long userId);
+	List<UserCollectDetailInfo> findUserCollectDetailByUserId(@Param("user_id") Long userId);
 	
 }
