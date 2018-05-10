@@ -1,7 +1,6 @@
 package com.yanda.entity.generated;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "t_user_collect")
@@ -16,16 +15,12 @@ public class UserCollectInfo implements Serializable {
     @Column(name = "episode_id")
     private Long episodeId;
 
-    @Column(name = "collect_time")
-    private Date collectTime;
-
     private static final long serialVersionUID = 1L;
 
-    public UserCollectInfo(Long collectId, Long userId, Long episodeId, Date collectTime) {
+    public UserCollectInfo(Long collectId, Long userId, Long episodeId) {
         this.collectId = collectId;
         this.userId = userId;
         this.episodeId = episodeId;
-        this.collectTime = collectTime;
     }
 
     public UserCollectInfo() {
@@ -74,25 +69,10 @@ public class UserCollectInfo implements Serializable {
         this.episodeId = episodeId;
     }
 
-    /**
-     * @return collect_time
-     */
-    public Date getCollectTime() {
-        return collectTime;
-    }
-
-    /**
-     * @param collectTime
-     */
-    public void setCollectTime(Date collectTime) {
-        this.collectTime = collectTime;
-    }
-
     public enum Col {
         collectId("collect_id"),
         userId("user_id"),
-        episodeId("episode_id"),
-        collectTime("collect_time");
+        episodeId("episode_id");
 
         private final String column;
 

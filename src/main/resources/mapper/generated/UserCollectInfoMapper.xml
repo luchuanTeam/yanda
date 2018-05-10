@@ -8,7 +8,6 @@
     <id column="collect_id" jdbcType="BIGINT" property="collectId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="episode_id" jdbcType="BIGINT" property="episodeId" />
-    <result column="collect_time" jdbcType="TIMESTAMP" property="collectTime" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.UserCollectInfo">
     <!--
@@ -18,7 +17,6 @@
       <idArg column="collect_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="episode_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="collect_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -89,7 +87,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    collect_id, user_id, episode_id, collect_time
+    collect_id, user_id, episode_id
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.UserCollectInfoExample" resultMap="BaseResultMap">
     <!--
@@ -160,9 +158,6 @@
       <if test="record.episodeId != null">
         episode_id = #{record.episodeId,jdbcType=BIGINT},
       </if>
-      <if test="record.collectTime != null">
-        collect_time = #{record.collectTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -175,8 +170,7 @@
     update t_user_collect
     set collect_id = #{record.collectId,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
-      episode_id = #{record.episodeId,jdbcType=BIGINT},
-      collect_time = #{record.collectTime,jdbcType=TIMESTAMP}
+      episode_id = #{record.episodeId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,15 +191,14 @@
       WARNING - @mbg.generated
     -->
     insert into t_user_collect
-    (collect_id, user_id, episode_id, collect_time)
+    (collect_id, user_id, episode_id)
     values
-    (#{collectId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{episodeId,jdbcType=BIGINT}, 
-      #{collectTime,jdbcType=TIMESTAMP})
+    (#{collectId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{episodeId,jdbcType=BIGINT}
+      )
     on duplicate key update 
     collect_id = #{collectId,jdbcType=BIGINT}, 
     user_id = #{userId,jdbcType=BIGINT}, 
-    episode_id = #{episodeId,jdbcType=BIGINT}, 
-    collect_time = #{collectTime,jdbcType=TIMESTAMP}
+    episode_id = #{episodeId,jdbcType=BIGINT}
   </insert>
   <insert id="upsertSelective" parameterType="com.yanda.entity.generated.UserCollectInfo">
     <!--
@@ -222,9 +215,6 @@
       <if test="episodeId != null">
         episode_id,
       </if>
-      <if test="collectTime != null">
-        collect_time,
-      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -237,9 +227,6 @@
       <if test="episodeId != null">
         #{episodeId,jdbcType=BIGINT},
       </if>
-      <if test="collectTime != null">
-        #{collectTime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -251,9 +238,6 @@
       </if>
       <if test="episodeId != null">
         episode_id = #{episodeId,jdbcType=BIGINT},
-      </if>
-      <if test="collectTime != null">
-        collect_time = #{collectTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
