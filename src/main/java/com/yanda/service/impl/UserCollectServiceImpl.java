@@ -11,7 +11,6 @@ import com.github.pagehelper.PageHelper;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserCollectDetailInfo;
 import com.yanda.entity.generated.UserCollectInfo;
-import com.yanda.entity.generated.UserCollectInfoExample;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.UserCustomMapper;
 import com.yanda.mapper.generated.UserCollectInfoMapper;

@@ -29,7 +29,7 @@ public class UserCollectController extends BaseController {
 			return result(-1, "用户id为空");
 		}
 		String pageNum = getValue(request, "pageNum", "1");
-		String pageSize = getValue(request, "pageSize", "2");
+		String pageSize = getValue(request, "pageSize", "10");
 		PageResult<UserCollectDetailInfo> pageResult = userCollectService.findUserCollectsByUserId(Long.valueOf(userId), Integer.valueOf(pageNum), 
 						Integer.valueOf(pageSize));
 		
@@ -37,8 +37,8 @@ public class UserCollectController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public JsonResult deleteByUIdAndEpisodeId(HttpServletRequest request) {
-		String collectId = getNotEmptyValue(request, "collectId");
+	public JsonResult deleteByCollectId(HttpServletRequest request) {
+		String collectId = getNotEmptyValue(request, "id");
 		if(StringUtil.isEmpty(collectId)) {
 			return result(-1, "收藏编号为空");
 		}

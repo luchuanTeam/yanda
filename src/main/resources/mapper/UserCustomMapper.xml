@@ -33,15 +33,33 @@
 		<result column="collect_time" jdbcType="TIMESTAMP" property="collectTime" />
 		<association column="episode_id"
 			javaType="com.yanda.entity.generated.EpisodeInfo" property="episodeInfo"
-			select="findEpisodeById"></association>
+			select="findCollectEpisodesById"></association>
 	</resultMap>
 
 	<select id="findUserCollectDetailByUserId" resultMap="UserCollectDetailInfo">
 		select * from t_user_collect where user_id = #{user_id} order by collect_time DESC
 	</select>
 
-	<select id="findEpisodeById" resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
+	<select id="findCollectEpisodesById" resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
 		select t2.* from t_user_collect t1 left join t_mv_episode t2 on t1.episode_id = t2.episode_id where t1.episode_id = #{episode_id}
+	</select>
+	
+	<resultMap id="UserHistoryDetailInfo" type="com.yanda.entity.UserHistoryDetailInfo">
+    	<id column="history_id" jdbcType="BIGINT" javaType="java.lang.Long" property="historyId" />	
+    	<result column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" property="userId" />
+    	<result column="episode_id" jdbcType="BIGINT" javaType="java.lang.Long" property="episodeId" />
+		<result column="watch_time" jdbcType="TIMESTAMP" property="watchTime" />
+		<association column="episode_id"
+			javaType="com.yanda.entity.generated.EpisodeInfo" property="episodeInfo"
+			select="findHistoryEpisodesById"></association>
+	</resultMap>
+
+	<select id="findUserHistoryDetailByUserId" resultMap="UserHistoryDetailInfo">
+		select * from t_user_history where user_id = #{user_id} order by watch_time DESC
+	</select>
+
+	<select id="findHistoryEpisodesById" resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
+		select t2.* from t_user_history t1 left join t_mv_episode t2 on t1.episode_id = t2.episode_id where t1.episode_id = #{episode_id}
 	</select>
 
 </mapper>

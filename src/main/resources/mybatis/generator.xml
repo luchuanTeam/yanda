@@ -100,8 +100,9 @@
 		<table tableName="t_user_info" domainObjectName="UserInfo" />
 		<table tableName="t_user_role" domainObjectName="UserRoleInfo" />
 		<table tableName="t_user_search" domainObjectName="UserSearchInfo" />
-		-->
 		<table tableName="t_user_collect" domainObjectName="UserCollectInfo" />
+		-->
+		<table tableName="t_user_history" domainObjectName="UserHistoryInfo" />
 
 	</context>
 </generatorConfiguration>

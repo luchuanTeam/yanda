@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.yanda.entity.UserCollectDetailInfo;
 import com.yanda.entity.UserDetailInfo;
+import com.yanda.entity.UserHistoryDetailInfo;
 import com.yanda.entity.generated.RoleInfo;
 
 public interface UserCustomMapper {
@@ -30,5 +31,12 @@ public interface UserCustomMapper {
 	 * @return
 	 */
 	List<UserCollectDetailInfo> findUserCollectDetailByUserId(@Param("user_id") Long userId);
+	
+	/**
+	 * 根据用户id 查询用户历史记录
+	 * @param userId
+	 * @return
+	 */
+	List<UserHistoryDetailInfo> findUserHistoryDetailByUserId(@Param("user_id") Long userId);
 	
 }
