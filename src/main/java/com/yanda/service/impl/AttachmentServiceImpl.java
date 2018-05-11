@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -149,5 +150,14 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 			ImageUtils.zoom(sFile, dfile, size, size, ext);
 		}
 	}
+	
+	@Cacheable(value = "attach")
+	@Override
+	public AttachmentInfo selectById(Long id) throws DOPException {
+		LOG.info("从数据库获取附件ID=["+id+"]的信息");
+		return super.selectById(id);
+	}
+	
+	
 
 }

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,15 +97,16 @@ public class AttachmentController extends BaseController {
 	public JsonResult doVideoUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
 		if (file.isEmpty())
 			return result(-1, "上传失败，请选择要上传的视频!");
-		if (!file.getContentType().contains("video"))
-			return result(-1, "上传的文件不是视频类型，请重新上传!");
+		String fileType = file.getContentType();
+		if (!fileType.contains("video") && !fileType.contains("audio"))
+			return result(-1, "上传的文件不是指定类型，请重新上传!");
 		// 获取图片的文件名+后缀
 		String fileName = file.getOriginalFilename();
 		try {
 			Map<String, String> resultMap = new HashMap<>();
-			// 获取图片的扩展名
+			// 获取文件的扩展名
 			String fileExt = StringUtils.substringAfter(fileName, ".");
-			// 获取新图片的名字
+			// 获取新文件的名字
 			String newFileName = String.valueOf(System.currentTimeMillis()) + "." + fileExt;
 
 			File dest = new File(fileConfig.getTempPath(), newFileName);
@@ -130,13 +132,14 @@ public class AttachmentController extends BaseController {
 	 */
 	@RequestMapping(value = "/readFile", method = RequestMethod.GET)
 	public void readFile(HttpServletRequest request, HttpServletResponse response) {
+		
 		String id = getNotEmptyValue(request, "id");
 		String size = getNotEmptyValue(request, "size");
 
 		if (StringUtil.isEmpty(id)) {
 			return;
 		}
-
+		
 		AttachmentInfo attach = null;
 		try {
 			attach = attachmentService.selectById(Long.valueOf(id));

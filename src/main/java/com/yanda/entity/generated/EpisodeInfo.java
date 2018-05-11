@@ -61,9 +61,14 @@ public class EpisodeInfo implements Serializable {
     @Column(name = "update_time")
     private Date updateTime;
 
+    /**
+     * 视频类型： 1-视频 2-音频
+     */
+    private Integer type;
+
     private static final long serialVersionUID = 1L;
 
-    public EpisodeInfo(Long episodeId, String episodeName, String episodeIntro, Integer episodeNum, Long imgAppendixId, Long mvAppendixId, Long mvId, Date createTime, Date updateTime) {
+    public EpisodeInfo(Long episodeId, String episodeName, String episodeIntro, Integer episodeNum, Long imgAppendixId, Long mvAppendixId, Long mvId, Date createTime, Date updateTime, Integer type) {
         this.episodeId = episodeId;
         this.episodeName = episodeName;
         this.episodeIntro = episodeIntro;
@@ -73,6 +78,7 @@ public class EpisodeInfo implements Serializable {
         this.mvId = mvId;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.type = type;
     }
 
     public EpisodeInfo() {
@@ -241,6 +247,24 @@ public class EpisodeInfo implements Serializable {
         this.updateTime = updateTime;
     }
 
+    /**
+     * 获取视频类型： 1-视频 2-音频
+     *
+     * @return type - 视频类型： 1-视频 2-音频
+     */
+    public Integer getType() {
+        return type;
+    }
+
+    /**
+     * 设置视频类型： 1-视频 2-音频
+     *
+     * @param type 视频类型： 1-视频 2-音频
+     */
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public enum Col {
         episodeId("episode_id"),
         episodeName("episode_name"),
@@ -250,7 +274,8 @@ public class EpisodeInfo implements Serializable {
         mvAppendixId("mv_appendix_id"),
         mvId("mv_id"),
         createTime("create_time"),
-        updateTime("update_time");
+        updateTime("update_time"),
+        type("type");
 
         private final String column;
 

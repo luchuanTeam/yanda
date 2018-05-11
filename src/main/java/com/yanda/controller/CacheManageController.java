@@ -41,5 +41,11 @@ public class CacheManageController extends BaseController {
 	public JsonResult clearUser(HttpServletRequest request) {
 		return result(200, "清除用户缓存数据成功");
 	}
+	
+	@CacheEvict(value = "attach", allEntries=true, beforeInvocation=true)
+	@RequestMapping(value = "/clearAttach")
+	public JsonResult clearAttach(HttpServletRequest request) {
+		return result(200, "清除附件缓存数据成功");
+	}
 
 }

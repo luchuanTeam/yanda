@@ -118,7 +118,7 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo
 		this.save(movieInfo);
 	}
 	
-	@CacheEvict(value = "movieList", allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = {"movieList", "attach"}, allEntries=true, beforeInvocation=true)
 	@Override
 	public void updateMovie(MovieInfo movieInfo, AttachmentInfo attachmentInfo) throws DOPException {
 		LOG.info("更新视频，清空视频缓存数据...");
@@ -129,7 +129,7 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo
 		this.update(movieInfo);
 	}
 	
-	@CacheEvict(value = {"movieList", "report"}, allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = {"movieList", "report", "attach"}, allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public int deleteById(Long id) throws DOPException {

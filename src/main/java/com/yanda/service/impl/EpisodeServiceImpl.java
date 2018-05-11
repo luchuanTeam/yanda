@@ -82,7 +82,7 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		return movieAttachmentMapper.findEpisodeDetailInfoById(episodeId);
 	}
 	
-	@CacheEvict(value = {"episodeList", "movieList"}, allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = {"episodeList", "movieList", "attach"}, allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class})
 	@Override
 	public int deleteById(Long id) throws DOPException {
@@ -99,7 +99,7 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		return super.deleteById(id);
 	}
 	
-	@CacheEvict(value = "episodeList", allEntries=true, beforeInvocation=true)
+	@CacheEvict(value = {"episodeList", "attach"}, allEntries=true, beforeInvocation=true)
 	@Transactional(rollbackFor={DOPException.class, Exception.class})
 	@Override
 	public void updateEpisode(AttachmentInfo imgAttach, AttachmentInfo videoAttach, EpisodeInfo episodeInfo)
