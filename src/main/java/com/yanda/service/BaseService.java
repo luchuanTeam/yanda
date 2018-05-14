@@ -2,6 +2,7 @@ package com.yanda.service;
 
 import java.io.Serializable;
 
+import com.yanda.entity.PageResult;
 import com.yanda.exception.DOPException;
 
 
@@ -13,6 +14,9 @@ import com.yanda.exception.DOPException;
  * @time 2018年3月7日 下午11:09:08
  */
 public interface BaseService<T extends Serializable, ID> {
+	
+	
+	PageResult<T> getList(int pageNum, int pageSize, String searchVal);
 	
 	/**
 	 * 新增实体

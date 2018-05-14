@@ -66,9 +66,15 @@ public class EpisodeInfo implements Serializable {
      */
     private Integer type;
 
+    /**
+     * 视频vip权限  0：普通会员 1：vip会员
+     */
+    @Column(name = "vip_type")
+    private Integer vipType;
+
     private static final long serialVersionUID = 1L;
 
-    public EpisodeInfo(Long episodeId, String episodeName, String episodeIntro, Integer episodeNum, Long imgAppendixId, Long mvAppendixId, Long mvId, Date createTime, Date updateTime, Integer type) {
+    public EpisodeInfo(Long episodeId, String episodeName, String episodeIntro, Integer episodeNum, Long imgAppendixId, Long mvAppendixId, Long mvId, Date createTime, Date updateTime, Integer type, Integer vipType) {
         this.episodeId = episodeId;
         this.episodeName = episodeName;
         this.episodeIntro = episodeIntro;
@@ -79,6 +85,7 @@ public class EpisodeInfo implements Serializable {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.type = type;
+        this.vipType = vipType;
     }
 
     public EpisodeInfo() {
@@ -265,6 +272,24 @@ public class EpisodeInfo implements Serializable {
         this.type = type;
     }
 
+    /**
+     * 获取视频vip权限  0：普通会员 1：vip会员
+     *
+     * @return vip_type - 视频vip权限  0：普通会员 1：vip会员
+     */
+    public Integer getVipType() {
+        return vipType;
+    }
+
+    /**
+     * 设置视频vip权限  0：普通会员 1：vip会员
+     *
+     * @param vipType 视频vip权限  0：普通会员 1：vip会员
+     */
+    public void setVipType(Integer vipType) {
+        this.vipType = vipType;
+    }
+
     public enum Col {
         episodeId("episode_id"),
         episodeName("episode_name"),
@@ -275,7 +300,8 @@ public class EpisodeInfo implements Serializable {
         mvId("mv_id"),
         createTime("create_time"),
         updateTime("update_time"),
-        type("type");
+        type("type"),
+        vipType("vip_type");
 
         private final String column;
 

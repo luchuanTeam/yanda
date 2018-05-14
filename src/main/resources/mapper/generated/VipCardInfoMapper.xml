@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yanda.mapper.generated.VipCardInfoMapper">
+  <resultMap id="BasePropertyResultMap" type="com.yanda.entity.generated.VipCardInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="card_id" jdbcType="INTEGER" property="cardId" />
+    <result column="card_num" jdbcType="VARCHAR" property="cardNum" />
+    <result column="card_password" jdbcType="VARCHAR" property="cardPassword" />
+    <result column="purchase_months" jdbcType="INTEGER" property="purchaseMonths" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="exp_time" jdbcType="TIMESTAMP" property="expTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.VipCardInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor>
+      <idArg column="card_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="card_num" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="card_password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="purchase_months" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="exp_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    card_id, card_num, card_password, purchase_months, create_time, update_time, exp_time, 
+    user_id, nick_name
+  </sql>
+  <select id="selectByExample" parameterType="com.yanda.entity.generated.VipCardInfoExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_vip_card_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleSelective" parameterType="map" resultMap="BasePropertyResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="example.distinct">
+      distinct
+    </if>
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    from t_vip_card_info
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yanda.entity.generated.VipCardInfoExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from t_vip_card_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.yanda.entity.generated.VipCardInfoExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from t_vip_card_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_vip_card_info
+    <set>
+      <if test="record.cardId != null">
+        card_id = #{record.cardId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardNum != null">
+        card_num = #{record.cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardPassword != null">
+        card_password = #{record.cardPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseMonths != null">
+        purchase_months = #{record.purchaseMonths,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expTime != null">
+        exp_time = #{record.expTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_vip_card_info
+    set card_id = #{record.cardId,jdbcType=INTEGER},
+      card_num = #{record.cardNum,jdbcType=VARCHAR},
+      card_password = #{record.cardPassword,jdbcType=VARCHAR},
+      purchase_months = #{record.purchaseMonths,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      exp_time = #{record.expTime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      nick_name = #{record.nickName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKeySelective" parameterType="map" resultMap="BasePropertyResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    from t_vip_card_info
+    where card_id = #{cardId,jdbcType=INTEGER}
+  </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.VipCardInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_vip_card_info
+    (card_id, card_num, card_password, purchase_months, create_time, update_time, exp_time, 
+      user_id, nick_name)
+    values
+    (#{cardId,jdbcType=INTEGER}, #{cardNum,jdbcType=VARCHAR}, #{cardPassword,jdbcType=VARCHAR}, 
+      #{purchaseMonths,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{expTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}
+      )
+    on duplicate key update 
+    card_id = #{cardId,jdbcType=INTEGER}, 
+    card_num = #{cardNum,jdbcType=VARCHAR}, 
+    card_password = #{cardPassword,jdbcType=VARCHAR}, 
+    purchase_months = #{purchaseMonths,jdbcType=INTEGER}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}, 
+    exp_time = #{expTime,jdbcType=TIMESTAMP}, 
+    user_id = #{userId,jdbcType=INTEGER}, 
+    nick_name = #{nickName,jdbcType=VARCHAR}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.VipCardInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_vip_card_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cardId != null">
+        card_id,
+      </if>
+      <if test="cardNum != null">
+        card_num,
+      </if>
+      <if test="cardPassword != null">
+        card_password,
+      </if>
+      <if test="purchaseMonths != null">
+        purchase_months,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="expTime != null">
+        exp_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cardId != null">
+        #{cardId,jdbcType=INTEGER},
+      </if>
+      <if test="cardNum != null">
+        #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cardPassword != null">
+        #{cardPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseMonths != null">
+        #{purchaseMonths,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expTime != null">
+        #{expTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="cardId != null">
+        card_id = #{cardId,jdbcType=INTEGER},
+      </if>
+      <if test="cardNum != null">
+        card_num = #{cardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="cardPassword != null">
+        card_password = #{cardPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseMonths != null">
+        purchase_months = #{purchaseMonths,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expTime != null">
+        exp_time = #{expTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

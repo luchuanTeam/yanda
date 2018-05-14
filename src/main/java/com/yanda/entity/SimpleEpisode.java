@@ -11,6 +11,8 @@ public class SimpleEpisode {
      * 当前集数
      */
     private Integer episodeNum;
+    
+    private String episodeName;
 
 	public Long getEpisodeId() {
 		return episodeId;

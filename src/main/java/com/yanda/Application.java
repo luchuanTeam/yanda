@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan(basePackages = "com.yanda.mapper")
 @EnableScheduling
 @EnableConfigurationProperties
-public class Application {
+public class Application { 
 	
 	public static void main(String[] args) throws Exception {
 		// 加载配置文件

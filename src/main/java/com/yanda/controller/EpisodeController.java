@@ -202,7 +202,7 @@ public class EpisodeController extends BaseController {
 	 * @throws DOPException
 	 */
 	@RequestMapping(value = "/episodes/{mvId}", method = RequestMethod.GET)
-	public List<SimpleEpisode> getEpisodesByMvId(HttpServletRequest request, @PathVariable Long mvId) throws DOPException {
+	public List<EpisodeInfo> getEpisodesByMvId(HttpServletRequest request, @PathVariable Long mvId) throws DOPException {
 		return episodeService.getSimpleEpisodeByMvId(mvId);
 	}
 

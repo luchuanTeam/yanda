@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -106,7 +107,8 @@ public class UserController extends BaseController {
 		}
 		return result(-1, "会话已过期，请重新登录");
 	}
-
+	
+	@CacheEvict(value = { "userList" }, allEntries = true, beforeInvocation = true)
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public JsonResult register(HttpServletRequest request) {
 		String userName = getNotEmptyValue(request, "userName");
@@ -234,6 +236,7 @@ public class UserController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@CacheEvict(value = { "userList" }, allEntries = true, beforeInvocation = true)
 	@RequestMapping(value = "/registerByWechat", method = RequestMethod.POST)
 	public JsonResult registerByWechat(HttpServletRequest request) {
 		String openId = getNotEmptyValue(request, "openId");

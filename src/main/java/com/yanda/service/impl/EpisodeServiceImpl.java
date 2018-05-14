@@ -13,14 +13,13 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.PageResult;
-import com.yanda.entity.SimpleEpisode;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
+import com.yanda.entity.generated.EpisodeInfo.Col;
 import com.yanda.entity.generated.EpisodeInfoExample;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.MovieAttachmentMapper;
-import com.yanda.mapper.MovieEpisodeMapper;
 import com.yanda.mapper.generated.EpisodeInfoMapper;
 import com.yanda.service.AttachmentService;
 import com.yanda.service.EpisodeService;
@@ -35,8 +34,6 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 	private MovieService movieService;
 	@Autowired
 	private MovieAttachmentMapper movieAttachmentMapper;
-	@Autowired
-	private MovieEpisodeMapper movieEpisodeMapper;
 	
 	@Cacheable(value = "episodeList")
 	@Override
@@ -117,8 +114,10 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 	}
 
 	@Override
-	public List<SimpleEpisode> getSimpleEpisodeByMvId(Long mvId) {
-		return movieEpisodeMapper.findSimpleEpisodeByMvId(mvId);
+	public List<EpisodeInfo> getSimpleEpisodeByMvId(Long mvId) {
+		EpisodeInfoExample example = new EpisodeInfoExample();
+		example.createCriteria().andMvIdEqualTo(mvId);
+		return this.mapper.selectByExampleSelective(example, Col.episodeId, Col.episodeId, Col.episodeName, Col.episodeNum, Col.vipType);
 	}
 	
 	

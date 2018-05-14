@@ -46,9 +46,11 @@ public class ReportServiceImpl implements ReportService {
 			column.add(cInfo.getLabel());
 			
 			for (Entry<Integer, Map<Integer, Long>> entry : result.entrySet()) {
-				if (cInfo.getId().intValue() == entry.getKey().intValue()) {
-					count = entry.getValue().get("total");
-					break;
+				if (entry.getKey() != null) {
+					if (cInfo.getId().intValue() == entry.getKey().intValue()) {
+						count = entry.getValue().get("total");
+						break;
+					}
 				}
 			}
 			

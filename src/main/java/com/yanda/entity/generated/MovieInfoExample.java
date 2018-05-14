@@ -924,6 +924,66 @@ public class MovieInfoExample {
             addCriterion("public_time not between", value1, value2, "publicTime");
             return (Criteria) this;
         }
+
+        public Criteria andVipTypeIsNull() {
+            addCriterion("vip_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeIsNotNull() {
+            addCriterion("vip_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeEqualTo(Integer value) {
+            addCriterion("vip_type =", value, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeNotEqualTo(Integer value) {
+            addCriterion("vip_type <>", value, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeGreaterThan(Integer value) {
+            addCriterion("vip_type >", value, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("vip_type >=", value, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeLessThan(Integer value) {
+            addCriterion("vip_type <", value, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("vip_type <=", value, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeIn(List<Integer> values) {
+            addCriterion("vip_type in", values, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeNotIn(List<Integer> values) {
+            addCriterion("vip_type not in", values, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeBetween(Integer value1, Integer value2) {
+            addCriterion("vip_type between", value1, value2, "vipType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("vip_type not between", value1, value2, "vipType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

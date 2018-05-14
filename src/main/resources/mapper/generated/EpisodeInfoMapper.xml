@@ -15,6 +15,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="vip_type" jdbcType="INTEGER" property="vipType" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.EpisodeInfo">
     <!--
@@ -31,6 +32,7 @@
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="vip_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -102,7 +104,7 @@
       WARNING - @mbg.generated
     -->
     episode_id, episode_name, episode_intro, episode_num, img_appendix_id, mv_appendix_id, 
-    mv_id, create_time, update_time, type
+    mv_id, create_time, update_time, type, vip_type
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.EpisodeInfoExample" resultMap="BaseResultMap">
     <!--
@@ -194,6 +196,9 @@
       <if test="record.type != null">
         type = #{record.type,jdbcType=INTEGER},
       </if>
+      <if test="record.vipType != null">
+        vip_type = #{record.vipType,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -213,7 +218,8 @@
       mv_id = #{record.mvId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      type = #{record.type,jdbcType=INTEGER}
+      type = #{record.type,jdbcType=INTEGER},
+      vip_type = #{record.vipType,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,12 +241,12 @@
     -->
     insert into t_mv_episode
     (episode_id, episode_name, episode_intro, episode_num, img_appendix_id, mv_appendix_id, 
-      mv_id, create_time, update_time, type)
+      mv_id, create_time, update_time, type, vip_type)
     values
     (#{episodeId,jdbcType=BIGINT}, #{episodeName,jdbcType=VARCHAR}, #{episodeIntro,jdbcType=VARCHAR}, 
       #{episodeNum,jdbcType=INTEGER}, #{imgAppendixId,jdbcType=BIGINT}, #{mvAppendixId,jdbcType=BIGINT}, 
       #{mvId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{type,jdbcType=INTEGER})
+      #{type,jdbcType=INTEGER}, #{vipType,jdbcType=INTEGER})
     on duplicate key update 
     episode_id = #{episodeId,jdbcType=BIGINT}, 
     episode_name = #{episodeName,jdbcType=VARCHAR}, 
@@ -251,7 +257,8 @@
     mv_id = #{mvId,jdbcType=BIGINT}, 
     create_time = #{createTime,jdbcType=TIMESTAMP}, 
     update_time = #{updateTime,jdbcType=TIMESTAMP}, 
-    type = #{type,jdbcType=INTEGER}
+    type = #{type,jdbcType=INTEGER}, 
+    vip_type = #{vipType,jdbcType=INTEGER}
   </insert>
   <insert id="upsertSelective" parameterType="com.yanda.entity.generated.EpisodeInfo">
     <!--
@@ -289,6 +296,9 @@
       <if test="type != null">
         type,
       </if>
+      <if test="vipType != null">
+        vip_type,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -322,6 +332,9 @@
       <if test="type != null">
         #{type,jdbcType=INTEGER},
       </if>
+      <if test="vipType != null">
+        #{vipType,jdbcType=INTEGER},
+      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -354,6 +367,9 @@
       </if>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="vipType != null">
+        vip_type = #{vipType,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

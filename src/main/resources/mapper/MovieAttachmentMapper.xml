@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yanda.mapper.MovieAttachmentMapper">
-    	
-     <resultMap id="EpisodeDetailInfo" type="com.yanda.entity.EpisodeDetailInfo">
-      <id column="episode_id" property="episodeId" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <result column="episode_name" property="episodeName" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <result column="episode_intro" property="episodeIntro" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <result column="episode_num" property="episodeNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <result column="img_appendix_id" property="imgAppendixId" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <result column="mv_appendix_id" property="mvAppendixId" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <result column="mv_id" property="mvId" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <result column="create_time" property="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+
+	<resultMap id="EpisodeDetailInfo" type="com.yanda.entity.EpisodeDetailInfo"
+		extends="com.yanda.mapper.generated.EpisodeInfoMapper.BasePropertyResultMap">
 		<association column="mv_appendix_id"
 			javaType="com.yanda.entity.generated.AttachmentInfo" property="mvAttach"
 			select="findAttachmentById" />
 	</resultMap>
 
 	<select id="findEpisodeDetailInfoById" resultMap="EpisodeDetailInfo">
-		select * from t_mv_episode where episode_id = #{epsodeId}
+		select * from
+		t_mv_episode where episode_id = #{epsodeId}
 	</select>
-	
-	<select id="findAttachmentById" resultMap="com.yanda.mapper.generated.AttachmentInfoMapper.BaseResultMap">
-		select * from t_attachment_info where appendix_id = #{mv_appendix_id}
+
+	<select id="findAttachmentById"
+		resultMap="com.yanda.mapper.generated.AttachmentInfoMapper.BaseResultMap">
+		select * from t_attachment_info where appendix_id =
+		#{mv_appendix_id}
 	</select>
 
 </mapper>

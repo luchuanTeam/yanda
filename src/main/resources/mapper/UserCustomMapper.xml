@@ -3,33 +3,58 @@
 <mapper namespace="com.yanda.mapper.UserCustomMapper">
 
 	<resultMap id="UserDetailInfo" type="com.yanda.entity.UserDetailInfo">
-      <id column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" property="userId" />
-      <result column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" property="userName" />
-      <result column="password" jdbcType="VARCHAR" javaType="java.lang.String" property="password" />
-      <result column="nick_name" jdbcType="VARCHAR" javaType="java.lang.String" property="nickName" />
-      <result column="mobile" jdbcType="VARCHAR" javaType="java.lang.String" property="mobile" />
-      <result column="sex" jdbcType="INTEGER" javaType="java.lang.Integer" property="sex" />
-      <result column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" property="createTime" />
-      <result column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" property="updateTime" />
-      <result column="avatar" jdbcType="VARCHAR" javaType="java.lang.String" property="avatar" />
-      <result column="status" jdbcType="INTEGER" javaType="java.lang.Integer" property="status" />
-      
-      <collection property="role" column="user_id" javaType="ArrayList" 
-                ofType="com.yanda.entity.generated.RoleInfo" select="findUserRoleByUserId"/>
+		<id column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer"
+			property="userId" />
+		<result column="user_name" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="userName" />
+		<result column="password" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="password" />
+		<result column="nick_name" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="nickName" />
+		<result column="mobile" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="mobile" />
+		<result column="sex" jdbcType="INTEGER" javaType="java.lang.Integer"
+			property="sex" />
+		<result column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"
+			property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"
+			property="updateTime" />
+		<result column="avatar" jdbcType="VARCHAR" javaType="java.lang.String"
+			property="avatar" />
+		<result column="status" jdbcType="INTEGER" javaType="java.lang.Integer"
+			property="status" />
+		
+		<association property="vipCard" column="user_id"
+			javaType="com.yanda.entity.generated.VipCardInfo" 
+			select="findVipCardByUserId" />
+		
+		<collection property="role" column="user_id" javaType="ArrayList"
+			ofType="com.yanda.entity.generated.RoleInfo" select="findUserRoleByUserId" />
+		
 	</resultMap>
 
 	<select id="findUserDetailByUserId" resultMap="UserDetailInfo">
-		select * from t_user_info where user_id = #{userId}
+		select * from
+		t_user_info where user_id = #{userId}
 	</select>
 	
-	<select id="findUserRoleByUserId" resultMap="com.yanda.mapper.generated.RoleInfoMapper.BaseResultMap">
-		select t2.* from t_user_role t1 left join t_role_info t2 on t1.role_id = t2.role_id where t1.user_id = #{user_id}
+	<select id="findVipCardByUserId" resultMap="com.yanda.mapper.generated.VipCardInfoMapper.BaseResultMap">
+		select * from t_vip_card_info where user_id = #{user_Id}
 	</select>
-	
+
+	<select id="findUserRoleByUserId"
+		resultMap="com.yanda.mapper.generated.RoleInfoMapper.BaseResultMap">
+		select t2.* from t_user_role t1 left join t_role_info t2 on
+		t1.role_id = t2.role_id where t1.user_id = #{user_id}
+	</select>
+
 	<resultMap id="UserCollectDetailInfo" type="com.yanda.entity.UserCollectDetailInfo">
-    	<id column="collect_id" jdbcType="BIGINT" javaType="java.lang.Long" property="collectId" />	
-    	<result column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" property="userId" />
-    	<result column="episode_id" jdbcType="BIGINT" javaType="java.lang.Long" property="episodeId" />
+		<id column="collect_id" jdbcType="BIGINT" javaType="java.lang.Long"
+			property="collectId" />
+		<result column="user_id" jdbcType="BIGINT" javaType="java.lang.Long"
+			property="userId" />
+		<result column="episode_id" jdbcType="BIGINT" javaType="java.lang.Long"
+			property="episodeId" />
 		<result column="collect_time" jdbcType="TIMESTAMP" property="collectTime" />
 		<association column="episode_id"
 			javaType="com.yanda.entity.generated.EpisodeInfo" property="episodeInfo"
@@ -37,17 +62,24 @@
 	</resultMap>
 
 	<select id="findUserCollectDetailByUserId" resultMap="UserCollectDetailInfo">
-		select * from t_user_collect where user_id = #{user_id} order by collect_time DESC
+		select *
+		from t_user_collect where user_id = #{user_id} order by collect_time
+		DESC
 	</select>
 
-	<select id="findCollectEpisodesById" resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
-		select t2.* from t_user_collect t1 left join t_mv_episode t2 on t1.episode_id = t2.episode_id where t1.episode_id = #{episode_id}
+	<select id="findCollectEpisodesById"
+		resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
+		select t2.* from t_user_collect t1 left join t_mv_episode t2
+		on t1.episode_id = t2.episode_id where t1.episode_id = #{episode_id}
 	</select>
-	
+
 	<resultMap id="UserHistoryDetailInfo" type="com.yanda.entity.UserHistoryDetailInfo">
-    	<id column="history_id" jdbcType="BIGINT" javaType="java.lang.Long" property="historyId" />	
-    	<result column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" property="userId" />
-    	<result column="episode_id" jdbcType="BIGINT" javaType="java.lang.Long" property="episodeId" />
+		<id column="history_id" jdbcType="BIGINT" javaType="java.lang.Long"
+			property="historyId" />
+		<result column="user_id" jdbcType="BIGINT" javaType="java.lang.Long"
+			property="userId" />
+		<result column="episode_id" jdbcType="BIGINT" javaType="java.lang.Long"
+			property="episodeId" />
 		<result column="watch_time" jdbcType="TIMESTAMP" property="watchTime" />
 		<association column="episode_id"
 			javaType="com.yanda.entity.generated.EpisodeInfo" property="episodeInfo"
@@ -55,11 +87,15 @@
 	</resultMap>
 
 	<select id="findUserHistoryDetailByUserId" resultMap="UserHistoryDetailInfo">
-		select * from t_user_history where user_id = #{user_id} order by watch_time DESC
+		select *
+		from t_user_history where user_id = #{user_id} order by watch_time
+		DESC
 	</select>
 
-	<select id="findHistoryEpisodesById" resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
-		select t2.* from t_user_history t1 left join t_mv_episode t2 on t1.episode_id = t2.episode_id where t1.episode_id = #{episode_id}
+	<select id="findHistoryEpisodesById"
+		resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
+		select t2.* from t_user_history t1 left join t_mv_episode t2
+		on t1.episode_id = t2.episode_id where t1.episode_id = #{episode_id}
 	</select>
 
 </mapper>

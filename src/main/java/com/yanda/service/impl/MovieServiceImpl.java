@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.yanda.entity.ClassifyDetailInfo;
@@ -95,7 +96,7 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo
 		List<MovieDetailInfo> mDetailInfos = new LinkedList<>();
 		for (MovieInfo mvInfo : mvList) {
 			
-			MovieDetailInfo detailInfo = new MovieDetailInfo(mvInfo);
+			MovieDetailInfo detailInfo = JSON.parseObject(JSON.toJSONString(mvInfo), MovieDetailInfo.class); 
 			if (StringUtil.isEmpty(detailInfo.getClassifyName())) {
 				//在数据库表冗余了分类名称字段，不从库进行查询，对历史数据进行查库并更新
 				String classifyName = this.findMovieClassifyFullName(mvInfo.getClassifyId());
@@ -175,8 +176,12 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo
 		criteria.andEpisodeCountGreaterThanOrEqualTo(1).andIsPublicEqualTo(true);
 		if (0 != classifyId) {
 			criteria.andClassifyIdEqualTo(classifyId);
+			// 分类下的视频列表以创建时间正序排序
+			example.setOrderByClause("create_time asc");
+		} else {
+			// 所有视频列表以更新时间倒序排序
+			example.setOrderByClause("update_time desc");
 		}
-		example.setOrderByClause("update_time desc");
 		List<MovieInfo> mvList = mapper.selectByExample(example);
 		List<MovieDetailInfo> mDetailInfos = this.getMovieDetailInfos(mvList);
 		PageResult<MovieDetailInfo> pageResult = new PageResult<>(pageInfo.getTotal(), pageInfo.getPages(),

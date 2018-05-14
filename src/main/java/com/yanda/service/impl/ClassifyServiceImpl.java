@@ -1,5 +1,6 @@
 package com.yanda.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -8,12 +9,17 @@ import com.github.pagehelper.PageHelper;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.ClassifyInfo;
 import com.yanda.entity.generated.ClassifyInfoExample;
+import com.yanda.entity.generated.MovieInfoExample;
+import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.ClassifyInfoMapper;
+import com.yanda.mapper.generated.MovieInfoMapper;
 import com.yanda.service.ClassifyService;
 
 @Service
 public class ClassifyServiceImpl extends BaseServiceImpl<ClassifyInfoMapper, ClassifyInfo, Integer> implements ClassifyService {
 	
+	@Autowired
+	private MovieInfoMapper movieInfoMapper;
 	
 	@Cacheable(value = "classifyList")
 	@Override
@@ -43,5 +49,19 @@ public class ClassifyServiceImpl extends BaseServiceImpl<ClassifyInfoMapper, Cla
 		pageResult.setTotal(pageInfo.getTotal());
 		return pageResult;
 	}
+
+	@Override
+	public int deleteById(Integer id) throws DOPException {
+		MovieInfoExample example = new MovieInfoExample();
+		example.createCriteria().andClassifyIdEqualTo(id);
+		int count = movieInfoMapper.selectCountByExample(example);
+		if (count > 0) {
+			throw new DOPException("该分类下存在视频。不能删除该分类");
+		} else {
+			return super.deleteById(id);
+		}
+	}
+	
+	
 
 }

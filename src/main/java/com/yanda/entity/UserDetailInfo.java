@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yanda.entity.generated.RoleInfo;
 import com.yanda.entity.generated.UserInfo;
+import com.yanda.entity.generated.VipCardInfo;
 
 public class UserDetailInfo extends UserInfo {
 
@@ -15,6 +16,11 @@ public class UserDetailInfo extends UserInfo {
 	 * 用户角色
 	 */
 	private List<RoleInfo> role;
+	
+	/**
+	 * 用户绑定的会员卡
+	 */
+	private VipCardInfo vipCard;
 	
 	/**
 	 * 覆盖账号密码，不返回前台
@@ -44,6 +50,18 @@ public class UserDetailInfo extends UserInfo {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+
+
+	public VipCardInfo getVipCard() {
+		return vipCard;
+	}
+
+
+
+	public void setVipCard(VipCardInfo vipCard) {
+		this.vipCard = vipCard;
 	}
 
 

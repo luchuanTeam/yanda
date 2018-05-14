@@ -15,13 +15,6 @@ public class MovieDetailInfo extends MovieInfo {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MovieDetailInfo(MovieInfo movieInfo) {
-		super(movieInfo.getMvId(), movieInfo.getMvName(), movieInfo.getMvIntro(), movieInfo.getCreateTime(),
-				movieInfo.getUpdateTime(), movieInfo.getClassifyId(), movieInfo.getClassifyName(),
-				movieInfo.getImgAppendixId(), movieInfo.getMvAppendixId(), movieInfo.getEpisodeCount(),
-				movieInfo.getMvPath(), movieInfo.getIsPublic(), movieInfo.getPublicTime());
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * 图片附件

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.PageResult;
-import com.yanda.entity.SimpleEpisode;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
 import com.yanda.entity.generated.MovieInfo;
@@ -65,5 +64,5 @@ public interface EpisodeService extends BaseService<EpisodeInfo, Long> {
 	 * @param mvId
 	 * @return
 	 */
-	List<SimpleEpisode> getSimpleEpisodeByMvId(Long mvId);
+	List<EpisodeInfo> getSimpleEpisodeByMvId(Long mvId);
 }

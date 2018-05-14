@@ -5,6 +5,11 @@ import java.io.Serializable;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.yanda.entity.PageResult;
+import com.yanda.entity.generated.BannerInfo;
+import com.yanda.entity.generated.BannerInfoExample;
 import com.yanda.exception.DOPException;
 import com.yanda.service.BaseService;
 import com.yanda.util.MyMapper;
@@ -31,6 +36,13 @@ public abstract class BaseServiceImpl<D extends MyMapper<T>, T extends Serializa
     public D getMapper() {
         return mapper;
     } 
+    
+    /**
+     * 一般都需要用到获取列表的方法，但是不同业务涉及到不同查询条件，这里返回null是为了留给子类在需要用到的时候去实现
+     */
+    public PageResult<T> getList(int pageNum, int pageSize, String searchVal) {
+    	return null;
+    }
 	
 	/**
 	 * 新增实体

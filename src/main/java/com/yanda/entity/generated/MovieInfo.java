@@ -82,9 +82,15 @@ public class MovieInfo implements Serializable {
     @Column(name = "public_time")
     private Date publicTime;
 
+    /**
+     * 视频vip权限  0：普通会员 1：vip会员
+     */
+    @Column(name = "vip_type")
+    private Integer vipType;
+
     private static final long serialVersionUID = 1L;
 
-    public MovieInfo(Long mvId, String mvName, String mvIntro, Date createTime, Date updateTime, Integer classifyId, String classifyName, Long imgAppendixId, Long mvAppendixId, Integer episodeCount, String mvPath, Boolean isPublic, Date publicTime) {
+    public MovieInfo(Long mvId, String mvName, String mvIntro, Date createTime, Date updateTime, Integer classifyId, String classifyName, Long imgAppendixId, Long mvAppendixId, Integer episodeCount, String mvPath, Boolean isPublic, Date publicTime, Integer vipType) {
         this.mvId = mvId;
         this.mvName = mvName;
         this.mvIntro = mvIntro;
@@ -98,6 +104,7 @@ public class MovieInfo implements Serializable {
         this.mvPath = mvPath;
         this.isPublic = isPublic;
         this.publicTime = publicTime;
+        this.vipType = vipType;
     }
 
     public MovieInfo() {
@@ -334,6 +341,24 @@ public class MovieInfo implements Serializable {
         this.publicTime = publicTime;
     }
 
+    /**
+     * 获取视频vip权限  0：普通会员 1：vip会员
+     *
+     * @return vip_type - 视频vip权限  0：普通会员 1：vip会员
+     */
+    public Integer getVipType() {
+        return vipType;
+    }
+
+    /**
+     * 设置视频vip权限  0：普通会员 1：vip会员
+     *
+     * @param vipType 视频vip权限  0：普通会员 1：vip会员
+     */
+    public void setVipType(Integer vipType) {
+        this.vipType = vipType;
+    }
+
     public enum Col {
         mvId("mv_id"),
         mvName("mv_name"),
@@ -347,7 +372,8 @@ public class MovieInfo implements Serializable {
         episodeCount("episode_count"),
         mvPath("mv_path"),
         isPublic("is_public"),
-        publicTime("public_time");
+        publicTime("public_time"),
+        vipType("vip_type");
 
         private final String column;
 

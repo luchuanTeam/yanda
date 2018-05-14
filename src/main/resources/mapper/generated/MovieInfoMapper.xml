@@ -18,6 +18,7 @@
     <result column="mv_path" jdbcType="VARCHAR" property="mvPath" />
     <result column="is_public" jdbcType="BOOLEAN" property="isPublic" />
     <result column="public_time" jdbcType="TIMESTAMP" property="publicTime" />
+    <result column="vip_type" jdbcType="INTEGER" property="vipType" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.MovieInfo">
     <!--
@@ -37,6 +38,7 @@
       <arg column="mv_path" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="is_public" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
       <arg column="public_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="vip_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -108,7 +110,7 @@
       WARNING - @mbg.generated
     -->
     mv_id, mv_name, mv_intro, create_time, update_time, classify_id, classify_name, img_appendix_id, 
-    mv_appendix_id, episode_count, mv_path, is_public, public_time
+    mv_appendix_id, episode_count, mv_path, is_public, public_time, vip_type
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.MovieInfoExample" resultMap="BaseResultMap">
     <!--
@@ -209,6 +211,9 @@
       <if test="record.publicTime != null">
         public_time = #{record.publicTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.vipType != null">
+        vip_type = #{record.vipType,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -231,7 +236,8 @@
       episode_count = #{record.episodeCount,jdbcType=INTEGER},
       mv_path = #{record.mvPath,jdbcType=VARCHAR},
       is_public = #{record.isPublic,jdbcType=BOOLEAN},
-      public_time = #{record.publicTime,jdbcType=TIMESTAMP}
+      public_time = #{record.publicTime,jdbcType=TIMESTAMP},
+      vip_type = #{record.vipType,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -253,14 +259,14 @@
     -->
     insert into t_mv_info
     (mv_id, mv_name, mv_intro, create_time, update_time, classify_id, classify_name, 
-      img_appendix_id, mv_appendix_id, episode_count, mv_path, is_public, public_time
-      )
+      img_appendix_id, mv_appendix_id, episode_count, mv_path, is_public, public_time, 
+      vip_type)
     values
     (#{mvId,jdbcType=BIGINT}, #{mvName,jdbcType=VARCHAR}, #{mvIntro,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{classifyId,jdbcType=INTEGER}, 
       #{classifyName,jdbcType=VARCHAR}, #{imgAppendixId,jdbcType=BIGINT}, #{mvAppendixId,jdbcType=BIGINT}, 
       #{episodeCount,jdbcType=INTEGER}, #{mvPath,jdbcType=VARCHAR}, #{isPublic,jdbcType=BOOLEAN}, 
-      #{publicTime,jdbcType=TIMESTAMP})
+      #{publicTime,jdbcType=TIMESTAMP}, #{vipType,jdbcType=INTEGER})
     on duplicate key update 
     mv_id = #{mvId,jdbcType=BIGINT}, 
     mv_name = #{mvName,jdbcType=VARCHAR}, 
@@ -274,7 +280,8 @@
     episode_count = #{episodeCount,jdbcType=INTEGER}, 
     mv_path = #{mvPath,jdbcType=VARCHAR}, 
     is_public = #{isPublic,jdbcType=BOOLEAN}, 
-    public_time = #{publicTime,jdbcType=TIMESTAMP}
+    public_time = #{publicTime,jdbcType=TIMESTAMP}, 
+    vip_type = #{vipType,jdbcType=INTEGER}
   </insert>
   <insert id="upsertSelective" parameterType="com.yanda.entity.generated.MovieInfo">
     <!--
@@ -321,6 +328,9 @@
       <if test="publicTime != null">
         public_time,
       </if>
+      <if test="vipType != null">
+        vip_type,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -363,6 +373,9 @@
       <if test="publicTime != null">
         #{publicTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="vipType != null">
+        #{vipType,jdbcType=INTEGER},
+      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -404,6 +417,9 @@
       </if>
       <if test="publicTime != null">
         public_time = #{publicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vipType != null">
+        vip_type = #{vipType,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
