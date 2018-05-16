@@ -81,6 +81,8 @@
 		<result column="episode_id" jdbcType="BIGINT" javaType="java.lang.Long"
 			property="episodeId" />
 		<result column="watch_time" jdbcType="TIMESTAMP" property="watchTime" />
+		<result column="progress" jdbcType="INTEGER" javaType="java.lang.Integer"
+			property="progress" />
 		<association column="episode_id"
 			javaType="com.yanda.entity.generated.EpisodeInfo" property="episodeInfo"
 			select="findHistoryEpisodesById"></association>

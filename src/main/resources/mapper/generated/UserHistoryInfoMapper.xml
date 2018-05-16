@@ -9,6 +9,7 @@
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="episode_id" jdbcType="BIGINT" property="episodeId" />
     <result column="watch_time" jdbcType="TIMESTAMP" property="watchTime" />
+    <result column="progress" jdbcType="INTEGER" property="progress" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.UserHistoryInfo">
     <!--
@@ -19,6 +20,7 @@
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="episode_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="watch_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="progress" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -89,7 +91,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    history_id, user_id, episode_id, watch_time
+    history_id, user_id, episode_id, watch_time, progress
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.UserHistoryInfoExample" resultMap="BaseResultMap">
     <!--
@@ -163,6 +165,9 @@
       <if test="record.watchTime != null">
         watch_time = #{record.watchTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.progress != null">
+        progress = #{record.progress,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -176,7 +181,8 @@
     set history_id = #{record.historyId,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
       episode_id = #{record.episodeId,jdbcType=BIGINT},
-      watch_time = #{record.watchTime,jdbcType=TIMESTAMP}
+      watch_time = #{record.watchTime,jdbcType=TIMESTAMP},
+      progress = #{record.progress,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,15 +203,16 @@
       WARNING - @mbg.generated
     -->
     insert into t_user_history
-    (history_id, user_id, episode_id, watch_time)
+    (history_id, user_id, episode_id, watch_time, progress)
     values
     (#{historyId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{episodeId,jdbcType=BIGINT}, 
-      #{watchTime,jdbcType=TIMESTAMP})
+      #{watchTime,jdbcType=TIMESTAMP}, #{progress,jdbcType=INTEGER})
     on duplicate key update 
     history_id = #{historyId,jdbcType=BIGINT}, 
     user_id = #{userId,jdbcType=BIGINT}, 
     episode_id = #{episodeId,jdbcType=BIGINT}, 
-    watch_time = #{watchTime,jdbcType=TIMESTAMP}
+    watch_time = #{watchTime,jdbcType=TIMESTAMP}, 
+    progress = #{progress,jdbcType=INTEGER}
   </insert>
   <insert id="upsertSelective" parameterType="com.yanda.entity.generated.UserHistoryInfo">
     <!--
@@ -225,6 +232,9 @@
       <if test="watchTime != null">
         watch_time,
       </if>
+      <if test="progress != null">
+        progress,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -240,6 +250,9 @@
       <if test="watchTime != null">
         #{watchTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="progress != null">
+        #{progress,jdbcType=INTEGER},
+      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -254,6 +267,9 @@
       </if>
       <if test="watchTime != null">
         watch_time = #{watchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="progress != null">
+        progress = #{progress,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

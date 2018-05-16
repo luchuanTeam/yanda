@@ -344,6 +344,66 @@ public class UserHistoryInfoExample {
             addCriterion("watch_time not between", value1, value2, "watchTime");
             return (Criteria) this;
         }
+
+        public Criteria andProgressIsNull() {
+            addCriterion("progress is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressIsNotNull() {
+            addCriterion("progress is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressEqualTo(Integer value) {
+            addCriterion("progress =", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressNotEqualTo(Integer value) {
+            addCriterion("progress <>", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressGreaterThan(Integer value) {
+            addCriterion("progress >", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressGreaterThanOrEqualTo(Integer value) {
+            addCriterion("progress >=", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressLessThan(Integer value) {
+            addCriterion("progress <", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressLessThanOrEqualTo(Integer value) {
+            addCriterion("progress <=", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressIn(List<Integer> values) {
+            addCriterion("progress in", values, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressNotIn(List<Integer> values) {
+            addCriterion("progress not in", values, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressBetween(Integer value1, Integer value2) {
+            addCriterion("progress between", value1, value2, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressNotBetween(Integer value1, Integer value2) {
+            addCriterion("progress not between", value1, value2, "progress");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

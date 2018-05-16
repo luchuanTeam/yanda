@@ -1,5 +1,7 @@
 package com.yanda.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserHistoryDetailInfo;
+import com.yanda.entity.generated.UserHistoryInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.service.UserHistoryService;
 import com.yanda.util.StringUtil;
@@ -48,5 +51,44 @@ public class UserHistoryController extends BaseController {
 			return result(-1, "fail", e.getMessage());
 		}
 		
+	}
+	
+	@RequestMapping(value = "/upsert", method = RequestMethod.POST)
+	public JsonResult upsertByUserIdAndEpisodeId(HttpServletRequest request) {
+		String userId = getNotEmptyValue(request, "userId");
+		String episodeId = getNotEmptyValue(request, "episodeId");
+		if(StringUtil.isEmpty(userId) || StringUtil.isEmpty(episodeId)) {
+			return result(-1, "必传参数缺少");
+		}
+		String progress = getValue(request, "progress", "0");
+		UserHistoryInfo userHistoryInfo = new UserHistoryInfo();
+		userHistoryInfo.setUserId(Long.valueOf(userId));
+		userHistoryInfo.setEpisodeId(Long.valueOf(episodeId));
+		userHistoryInfo.setProgress(Integer.valueOf(progress));
+		userHistoryInfo.setWatchTime(new Date());
+		try {
+			userHistoryService.upsertUserHistoryInfo(userHistoryInfo);
+			return result(200, "success");
+		} catch (DOPException e) {
+			e.printStackTrace();
+			return result(-1, "fail");
+		}
+		
+	}
+	
+	@RequestMapping(value = "/record", method = RequestMethod.POST)
+	public JsonResult findByUserIdAndEpisodeId(HttpServletRequest request) {
+		String userId = getNotEmptyValue(request, "userId");
+		String episodeId = getNotEmptyValue(request, "episodeId");
+		if(StringUtil.isEmpty(userId) || StringUtil.isEmpty(episodeId)) {
+			return result(-1, "必传参数缺少");
+		}
+		UserHistoryInfo userHistoryInfo = userHistoryService.findByUserIdAndEpisodeId(Long.valueOf(userId),
+				Long.valueOf(episodeId));
+		if(userHistoryInfo == null) {
+			return result(-1, "无历史记录");
+		} else {
+			return result(200, "success", userHistoryInfo);
+		}
 	}
 }

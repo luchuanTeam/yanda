@@ -2,6 +2,7 @@ package com.yanda.service;
 
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserHistoryDetailInfo;
+import com.yanda.entity.generated.UserHistoryInfo;
 import com.yanda.exception.DOPException;
 
 public interface UserHistoryService {
@@ -21,4 +22,18 @@ public interface UserHistoryService {
 	 * @param historyId
 	 */
 	void deleteByHistoryId(Long historyId) throws DOPException;
+	
+	/**
+	 * 更新历史记录
+	 * @throws DOPException
+	 */
+	void upsertUserHistoryInfo(UserHistoryInfo userHistoryInfo) throws DOPException;
+	
+	/**
+	 * 根据 userId 和 episodeId 查找历史信息
+	 * @param userId
+	 * @param historyId
+	 * @return
+	 */
+	UserHistoryInfo findByUserIdAndEpisodeId(Long userId, Long episodeId);
 }

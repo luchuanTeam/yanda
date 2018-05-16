@@ -19,13 +19,16 @@ public class UserHistoryInfo implements Serializable {
     @Column(name = "watch_time")
     private Date watchTime;
 
+    private Integer progress;
+
     private static final long serialVersionUID = 1L;
 
-    public UserHistoryInfo(Long historyId, Long userId, Long episodeId, Date watchTime) {
+    public UserHistoryInfo(Long historyId, Long userId, Long episodeId, Date watchTime, Integer progress) {
         this.historyId = historyId;
         this.userId = userId;
         this.episodeId = episodeId;
         this.watchTime = watchTime;
+        this.progress = progress;
     }
 
     public UserHistoryInfo() {
@@ -88,11 +91,26 @@ public class UserHistoryInfo implements Serializable {
         this.watchTime = watchTime;
     }
 
+    /**
+     * @return progress
+     */
+    public Integer getProgress() {
+        return progress;
+    }
+
+    /**
+     * @param progress
+     */
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
+
     public enum Col {
         historyId("history_id"),
         userId("user_id"),
         episodeId("episode_id"),
-        watchTime("watch_time");
+        watchTime("watch_time"),
+        progress("progress");
 
         private final String column;
 
