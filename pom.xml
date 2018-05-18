@@ -23,6 +23,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
 		<dependency>
@@ -37,6 +43,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -102,6 +114,18 @@
 		    <version>2.5.0</version>
 		</dependency>
 		
+		<dependency>
+		  <groupId>com.github.qcloudsms</groupId>
+		  <artifactId>qcloudsms</artifactId>
+		  <version>1.0.2</version>
+		  <!-- <exclusions>  
+            <exclusion>  
+                <groupId>org.json</groupId>
+			    <artifactId>json</artifactId>
+            </exclusion>  
+        </exclusions> -->
+		</dependency>
+		
 	</dependencies>
 	
 	<!-- 用于mian方法运行 -->
@@ -146,6 +170,7 @@
 						org.apache.cxf,
 						org.ow2.asm,
 						org.codehaus.woodstox,
+						org.json,
 						commons-httpclient, commons-beanutils, commons-codec, commons-collections, commons-io, commons-lang, commons-logging,
 						mysql,
 						javax.servlet,
@@ -156,6 +181,7 @@
 						net.sf.json-lib, net.sf.ezmorph, net.sourceforge.jexcelapi, net.sourceforge.nekohtml,
 						com.jayway, com.sun.xml.bind,
 						com.fasterxml,
+						com.github.qcloudsms,
 						ch.qos.logback,
 						javax.validation,
 						javax.xml.bind,
@@ -173,6 +199,7 @@
 						ognl,
 						com.github.pagehelper,
 						com.github.jsqlparser,
+						com.belerweb,
 						com.vaadin.external.google,
 						wsdl4j,
 						redis.clients,

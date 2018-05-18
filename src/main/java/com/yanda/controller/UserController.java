@@ -3,21 +3,27 @@ package com.yanda.controller;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.yanda.component.MessageSender;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserDetailInfo;
@@ -34,11 +40,17 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private UserService userService;
+	@Resource
+	private RedisTemplate<String, Object> redisTemplate;
+	@Autowired
+	private MessageSender messageSender;
 
 	private static final String KEY_DATA = "12345678"; // 加密的密钥
 	private static final int COOKIE_AGE = 172800; // cookie的时限
 	private static final String appId = "wx8c025f88b3f63c44";
 	private static final String appSecret = "a308a19541497abdab9a2cad360188d3";
+	private static final String CODE_KEY_PRE = "message#code#"; // 验证码存储key前缀
+	private static final int CODE_EXPIRE = 2; // 验证码有效期，单位分钟
 	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -295,5 +307,53 @@ public class UserController extends BaseController {
 		return result(200, "success", JSON.parse(result));
 
 	}
-
+	
+	/**
+	 * 发送短信验证码
+	 * @param userId
+	 * @param mobile
+	 * @return
+	 */
+	@PostMapping(value = "/sendCode")
+	public JsonResult sendCode(String userId, String mobile) {
+		if (StringUtil.isEmpty(userId))
+			return result(-1, "用户ID为空");
+		if (StringUtil.isEmpty(mobile))
+			return result(-1, "手机号为空");
+		Random rad = new Random();  
+        String code = rad.nextInt(10000) + "";
+		messageSender.sendMessage(code, mobile);
+		redisTemplate.opsForSet().add(CODE_KEY_PRE + userId, code);
+		redisTemplate.expire(CODE_KEY_PRE + userId, CODE_EXPIRE, TimeUnit.MINUTES);
+		return result(200, "发送成功");
+	}
+	
+	/**
+	 * 发送短信验证码
+	 * @param userId
+	 * @param mobile
+	 * @return
+	 */
+	@PostMapping(value = "/bindMobile")
+	public JsonResult bindMobile(String userId, String mobile, String code) {
+		if (StringUtil.isEmpty(userId))
+			return result(-1, "用户ID为空");
+		if (StringUtil.isEmpty(mobile))
+			return result(-1, "手机号为空");
+		if (StringUtil.isEmpty(code))
+			return result(-1, "验证码为空");
+		Object redisCode = redisTemplate.opsForSet().pop(CODE_KEY_PRE + userId);
+		if (null == redisCode || !redisCode.toString().equals(code))
+			return result(-1, "验证码已失效");
+		UserInfo userInfo = new UserInfo();
+		userInfo.setUserId(Integer.valueOf(userId));
+		userInfo.setMobile(mobile);
+		try {
+			userService.update(userInfo);
+		} catch (DOPException e) {
+			LOG.error("绑定用户手机号失败:"+e);
+			return result(-1, "绑定失败");
+		}
+		return result(200, "绑定成功");
+	}
 }

@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.alibaba.fastjson.JSON;
 import com.yanda.Application;
 import com.yanda.Configuration;
+import com.yanda.component.MessageSender;
 import com.yanda.entity.generated.BannerInfo;
 import com.yanda.mapper.generated.BannerInfoMapper;
 import com.yanda.service.ReportService;
@@ -28,6 +29,8 @@ public class TestController {
 	private BannerInfoMapper mapper;
 	@Autowired
 	private ReportService report;
+	@Autowired
+	private MessageSender meSender;
 
 	
 	public void testPushApi() {
@@ -44,6 +47,12 @@ public class TestController {
 	@Test
 	public void testReport() {
 		System.out.println(JSON.toJSONString(report.getClassifyMvCount()));
+	}
+	
+	@Test
+	public void send() {
+		meSender.sendMessage("1111", "17620059260");
+		
 	}
 
 }
