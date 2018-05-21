@@ -41,9 +41,10 @@ public class BannerController extends BaseController {
 	 * @param pageSize 分页大小
 	 * @param bannerDesc 轮播图描述
 	 * @return
+	 * @throws DOPException 
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public JsonResult listBanners(HttpServletRequest request) {
+	public JsonResult listBanners(HttpServletRequest request) throws DOPException {
 		String pageNum = getValue(request, "pageNum", "1");
 		String pageSize = getValue(request, "pageSize", "10");
 		String bannerDesc = getNotEmptyValue(request, "bannerDesc");

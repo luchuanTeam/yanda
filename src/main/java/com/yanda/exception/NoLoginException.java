@@ -1,25 +1,25 @@
 package com.yanda.exception;
 
-public class NullParamException extends Exception {
+public class NoLoginException extends Exception {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2585759107324467907L;
+	private static final long serialVersionUID = 7064000400415752349L;
 	
 	/**
 	 * 异常消息
 	 */
-	private String message;
+	private String message = "用户未登录";
 	
 	/**
 	 * 响应状态码
 	 */
-	private int status = 400;
+	private int status = 401;
 	
 
 	public String getMessage() {
-		return "缺少" + message + "参数";
+		return message;
 	}
 
 	public void setMessage(String message) {
@@ -33,5 +33,6 @@ public class NullParamException extends Exception {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+
+
 }

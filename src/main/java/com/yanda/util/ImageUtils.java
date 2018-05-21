@@ -70,17 +70,16 @@ public class ImageUtils {
 	 * 
 	 */
 
-	public static int[] zoom(File sfile, File dfile, int width, int height, 
-			String type) throws IOException {
-				
-		BufferedImage bitmap = ImageIO.read(new FileInputStream(sfile));		
+	public static int[] zoom(File sfile, File dfile, int width, int height, String type) throws IOException {
+
+		BufferedImage bitmap = ImageIO.read(new FileInputStream(sfile));
 
 		if (bitmap == null) {
 
 			return null;
 
 		}
-		
+
 		if (!dfile.exists()) {
 			dfile.createNewFile();
 		}
@@ -357,11 +356,55 @@ public class ImageUtils {
 		return true;
 
 	}
-	
-	public static void main(String[] args) throws IOException {
-		File sfile = new File("C://Users//chenli//Desktop//down//zoom//test.jpg");
-		File dfile = new File("C://Users//chenli//Desktop//down//zoom//test.jpg");
+
+	public static void main(String[] args) throws IOException, InterruptedException {
+		 File sfile = new File("C://Users//chenli//Desktop//down//test.jpg");
+		 File dfile = new File("C://Users//chenli//Desktop//down//zoom//test.jpg");
 		
-		zoom(sfile, dfile, 800, 500, "jpg");
+		createImgThumbnail(sfile, dfile, 400, 200);
+	}
+	
+	/**
+	 * 裁剪图片
+	 * @param imgSrc   
+	 * @param thumbWidth
+	 * @param thumbHeight
+	 * @param outFilePath
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	public static void createImgThumbnail(File imageFile, File outFile, int thumbWidth, int thumbHeight)
+			throws InterruptedException, IOException {
+		
+		BufferedImage image = ImageIO.read(imageFile);
+		Integer width = image.getWidth();
+		Integer height = image.getHeight();
+		double i = (double) width / (double) height;
+		double j = (double) thumbWidth / (double) thumbHeight;
+		int[] d = new int[2];
+		int x = 0;
+		int y = 0;
+		if (i > j) {
+			d[1] = thumbHeight;
+			d[0] = (int) (thumbHeight * i);
+			y = 0;
+			x = (d[0] - thumbWidth) / 2;
+		} else {
+			d[0] = thumbWidth;
+			d[1] = (int) (thumbWidth / i);
+			x = 0;
+			y = (d[1] - thumbHeight) / 2;
+		}
+		if (!outFile.getParentFile().exists()) {
+			outFile.getParentFile().mkdirs();
+		}
+		/* 等比例缩放 */
+		BufferedImage newImage = new BufferedImage(d[0], d[1], image.getType());
+		Graphics g = newImage.getGraphics();
+		g.drawImage(image, 0, 0, d[0], d[1], null);
+		g.dispose();
+		/* 居中剪裁 */
+		newImage = newImage.getSubimage(x, y, thumbWidth, thumbHeight);
+		ImageIO.write(newImage, imageFile.getName().substring(imageFile.getName().lastIndexOf(".") + 1), outFile);
 	}
 }

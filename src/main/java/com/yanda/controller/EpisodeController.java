@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanda.entity.EpisodeDetailInfo;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
-import com.yanda.entity.SimpleEpisode;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.EpisodeInfo;
 import com.yanda.entity.generated.MovieInfo;

@@ -11,7 +11,12 @@ public class DOPException extends Exception {
 	/**
 	 * 异常消息
 	 */
-	private String message;
+	private String message = "请求失败";
+	
+	/**
+	 * 请求状态码
+	 */
+	private int status = -1;
 	
 	
 	public DOPException(String message) {
@@ -39,7 +44,14 @@ public class DOPException extends Exception {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	
 	
 }

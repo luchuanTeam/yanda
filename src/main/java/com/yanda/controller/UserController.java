@@ -323,7 +323,7 @@ public class UserController extends BaseController {
 		Random rad = new Random();  
         String code = rad.nextInt(10000) + "";
 		messageSender.sendMessage(code, mobile);
-		redisTemplate.opsForSet().add(CODE_KEY_PRE + userId, code);
+		redisTemplate.opsForHash().put(CODE_KEY_PRE, userId, code);
 		redisTemplate.expire(CODE_KEY_PRE + userId, CODE_EXPIRE, TimeUnit.MINUTES);
 		return result(200, "发送成功");
 	}
@@ -342,9 +342,9 @@ public class UserController extends BaseController {
 			return result(-1, "手机号为空");
 		if (StringUtil.isEmpty(code))
 			return result(-1, "验证码为空");
-		Object redisCode = redisTemplate.opsForSet().pop(CODE_KEY_PRE + userId);
+		Object redisCode = redisTemplate.opsForHash().get(CODE_KEY_PRE, userId);
 		if (null == redisCode || !redisCode.toString().equals(code))
-			return result(-1, "验证码已失效");
+			return result(-1, "验证码错误或已失效");
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUserId(Integer.valueOf(userId));
 		userInfo.setMobile(mobile);

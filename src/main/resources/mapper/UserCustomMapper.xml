@@ -58,19 +58,13 @@
 		<result column="collect_time" jdbcType="TIMESTAMP" property="collectTime" />
 		<association column="episode_id"
 			javaType="com.yanda.entity.generated.EpisodeInfo" property="episodeInfo"
-			select="findCollectEpisodesById"></association>
+			select="findEpisodesById"></association>
 	</resultMap>
 
 	<select id="findUserCollectDetailByUserId" resultMap="UserCollectDetailInfo">
 		select *
 		from t_user_collect where user_id = #{user_id} order by collect_time
 		DESC
-	</select>
-
-	<select id="findCollectEpisodesById"
-		resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
-		select t2.* from t_user_collect t1 left join t_mv_episode t2
-		on t1.episode_id = t2.episode_id where t1.episode_id = #{episode_id}
 	</select>
 
 	<resultMap id="UserHistoryDetailInfo" type="com.yanda.entity.UserHistoryDetailInfo">
@@ -85,7 +79,7 @@
 			property="progress" />
 		<association column="episode_id"
 			javaType="com.yanda.entity.generated.EpisodeInfo" property="episodeInfo"
-			select="findHistoryEpisodesById"></association>
+			select="findEpisodesById"></association>
 	</resultMap>
 
 	<select id="findUserHistoryDetailByUserId" resultMap="UserHistoryDetailInfo">
@@ -94,10 +88,9 @@
 		DESC
 	</select>
 
-	<select id="findHistoryEpisodesById"
+	<select id="findEpisodesById"
 		resultMap="com.yanda.mapper.generated.EpisodeInfoMapper.BaseResultMap">
-		select t2.* from t_user_history t1 left join t_mv_episode t2
-		on t1.episode_id = t2.episode_id where t1.episode_id = #{episode_id}
+		select * from t_mv_episode where episode_id = #{episode_id}
 	</select>
 
 </mapper>

@@ -26,7 +26,7 @@ public class JsonResult {
 		super();
 		this.status = status;
 		this.message = message;
-		this.data = "{}";
+		this.data = null;
 	}
 	
 	public JsonResult(int status, String message, Object data) {
