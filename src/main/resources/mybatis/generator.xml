@@ -107,7 +107,8 @@
 		<table tableName="t_mv_info" domainObjectName="MovieInfo" /> -->
 		
 		<!-- <table tableName="t_user_history" domainObjectName="UserHistoryInfo" /> -->
-		<table tableName="t_log_info" domainObjectName="LogInfo" />
+		<!-- <table tableName="t_log_info" domainObjectName="LogInfo" /> -->
+		<table tableName="t_mv_episode" domainObjectName="EpisodeInfo" />
 
 	</context>
 </generatorConfiguration>

@@ -50,9 +50,14 @@ public class AttachmentInfo implements Serializable {
     @Column(name = "create_time")
     private Date createTime;
 
+    /**
+     * 音视频附件的总时长
+     */
+    private Long duration;
+
     private static final long serialVersionUID = 1L;
 
-    public AttachmentInfo(Long appendixId, String oldFilename, String newFilename, String fileExt, String filePath, Integer fileType, Date createTime) {
+    public AttachmentInfo(Long appendixId, String oldFilename, String newFilename, String fileExt, String filePath, Integer fileType, Date createTime, Long duration) {
         this.appendixId = appendixId;
         this.oldFilename = oldFilename;
         this.newFilename = newFilename;
@@ -60,6 +65,7 @@ public class AttachmentInfo implements Serializable {
         this.filePath = filePath;
         this.fileType = fileType;
         this.createTime = createTime;
+        this.duration = duration;
     }
 
     public AttachmentInfo() {
@@ -192,6 +198,24 @@ public class AttachmentInfo implements Serializable {
         this.createTime = createTime;
     }
 
+    /**
+     * 获取音视频附件的总时长
+     *
+     * @return duration - 音视频附件的总时长
+     */
+    public Long getDuration() {
+        return duration;
+    }
+
+    /**
+     * 设置音视频附件的总时长
+     *
+     * @param duration 音视频附件的总时长
+     */
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
     public enum Col {
         appendixId("appendix_id"),
         oldFilename("old_filename"),
@@ -199,7 +223,8 @@ public class AttachmentInfo implements Serializable {
         fileExt("file_ext"),
         filePath("file_path"),
         fileType("file_type"),
-        createTime("create_time");
+        createTime("create_time"),
+        duration("duration");
 
         private final String column;
 

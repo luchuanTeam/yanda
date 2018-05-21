@@ -58,6 +58,7 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		attachmentService.save(videoAttach);
 		episodeInfo.setImgAppendixId(imgAttach.getAppendixId());
 		episodeInfo.setMvAppendixId(videoAttach.getAppendixId());
+		episodeInfo.setDuration(videoAttach.getDuration());
 		movieService.update(movieInfo);
 		this.save(episodeInfo);
 	}
@@ -109,6 +110,7 @@ public class EpisodeServiceImpl extends BaseServiceImpl<EpisodeInfoMapper, Episo
 		if (null != videoAttach) {
 			attachmentService.save(videoAttach);
 			episodeInfo.setMvAppendixId(imgAttach.getAppendixId());
+			episodeInfo.setDuration(imgAttach.getDuration());
 		}
 		this.update(episodeInfo);
 	}

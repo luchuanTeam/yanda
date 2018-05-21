@@ -17,6 +17,12 @@ public class NullParamException extends Exception {
 	 */
 	private int status = 400;
 	
+	
+
+	public NullParamException(String message) {
+		super();
+		this.message = message;
+	}
 
 	public String getMessage() {
 		return "缺少" + message + "参数";

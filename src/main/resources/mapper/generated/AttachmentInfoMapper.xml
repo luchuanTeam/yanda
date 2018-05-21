@@ -12,6 +12,7 @@
     <result column="file_path" jdbcType="VARCHAR" property="filePath" />
     <result column="file_type" jdbcType="INTEGER" property="fileType" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="duration" jdbcType="BIGINT" property="duration" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.AttachmentInfo">
     <!--
@@ -25,6 +26,7 @@
       <arg column="file_path" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="file_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="duration" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -95,7 +97,8 @@
     <!--
       WARNING - @mbg.generated
     -->
-    appendix_id, old_filename, new_filename, file_ext, file_path, file_type, create_time
+    appendix_id, old_filename, new_filename, file_ext, file_path, file_type, create_time, 
+    duration
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.AttachmentInfoExample" resultMap="BaseResultMap">
     <!--
@@ -178,6 +181,9 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.duration != null">
+        duration = #{record.duration,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -194,7 +200,8 @@
       file_ext = #{record.fileExt,jdbcType=VARCHAR},
       file_path = #{record.filePath,jdbcType=VARCHAR},
       file_type = #{record.fileType,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      duration = #{record.duration,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -215,12 +222,12 @@
       WARNING - @mbg.generated
     -->
     insert into t_attachment_info
-    (appendix_id, old_filename, new_filename, file_ext, file_path, file_type, create_time
-      )
+    (appendix_id, old_filename, new_filename, file_ext, file_path, file_type, create_time, 
+      duration)
     values
     (#{appendixId,jdbcType=BIGINT}, #{oldFilename,jdbcType=VARCHAR}, #{newFilename,jdbcType=VARCHAR}, 
       #{fileExt,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{fileType,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{duration,jdbcType=BIGINT})
     on duplicate key update 
     appendix_id = #{appendixId,jdbcType=BIGINT}, 
     old_filename = #{oldFilename,jdbcType=VARCHAR}, 
@@ -228,7 +235,8 @@
     file_ext = #{fileExt,jdbcType=VARCHAR}, 
     file_path = #{filePath,jdbcType=VARCHAR}, 
     file_type = #{fileType,jdbcType=INTEGER}, 
-    create_time = #{createTime,jdbcType=TIMESTAMP}
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    duration = #{duration,jdbcType=BIGINT}
   </insert>
   <insert id="upsertSelective" keyColumn="appendix_id" keyProperty="appendixId" parameterType="com.yanda.entity.generated.AttachmentInfo" useGeneratedKeys="true">
     <!--
@@ -257,6 +265,9 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="duration != null">
+        duration,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -281,6 +292,9 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="duration != null">
+        #{duration,jdbcType=BIGINT},
+      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -304,6 +318,9 @@
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>

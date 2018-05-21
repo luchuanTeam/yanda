@@ -111,18 +111,18 @@ public class LogInfo implements Serializable {
     }
 
     /**
-     * 获取请求方法
+     * 获取请求方法类型
      *
-     * @return method - 请求方法
+     * @return method - 请求方法类型
      */
     public String getMethod() {
         return method;
     }
 
     /**
-     * 设置请求方法
+     * 设置请求方法类型
      *
-     * @param method 请求方法
+     * @param method 请求方法类型
      */
     public void setMethod(String method) {
         this.method = method == null ? null : method.trim();

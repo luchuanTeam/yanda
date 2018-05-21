@@ -72,9 +72,14 @@ public class EpisodeInfo implements Serializable {
     @Column(name = "vip_type")
     private Integer vipType;
 
+    /**
+     * 音视频总时长
+     */
+    private Long duration;
+
     private static final long serialVersionUID = 1L;
 
-    public EpisodeInfo(Long episodeId, String episodeName, String episodeIntro, Integer episodeNum, Long imgAppendixId, Long mvAppendixId, Long mvId, Date createTime, Date updateTime, Integer type, Integer vipType) {
+    public EpisodeInfo(Long episodeId, String episodeName, String episodeIntro, Integer episodeNum, Long imgAppendixId, Long mvAppendixId, Long mvId, Date createTime, Date updateTime, Integer type, Integer vipType, Long duration) {
         this.episodeId = episodeId;
         this.episodeName = episodeName;
         this.episodeIntro = episodeIntro;
@@ -86,6 +91,7 @@ public class EpisodeInfo implements Serializable {
         this.updateTime = updateTime;
         this.type = type;
         this.vipType = vipType;
+        this.duration = duration;
     }
 
     public EpisodeInfo() {
@@ -290,6 +296,24 @@ public class EpisodeInfo implements Serializable {
         this.vipType = vipType;
     }
 
+    /**
+     * 获取音视频总时长
+     *
+     * @return duration - 音视频总时长
+     */
+    public Long getDuration() {
+        return duration;
+    }
+
+    /**
+     * 设置音视频总时长
+     *
+     * @param duration 音视频总时长
+     */
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
+
     public enum Col {
         episodeId("episode_id"),
         episodeName("episode_name"),
@@ -301,7 +325,8 @@ public class EpisodeInfo implements Serializable {
         createTime("create_time"),
         updateTime("update_time"),
         type("type"),
-        vipType("vip_type");
+        vipType("vip_type"),
+        duration("duration");
 
         private final String column;
 
