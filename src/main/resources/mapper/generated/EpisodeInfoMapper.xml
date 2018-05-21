@@ -16,6 +16,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="vip_type" jdbcType="INTEGER" property="vipType" />
+    <result column="duration" jdbcType="BIGINT" property="duration" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.EpisodeInfo">
     <!--
@@ -33,6 +34,7 @@
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="vip_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="duration" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -104,7 +106,7 @@
       WARNING - @mbg.generated
     -->
     episode_id, episode_name, episode_intro, episode_num, img_appendix_id, mv_appendix_id, 
-    mv_id, create_time, update_time, type, vip_type
+    mv_id, create_time, update_time, type, vip_type, duration
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.EpisodeInfoExample" resultMap="BaseResultMap">
     <!--
@@ -199,6 +201,9 @@
       <if test="record.vipType != null">
         vip_type = #{record.vipType,jdbcType=INTEGER},
       </if>
+      <if test="record.duration != null">
+        duration = #{record.duration,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -219,7 +224,8 @@
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       type = #{record.type,jdbcType=INTEGER},
-      vip_type = #{record.vipType,jdbcType=INTEGER}
+      vip_type = #{record.vipType,jdbcType=INTEGER},
+      duration = #{record.duration,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,12 +247,13 @@
     -->
     insert into t_mv_episode
     (episode_id, episode_name, episode_intro, episode_num, img_appendix_id, mv_appendix_id, 
-      mv_id, create_time, update_time, type, vip_type)
+      mv_id, create_time, update_time, type, vip_type, duration)
     values
     (#{episodeId,jdbcType=BIGINT}, #{episodeName,jdbcType=VARCHAR}, #{episodeIntro,jdbcType=VARCHAR}, 
       #{episodeNum,jdbcType=INTEGER}, #{imgAppendixId,jdbcType=BIGINT}, #{mvAppendixId,jdbcType=BIGINT}, 
       #{mvId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{type,jdbcType=INTEGER}, #{vipType,jdbcType=INTEGER})
+      #{type,jdbcType=INTEGER}, #{vipType,jdbcType=INTEGER}, #{duration,jdbcType=BIGINT}
+      )
     on duplicate key update 
     episode_id = #{episodeId,jdbcType=BIGINT}, 
     episode_name = #{episodeName,jdbcType=VARCHAR}, 
@@ -258,7 +265,8 @@
     create_time = #{createTime,jdbcType=TIMESTAMP}, 
     update_time = #{updateTime,jdbcType=TIMESTAMP}, 
     type = #{type,jdbcType=INTEGER}, 
-    vip_type = #{vipType,jdbcType=INTEGER}
+    vip_type = #{vipType,jdbcType=INTEGER}, 
+    duration = #{duration,jdbcType=BIGINT}
   </insert>
   <insert id="upsertSelective" parameterType="com.yanda.entity.generated.EpisodeInfo">
     <!--
@@ -299,6 +307,9 @@
       <if test="vipType != null">
         vip_type,
       </if>
+      <if test="duration != null">
+        duration,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -335,6 +346,9 @@
       <if test="vipType != null">
         #{vipType,jdbcType=INTEGER},
       </if>
+      <if test="duration != null">
+        #{duration,jdbcType=BIGINT},
+      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -370,6 +384,9 @@
       </if>
       <if test="vipType != null">
         vip_type = #{vipType,jdbcType=INTEGER},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>

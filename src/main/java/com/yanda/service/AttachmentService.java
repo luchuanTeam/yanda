@@ -13,5 +13,7 @@ public interface AttachmentService extends BaseService<AttachmentInfo, Long> {
 	 * @throws IOException
 	 */
 	String generatedFilePath(AttachmentInfo record) throws IOException;
+	
+	void updateAllDuration();
 
 }

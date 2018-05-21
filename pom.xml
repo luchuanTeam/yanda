@@ -113,17 +113,15 @@
 		    <artifactId>pinyin4j</artifactId>
 		    <version>2.5.0</version>
 		</dependency>
-		
 		<dependency>
 		  <groupId>com.github.qcloudsms</groupId>
 		  <artifactId>qcloudsms</artifactId>
 		  <version>1.0.2</version>
-		  <!-- <exclusions>  
-            <exclusion>  
-                <groupId>org.json</groupId>
-			    <artifactId>json</artifactId>
-            </exclusion>  
-        </exclusions> -->
+		</dependency>
+		<dependency>
+		  <groupId>it.sauronsoftware</groupId>
+		  <artifactId>jave</artifactId>
+		  <version>2.0</version>
 		</dependency>
 		
 	</dependencies>
@@ -203,7 +201,8 @@
 						com.vaadin.external.google,
 						wsdl4j,
 						redis.clients,
-						tk.mybatis
+						tk.mybatis,
+						it.sauronsoftware
 					</excludeGroupIds>
 				</configuration>
 			</plugin>

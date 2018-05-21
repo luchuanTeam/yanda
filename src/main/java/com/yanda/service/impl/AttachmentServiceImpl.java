@@ -3,6 +3,7 @@ package com.yanda.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
@@ -11,11 +12,16 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yanda.component.FfmpegTool;
 import com.yanda.component.FileConfig;
 import com.yanda.entity.FileType;
 import com.yanda.entity.generated.AttachmentInfo;
+import com.yanda.entity.generated.AttachmentInfoExample;
+import com.yanda.entity.generated.EpisodeInfo;
+import com.yanda.entity.generated.EpisodeInfoExample;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.AttachmentInfoMapper;
+import com.yanda.mapper.generated.EpisodeInfoMapper;
 import com.yanda.service.AttachmentService;
 import com.yanda.util.ImageUtils;
 
@@ -29,7 +35,10 @@ import com.yanda.util.ImageUtils;
 @Service
 public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper, AttachmentInfo, Long> implements AttachmentService {
 	
-	
+	@Autowired
+	private FfmpegTool ffTool;
+	@Autowired
+	private EpisodeInfoMapper episodeInfoMapper;
 	
 	public AttachmentServiceImpl() {
 		super();
@@ -65,6 +74,7 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 		String newFilename = record.getNewFilename();
 		String fileExt = record.getFileExt();
 		File tempFile = new File(fileConfig.getTempPath(), newFilename + "." + fileExt);
+		setAttachmentDuration(record, tempFile);
 		try {
 			
 			String filePath = record.getFilePath();
@@ -158,6 +168,37 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 		return super.selectById(id);
 	}
 	
-	
+	/**
+	 * 获取音视频附件时长
+	 * @param attach
+	 * @param file
+	 */
+	private void setAttachmentDuration(AttachmentInfo attach, File file) {
+		if (attach.getFileType().intValue() != 20)
+			return;
+		attach.setDuration(ffTool.getMediaDuration(file)); 
+	}
 
+	@Override
+	public void updateAllDuration() {
+		AttachmentInfoExample example = new AttachmentInfoExample();
+		example.createCriteria().andFileTypeEqualTo(20).andDurationIsNull();
+		List<AttachmentInfo> attachs = this.mapper.selectByExample(example);
+		for (AttachmentInfo attach : attachs) {
+			File media = new File(attach.getFilePath() + "/" + attach.getNewFilename() + "." + attach.getFileExt());
+			Long duration = ffTool.getMediaDuration(media);
+			if (null == duration)
+				continue;
+			attach.setDuration(duration);
+			EpisodeInfoExample example2 = new EpisodeInfoExample();
+			example2.createCriteria().andMvAppendixIdEqualTo(attach.getAppendixId());
+			List<EpisodeInfo> eInfos = episodeInfoMapper.selectByExample(example2);
+			this.mapper.updateByPrimaryKeySelective(attach);
+			for (EpisodeInfo episode : eInfos) {
+				episode.setDuration(duration);
+				episodeInfoMapper.updateByPrimaryKey(episode);
+			}
+		}
+		
+	}
 }

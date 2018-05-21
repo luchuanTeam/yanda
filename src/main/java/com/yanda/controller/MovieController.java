@@ -25,6 +25,7 @@ import com.yanda.entity.generated.ClassifyInfo;
 import com.yanda.entity.generated.MovieInfo;
 import com.yanda.entity.generated.UserSearchInfo;
 import com.yanda.exception.DOPException;
+import com.yanda.exception.NullParamException;
 import com.yanda.service.MovieService;
 import com.yanda.service.UserSearchService;
 import com.yanda.util.SortUtil;
@@ -76,21 +77,18 @@ public class MovieController extends BaseController {
 	 * @param movieInfo
 	 *            视频实体
 	 * @return
+	 * @throws DOPException
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public JsonResult add(HttpServletRequest request, @RequestBody MovieInfo movieInfo) {
+	public JsonResult add(HttpServletRequest request, @RequestBody MovieInfo movieInfo) throws DOPException {
 
-		try {
-			AttachmentInfo attachmentInfo = handleImgAttach(request);
-			movieInfo.setCreateTime(attachmentInfo.getCreateTime());
-			movieInfo.setUpdateTime(attachmentInfo.getCreateTime());
-			movieInfo.setEpisodeCount(0);
-			movieService.addMovie(movieInfo, attachmentInfo);
-			return result(200, "success");
-		} catch (Exception e) {
-			LOG.error("拷贝临时图片到发布路径异常", e);
-			return result(-1, e.getMessage());
-		}
+		AttachmentInfo attachmentInfo = handleImgAttach(request);
+		movieInfo.setCreateTime(attachmentInfo.getCreateTime());
+		movieInfo.setUpdateTime(attachmentInfo.getCreateTime());
+		movieInfo.setEpisodeCount(0);
+		movieService.addMovie(movieInfo, attachmentInfo);
+		return result(200, "success");
+
 	}
 
 	/**
@@ -101,24 +99,21 @@ public class MovieController extends BaseController {
 	 * @param movieInfo
 	 *            视频实体
 	 * @return
+	 * @throws DOPException
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public JsonResult update(HttpServletRequest request, @RequestBody MovieInfo movieInfo) {
+	public JsonResult update(HttpServletRequest request, @RequestBody MovieInfo movieInfo) throws DOPException {
 
-		try {
-			String oldFilename = request.getParameter("oldFilename");
-			String newFilename = request.getParameter("newFilename");
-			AttachmentInfo attachmentInfo = null;
-			if (StringUtil.isNotEmpty(oldFilename) && StringUtil.isNotEmpty(newFilename)) {
-				attachmentInfo = handleImgAttach(request);
-			}
-			movieInfo.setUpdateTime(new Date());
-			movieService.updateMovie(movieInfo, attachmentInfo);
-			return result(200, "success");
-		} catch (Exception e) {
-			LOG.error("拷贝临时图片到发布路径异常", e);
-			return result(-1, e.getMessage());
+		String oldFilename = request.getParameter("oldFilename");
+		String newFilename = request.getParameter("newFilename");
+		AttachmentInfo attachmentInfo = null;
+		if (StringUtil.isNotEmpty(oldFilename) && StringUtil.isNotEmpty(newFilename)) {
+			attachmentInfo = handleImgAttach(request);
 		}
+		movieInfo.setUpdateTime(new Date());
+		movieService.updateMovie(movieInfo, attachmentInfo);
+		return result(200, "success");
+
 	}
 
 	/**
@@ -129,17 +124,14 @@ public class MovieController extends BaseController {
 	 * @param id
 	 *            视频id
 	 * @return
+	 * @throws DOPException
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-	public JsonResult delete(HttpServletRequest request, @PathVariable("id") Long id) {
+	public JsonResult delete(HttpServletRequest request, @PathVariable("id") Long id) throws DOPException {
 
-		try {
-			movieService.deleteById(id);
-			return result(200, "删除成功!");
-		} catch (Exception e) {
-			LOG.error("删除视频失败!", e);
-			return result(-1, e.getMessage());
-		}
+		movieService.deleteById(id);
+		return result(200, "删除成功!");
+
 	}
 
 	/**
@@ -214,33 +206,33 @@ public class MovieController extends BaseController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "size", defaultValue = "10") Integer size, String sort, String order)
 			throws DOPException {
-		
+
 		String sortWithOrder = SortUtil.mvSort(sort, order);
 
-        //添加到搜索历史
-        if (userId != null && StringUtil.isNotEmpty(keyword)) {
-            UserSearchInfo searchHistoryVo = new UserSearchInfo();
-            searchHistoryVo.setAddTime(new Date());
-            searchHistoryVo.setKeyword(keyword);
-            searchHistoryVo.setUserId(userId);
-            userSearchService.upsertSelective(searchHistoryVo);
-        }
+		// 添加到搜索历史
+		if (userId != null && StringUtil.isNotEmpty(keyword)) {
+			UserSearchInfo searchHistoryVo = new UserSearchInfo();
+			searchHistoryVo.setAddTime(new Date());
+			searchHistoryVo.setKeyword(keyword);
+			searchHistoryVo.setUserId(userId);
+			userSearchService.upsertSelective(searchHistoryVo);
+		}
 
-        //查询列表数据
-        PageResult<MovieInfo> pageResult = movieService.querySelective(classifyId, keyword, page, size, sortWithOrder);
+		// 查询列表数据
+		PageResult<MovieInfo> pageResult = movieService.querySelective(classifyId, keyword, page, size, sortWithOrder);
 
-        // 查询商品所属类目列表。
-        List<Integer> classifyIds = movieService.getClassifyIds(keyword);
-        List<ClassifyInfo> classifyList = null;
-        if(classifyIds.size() != 0) {
-            classifyList = movieService.findClassifyListByIds(classifyIds);
-        }
+		// 查询商品所属类目列表。
+		List<Integer> classifyIds = movieService.getClassifyIds(keyword);
+		List<ClassifyInfo> classifyList = null;
+		if (classifyIds.size() != 0) {
+			classifyList = movieService.findClassifyListByIds(classifyIds);
+		}
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("mvList", pageResult.getList());
-        data.put("filterclassifyList", classifyList);
-        data.put("count", pageResult.getTotal());
-		
+		Map<String, Object> data = new HashMap<>();
+		data.put("mvList", pageResult.getList());
+		data.put("filterclassifyList", classifyList);
+		data.put("count", pageResult.getTotal());
+
 		return result(200, "success", data);
 	}
 
@@ -252,32 +244,27 @@ public class MovieController extends BaseController {
 	 * @param isPublic
 	 * @return
 	 * @throws DOPException
+	 * @throws NullParamException
 	 */
 	@CacheEvict(value = "movieList", allEntries = true, beforeInvocation = true)
 	@RequestMapping(value = "/pub", method = RequestMethod.POST)
-	public JsonResult pubMovie(HttpServletRequest request) throws DOPException {
+	public JsonResult pubMovie(HttpServletRequest request) throws DOPException, NullParamException {
 		String mvId = getNotEmptyValue(request, "mvId");
 		if (StringUtil.isEmpty(mvId))
-			return result(-1, "视频编号为空");
+			throw new NullParamException("视频编号");
 		String isPublic = getNotEmptyValue(request, "isPublic");
 		if (StringUtil.isEmpty(mvId))
-			return result(-1, "发布状态值为空");
+			throw new NullParamException("发布状态值");
 
-		try {
-			Long id = Long.valueOf(mvId);
-			int ispublicVal = Integer.valueOf(isPublic).intValue();
-			MovieInfo movieInfo = new MovieInfo();
-			movieInfo.setMvId(id);
-			movieInfo.setIsPublic(ispublicVal == 1);
-			if (ispublicVal == 1) {
-				movieInfo.setPublicTime(new Date());
-			}
-			movieService.update(movieInfo);
-
-		} catch (Exception e) {
-			LOG.error(e);
-			return result(-1, "更新发布状态失败");
+		Long id = Long.valueOf(mvId);
+		int ispublicVal = Integer.valueOf(isPublic).intValue();
+		MovieInfo movieInfo = new MovieInfo();
+		movieInfo.setMvId(id);
+		movieInfo.setIsPublic(ispublicVal == 1);
+		if (ispublicVal == 1) {
+			movieInfo.setPublicTime(new Date());
 		}
+		movieService.update(movieInfo);
 
 		return result(200, "success");
 	}

@@ -5,11 +5,7 @@ import java.io.Serializable;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.yanda.entity.PageResult;
-import com.yanda.entity.generated.BannerInfo;
-import com.yanda.entity.generated.BannerInfoExample;
 import com.yanda.exception.DOPException;
 import com.yanda.service.BaseService;
 import com.yanda.util.MyMapper;
