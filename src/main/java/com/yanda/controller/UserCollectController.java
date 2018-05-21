@@ -63,8 +63,12 @@ public class UserCollectController extends BaseController {
 			return result(-1, "视频编号为空");
 		}
 		try {
-			userCollectService.addByUIdAndEpisodeId(Long.valueOf(userId), Long.valueOf(episodeId));
-			return result(200, "收藏成功");
+			boolean flag = userCollectService.addByUIdAndEpisodeId(Long.valueOf(userId), Long.valueOf(episodeId));
+			if(flag) {
+				return result(200, "收藏成功");
+			} else {
+				return result(-1, "您已经收藏该文件");
+			}
 		} catch (NumberFormatException | DOPException e) {
 			e.printStackTrace();
 			return result(-1, "收藏失败", e.getMessage());

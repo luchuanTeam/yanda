@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserCollectDetailInfo;
 import com.yanda.entity.generated.UserCollectInfo;
+import com.yanda.entity.generated.UserCollectInfoExample;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.UserCustomMapper;
 import com.yanda.mapper.generated.UserCollectInfoMapper;
@@ -22,6 +23,7 @@ public class UserCollectServiceImpl extends BaseServiceImpl<UserCollectInfoMappe
 	@Autowired
 	private UserCustomMapper userCostomMapper;
 
+	
 	@Override
 	public PageResult<UserCollectDetailInfo> findUserCollectsByUserId(Long userId, int pageNum, int pageSize) {
 		Page<UserCollectDetailInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
@@ -37,12 +39,21 @@ public class UserCollectServiceImpl extends BaseServiceImpl<UserCollectInfoMappe
 	}
 
 	@Override
-	public void addByUIdAndEpisodeId(Long userId, Long episodeId) throws DOPException {
-		UserCollectInfo userCollectInfo = new UserCollectInfo();
-		userCollectInfo.setUserId(userId);
-		userCollectInfo.setEpisodeId(episodeId);
-		userCollectInfo.setCollectTime(new Date());
-		this.save(userCollectInfo);
+	public boolean addByUIdAndEpisodeId(Long userId, Long episodeId) throws DOPException {
+		UserCollectInfoExample example = new UserCollectInfoExample();
+		example.createCriteria().andUserIdEqualTo(userId).andEpisodeIdEqualTo(episodeId);
+		UserCollectInfo userCollectInfo = mapper.selectOneByExample(example);
+		if(userCollectInfo == null) {
+			userCollectInfo = new UserCollectInfo();
+			userCollectInfo.setUserId(userId);
+			userCollectInfo.setEpisodeId(episodeId);
+			userCollectInfo.setCollectTime(new Date());
+			this.save(userCollectInfo);
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 	
 	

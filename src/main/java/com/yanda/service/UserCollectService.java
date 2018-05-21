@@ -27,5 +27,5 @@ public interface UserCollectService extends BaseService<UserCollectInfo, Long> {
 	 * @param userId
 	 * @param episodeId
 	 */
-	void addByUIdAndEpisodeId(Long userId, Long episodeId) throws DOPException;
+	boolean addByUIdAndEpisodeId(Long userId, Long episodeId) throws DOPException;
 }
