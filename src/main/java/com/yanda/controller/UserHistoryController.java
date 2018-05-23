@@ -1,12 +1,14 @@
 package com.yanda.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yanda.entity.JsonResult;
@@ -90,5 +92,16 @@ public class UserHistoryController extends BaseController {
 		} else {
 			return result(200, "success", userHistoryInfo);
 		}
+	}
+	
+	@RequestMapping(value = "/deleteByIds", method = RequestMethod.POST)
+	public JsonResult deleteByIdList(HttpServletRequest request, @RequestParam("ids") List<Long> ids) {
+		try {
+			userHistoryService.deleteByIdList(ids);
+			return result(200, "删除成功");
+		} catch (DOPException e) {
+			e.printStackTrace();
+		}
+		return result(-1, "删除失败");
 	}
 }

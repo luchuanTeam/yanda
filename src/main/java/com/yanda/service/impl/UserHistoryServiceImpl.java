@@ -1,6 +1,10 @@
 package com.yanda.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.Page;
@@ -19,6 +23,8 @@ public class UserHistoryServiceImpl extends BaseServiceImpl<UserHistoryInfoMappe
 
 	@Autowired
 	private UserCustomMapper userCostomMapper;
+	
+	@Cacheable(value = "historyList")
 	@Override
 	public PageResult<UserHistoryDetailInfo> findUserHistoriesByUserId(Long userId, int pageNum, int pageSize) {
 		Page<UserHistoryDetailInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
@@ -28,12 +34,13 @@ public class UserHistoryServiceImpl extends BaseServiceImpl<UserHistoryInfoMappe
 		return pageResult;
 	}
 	
+	@CacheEvict(value = "historyList", allEntries=true, beforeInvocation=true)
 	@Override
 	public void deleteByHistoryId(Long historyId) throws DOPException {
 		this.deleteById(historyId);
-		
 	}
 
+	@CacheEvict(value = "historyList", allEntries=true, beforeInvocation=true)
 	@Override
 	public void upsertUserHistoryInfo(UserHistoryInfo userHistoryInfo) throws DOPException {
 		UserHistoryInfoExample example = new UserHistoryInfoExample();
@@ -53,6 +60,15 @@ public class UserHistoryServiceImpl extends BaseServiceImpl<UserHistoryInfoMappe
 		example.createCriteria().andUserIdEqualTo(userId).andEpisodeIdEqualTo(episodeId);
 		UserHistoryInfo userHistoryInfo = mapper.selectOneByExample(example);
 		return userHistoryInfo;
+	}
+	
+	@CacheEvict(value = "historyList", allEntries=true, beforeInvocation=true)
+	@Override
+	public void deleteByIdList(List<Long> ids) throws DOPException {
+		for(Long id: ids) {
+			this.deleteById(id);
+		}
+		
 	}
 
 }

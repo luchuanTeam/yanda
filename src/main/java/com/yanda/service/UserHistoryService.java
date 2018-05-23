@@ -1,5 +1,7 @@
 package com.yanda.service;
 
+import java.util.List;
+
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserHistoryDetailInfo;
 import com.yanda.entity.generated.UserHistoryInfo;
@@ -36,4 +38,12 @@ public interface UserHistoryService {
 	 * @return
 	 */
 	UserHistoryInfo findByUserIdAndEpisodeId(Long userId, Long episodeId);
+	
+	
+	/**
+	 * 根据传入的数组 id 批量删除历史记录
+	 * @param ids
+	 * @throws DOPException
+	 */
+	void deleteByIdList(List<Long> ids) throws DOPException;
 }
