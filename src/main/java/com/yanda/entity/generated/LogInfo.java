@@ -58,6 +58,17 @@ public class LogInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public LogInfo(Integer logId, String requestUrl, String method, String ip, String classMethod, String params, Date createTime, String message) {
+        this.logId = logId;
+        this.requestUrl = requestUrl;
+        this.method = method;
+        this.ip = ip;
+        this.classMethod = classMethod;
+        this.params = params;
+        this.createTime = createTime;
+        this.message = message;
+    }
+
     public LogInfo(Integer logId, String requestUrl, String method, String ip, String classMethod, String params, Date createTime, String message, String error) {
         this.logId = logId;
         this.requestUrl = requestUrl;

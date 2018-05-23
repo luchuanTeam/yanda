@@ -2,9 +2,9 @@ package com.yanda.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +30,10 @@ import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserDetailInfo;
 import com.yanda.entity.generated.UserInfo;
+import com.yanda.entity.generated.UserInfo.Col;
+import com.yanda.entity.generated.UserInfoExample;
 import com.yanda.exception.DOPException;
+import com.yanda.mapper.generated.UserInfoMapper;
 import com.yanda.service.UserService;
 import com.yanda.util.DesEncryptUtil;
 import com.yanda.util.RestTemplateUtil;
@@ -44,6 +49,8 @@ public class UserController extends BaseController {
 	private RedisTemplate<String, Object> redisTemplate;
 	@Autowired
 	private MessageSender messageSender;
+	@Autowired
+	private UserInfoMapper userInfoMapper;
 
 	private static final String KEY_DATA = "12345678"; // 加密的密钥
 	private static final int COOKIE_AGE = 172800; // cookie的时限
@@ -256,9 +263,9 @@ public class UserController extends BaseController {
 			return result(-1, "openid为空");
 		String avatar = getNotEmptyValue(request, "avatar");
 		// 随机生成一个字符串作为用户名
-		String userName = UUID.randomUUID().toString().replaceAll("-", "");
+		String userName = StringUtil.generateRandomWord(12, "wx");
 		// 随机生成一个字符串作为密码
-		String password = UUID.randomUUID().toString().replaceAll("-", "");
+		String password = StringUtil.generateRandomCodeMixed(8);
 		String nickName = getNotEmptyValue(request, "nickName");
 		if (StringUtil.isEmpty(nickName)) {
 			nickName = userName;
@@ -356,4 +363,21 @@ public class UserController extends BaseController {
 		}
 		return result(200, "绑定成功");
 	}
+	
+	/*@Transactional
+	@GetMapping("/batchUpdateUserNameAndPass")
+	public JsonResult batchUpdateUserNameAndPass(HttpServletRequest request) {
+		String token = request.getParameter("token");
+		if (token == null || !token.equals("chenli"))
+			return result(-1, "非法操作");
+		UserInfoExample example = new UserInfoExample();
+		example.createCriteria().andIsWechatEqualTo(true);
+		List<UserInfo> users = userInfoMapper.selectByExampleSelective(example, Col.userId, Col.userName, Col.password);
+		for (UserInfo user: users) {
+			user.setUserName(StringUtil.generateRandomWord(12, "wx"));
+			user.setPassword(StringUtil.generateRandomCodeMixed(8));
+			userInfoMapper.updateByPrimaryKeySelective(user);
+		}
+		return result(200, "更新用户名和密码成功");
+	}*/
 }

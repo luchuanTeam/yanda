@@ -5,15 +5,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="log_id" jdbcType="INTEGER" property="logId" />
-    <result column="request_url" jdbcType="VARCHAR" property="requestUrl" />
-    <result column="method" jdbcType="VARCHAR" property="method" />
-    <result column="ip" jdbcType="VARCHAR" property="ip" />
-    <result column="class_method" jdbcType="VARCHAR" property="classMethod" />
-    <result column="params" jdbcType="VARCHAR" property="params" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="message" jdbcType="VARCHAR" property="message" />
-    <result column="error" jdbcType="VARCHAR" property="error" />
+    <result column="error" jdbcType="LONGVARCHAR" property="error" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.LogInfo">
     <!--
@@ -28,7 +20,22 @@
       <arg column="params" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="message" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="error" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.yanda.entity.generated.LogInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor>
+      <idArg column="log_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="request_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="method" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ip" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="class_method" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="params" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="message" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="error" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -99,8 +106,33 @@
     <!--
       WARNING - @mbg.generated
     -->
-    log_id, request_url, method, ip, class_method, params, create_time, message, error
+    log_id, request_url, method, ip, class_method, params, create_time, message
   </sql>
+  <sql id="Blob_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    error
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.yanda.entity.generated.LogInfoExample" resultMap="ResultMapWithBLOBs">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_log_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.LogInfoExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
@@ -186,9 +218,27 @@
         message = #{record.message,jdbcType=VARCHAR},
       </if>
       <if test="record.error != null">
-        error = #{record.error,jdbcType=VARCHAR},
+        error = #{record.error,jdbcType=LONGVARCHAR},
       </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_log_info
+    set log_id = #{record.logId,jdbcType=INTEGER},
+      request_url = #{record.requestUrl,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      class_method = #{record.classMethod,jdbcType=VARCHAR},
+      params = #{record.params,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      message = #{record.message,jdbcType=VARCHAR},
+      error = #{record.error,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -205,8 +255,7 @@
       class_method = #{record.classMethod,jdbcType=VARCHAR},
       params = #{record.params,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      message = #{record.message,jdbcType=VARCHAR},
-      error = #{record.error,jdbcType=VARCHAR}
+      message = #{record.message,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,13 +276,11 @@
       WARNING - @mbg.generated
     -->
     insert into t_log_info
-    (log_id, request_url, method, ip, class_method, params, create_time, message, error
-      )
+    (log_id, request_url, method, ip, class_method, params, create_time, message)
     values
     (#{logId,jdbcType=INTEGER}, #{requestUrl,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
       #{ip,jdbcType=VARCHAR}, #{classMethod,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{message,jdbcType=VARCHAR}, #{error,jdbcType=VARCHAR}
-      )
+      #{createTime,jdbcType=TIMESTAMP}, #{message,jdbcType=VARCHAR})
     on duplicate key update 
     log_id = #{logId,jdbcType=INTEGER}, 
     request_url = #{requestUrl,jdbcType=VARCHAR}, 
@@ -242,8 +289,7 @@
     class_method = #{classMethod,jdbcType=VARCHAR}, 
     params = #{params,jdbcType=VARCHAR}, 
     create_time = #{createTime,jdbcType=TIMESTAMP}, 
-    message = #{message,jdbcType=VARCHAR}, 
-    error = #{error,jdbcType=VARCHAR}
+    message = #{message,jdbcType=VARCHAR}
   </insert>
   <insert id="upsertSelective" parameterType="com.yanda.entity.generated.LogInfo">
     <!--
@@ -306,7 +352,7 @@
         #{message,jdbcType=VARCHAR},
       </if>
       <if test="error != null">
-        #{error,jdbcType=VARCHAR},
+        #{error,jdbcType=LONGVARCHAR},
       </if>
     </trim>
     on duplicate key update 
@@ -336,8 +382,31 @@
         message = #{message,jdbcType=VARCHAR},
       </if>
       <if test="error != null">
-        error = #{error,jdbcType=VARCHAR},
+        error = #{error,jdbcType=LONGVARCHAR},
       </if>
     </trim>
+  </insert>
+  <insert id="upsertWithBLOBs" parameterType="com.yanda.entity.generated.LogInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_log_info
+    (log_id, request_url, method, ip, class_method, params, create_time, message, error
+      )
+    values
+    (#{logId,jdbcType=INTEGER}, #{requestUrl,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{ip,jdbcType=VARCHAR}, #{classMethod,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{message,jdbcType=VARCHAR}, #{error,jdbcType=LONGVARCHAR}
+      )
+    on duplicate key update 
+    log_id = #{logId,jdbcType=INTEGER}, 
+    request_url = #{requestUrl,jdbcType=VARCHAR}, 
+    method = #{method,jdbcType=VARCHAR}, 
+    ip = #{ip,jdbcType=VARCHAR}, 
+    class_method = #{classMethod,jdbcType=VARCHAR}, 
+    params = #{params,jdbcType=VARCHAR}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    message = #{message,jdbcType=VARCHAR}, 
+    error = #{error,jdbcType=LONGVARCHAR}
   </insert>
 </mapper>

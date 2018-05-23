@@ -137,6 +137,22 @@ public class EpisodeController extends BaseController {
 		return result(200, "success");
 
 	}
+	
+	/**
+	 * 批量删除视频集
+	 * @param request 请求体
+	 * @param ids 轮播图实体ids字符串以","拼接
+	 * @return
+	 * @throws DOPException 
+	 */
+	@RequestMapping(value = "/batchDelete/{ids}", method = RequestMethod.POST)
+	public JsonResult batchDelete(HttpServletRequest request, @PathVariable("ids") String ids) throws DOPException {
+		long[] idArr = StringUtil.stringToLongs(ids);
+		for (long id : idArr) {
+			episodeService.deleteById(id);
+		}
+		return result(200, "删除成功!");
+	}
 
 	/**
 	 * 根据视频集ID获取视频集详细信息

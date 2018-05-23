@@ -11,17 +11,23 @@ public interface LogInfoMapper extends MyMapper<LogInfo> {
 
     int deleteByExample(LogInfoExample example);
 
+    List<LogInfo> selectByExampleWithBLOBs(LogInfoExample example);
+
     List<LogInfo> selectByExample(LogInfoExample example);
 
     List<LogInfo> selectByExampleSelective(@Param("example") LogInfoExample example, @Param("selective") LogInfo.Col ... selective);
 
     int updateByExampleSelective(@Param("record") LogInfo record, @Param("example") LogInfoExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") LogInfo record, @Param("example") LogInfoExample example);
+
     int updateByExample(@Param("record") LogInfo record, @Param("example") LogInfoExample example);
 
     LogInfo selectByPrimaryKeySelective(@Param("logId") Integer logId, @Param("selective") LogInfo.Col ... selective);
 
     int upsert(LogInfo record);
+
+    int upsertWithBLOBs(LogInfo record);
 
     int upsertSelective(LogInfo record);
 }

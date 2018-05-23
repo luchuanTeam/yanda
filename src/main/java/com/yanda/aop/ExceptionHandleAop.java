@@ -1,5 +1,7 @@
 package com.yanda.aop;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -103,9 +105,12 @@ public class ExceptionHandleAop {
 	}
 	
 	private void saveLog(LogInfo logInfo,  Throwable e) {
-		LOG.error(e);
+		LOG.error("异常:", e);
+		StringWriter sw = new StringWriter();  
+        e.printStackTrace(new PrintWriter(sw, true));  
+        String errInfo = sw.toString(); 
 		logInfo.setMessage(e.getMessage());
-		logInfo.setError(e.toString());
+		logInfo.setError(errInfo);
 		logInfoMapper.insertSelective(logInfo);
 	}
 	
