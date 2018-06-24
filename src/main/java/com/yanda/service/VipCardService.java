@@ -9,4 +9,6 @@ public interface VipCardService extends BaseService<VipCardInfo, Integer> {
 	 * @return
 	 */
 	String getVipCardNum();
+	
+	
 }

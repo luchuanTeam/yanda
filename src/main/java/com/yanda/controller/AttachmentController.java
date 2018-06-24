@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -74,7 +75,7 @@ public class AttachmentController extends BaseController {
 
 		Map<String, String> resultMap = new HashMap<>();
 		// 获取图片的扩展名
-		String fileExt = StringUtils.substringAfter(fileName, ".");
+		String fileExt = FilenameUtils.getExtension(fileName);
 		// 获取新图片的名字
 		String newFileName = String.valueOf(System.currentTimeMillis()) + "." + fileExt;
 

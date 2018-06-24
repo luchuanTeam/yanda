@@ -2,7 +2,6 @@ package com.yanda.controller;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -15,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,10 +27,7 @@ import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserDetailInfo;
 import com.yanda.entity.generated.UserInfo;
-import com.yanda.entity.generated.UserInfo.Col;
-import com.yanda.entity.generated.UserInfoExample;
 import com.yanda.exception.DOPException;
-import com.yanda.mapper.generated.UserInfoMapper;
 import com.yanda.service.UserService;
 import com.yanda.util.DesEncryptUtil;
 import com.yanda.util.RestTemplateUtil;
@@ -49,8 +43,7 @@ public class UserController extends BaseController {
 	private RedisTemplate<String, Object> redisTemplate;
 	@Autowired
 	private MessageSender messageSender;
-	@Autowired
-	private UserInfoMapper userInfoMapper;
+
 
 	private static final String KEY_DATA = "12345678"; // 加密的密钥
 	private static final int COOKIE_AGE = 172800; // cookie的时限

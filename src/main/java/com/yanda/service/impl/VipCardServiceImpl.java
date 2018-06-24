@@ -3,6 +3,7 @@ package com.yanda.service.impl;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -12,11 +13,15 @@ import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.VipCardInfo;
 import com.yanda.entity.generated.VipCardInfoExample;
 import com.yanda.mapper.generated.VipCardInfoMapper;
+import com.yanda.service.UserService;
 import com.yanda.service.VipCardService;
 
 @Service
 public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCardInfo, Integer>
 		implements VipCardService {
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public PageResult<VipCardInfo> getList(int pageNum, int pageSize, String searchVal) {
@@ -65,5 +70,41 @@ public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCa
 		return cardNum;
 	}
 	
-
+//	@Transactional
+//	@Override
+//	public int save(VipCardInfo t) throws DOPException {
+//		String userName = t.getCardNum();
+//		String password = t.getCardPassword();
+//		UserInfo user = new UserInfo();
+//		user.setUserName(userName);
+//		user.setNickName(userName);
+//		user.setPassword(password);
+//		user.setAvatar("http://www.yanda123.com/app/people.png");
+//		userService.save(user);
+//		return super.save(t);
+//	}
+//	
+//	@Transactional
+//	@Override
+//	public int deleteById(Integer id) throws DOPException {
+//		VipCardInfo vipCard = super.selectById(id);
+//		String userName = vipCard.getCardNum();
+//		userService.deleteByUserName(userName);
+//		return super.deleteById(id);
+//	}
+//
+//	@Override
+//	public int update(VipCardInfo t) throws DOPException {
+//		String userName = t.getCardNum();
+//		Integer userId = t.getUserId();
+//		UserInfo wxUser = userService.selectById(Long.valueOf(userId));
+//		UserInfo vipUser = userService.findUserByUserName(userName);
+//		vipUser.setNickName(wxUser.getNickName());
+//		vipUser.setMobile(wxUser.getMobile());
+//		vipUser.setSex(wxUser.getSex());
+//		vipUser.setAvatar(wxUser.getAvatar());
+//		return super.update(t);
+//	}
+	
+	
 }

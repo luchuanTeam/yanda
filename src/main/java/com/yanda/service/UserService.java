@@ -53,4 +53,19 @@ public interface UserService extends BaseService<UserInfo, Long> {
      */
     UserInfo findWechatIsExist(String openId);
     
-}
+    /**
+     * 通过用户名删除用户
+     * @param userName
+     * @return
+     * @throws DOPException
+     */
+    int deleteByUserName(String userName) throws DOPException;
+    
+    /**
+     * 通过用户名查找用户
+     * @param userName
+     * @return
+     * @throws DOPException
+     */
+    UserInfo findUserByUserName(String userName) throws DOPException;
+} 

@@ -15,9 +15,12 @@ import com.yanda.entity.PageResult;
 import com.yanda.entity.UserDetailInfo;
 import com.yanda.entity.generated.UserInfo;
 import com.yanda.entity.generated.UserInfoExample;
+import com.yanda.entity.generated.VipCardInfo;
+import com.yanda.entity.generated.VipCardInfoExample;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.UserCustomMapper;
 import com.yanda.mapper.generated.UserInfoMapper;
+import com.yanda.mapper.generated.VipCardInfoMapper;
 import com.yanda.service.UserService;
 
 @Service
@@ -25,6 +28,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 	
 	@Autowired
 	private UserCustomMapper userCustomMapper;
+	@Autowired
+	private VipCardInfoMapper vipCardMapper;
 	
 	@Override
 	public UserInfo login(String userName, String password) {
@@ -32,6 +37,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 		example.or().andUserNameEqualTo(userName).andPasswordEqualTo(password);
 		example.or().andMobileEqualTo(userName).andPasswordEqualTo(password);
 		UserInfo userInfo = mapper.selectOneByExample(example);
+		if (userInfo == null) {
+			VipCardInfoExample example2 = new VipCardInfoExample();
+			example2.createCriteria().andCardNumEqualTo(userName);
+			VipCardInfo vip = vipCardMapper.selectOneByExample(example2);
+			if (null != vip && null != vip.getUserId()) {
+				example.clear();
+				example.createCriteria().andUserIdEqualTo(vip.getUserId());
+				userInfo = mapper.selectOneByExample(example);
+			}
+		}
 		return userInfo;
 		
 	}
@@ -97,6 +112,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 		if (CollectionUtils.isEmpty(users))
 			return null;
 		return users.get(0);
+	}
+
+	@Override
+	public int deleteByUserName(String userName) throws DOPException {
+		UserInfoExample example = new UserInfoExample();
+		example.createCriteria().andUserNameEqualTo(userName);
+		return this.mapper.deleteByExample(example);
+	}
+
+	@Override
+	public UserInfo findUserByUserName(String userName) throws DOPException {
+		UserInfoExample example = new UserInfoExample();
+		example.createCriteria().andUserNameEqualTo(userName);
+		return this.mapper.selectOneByExample(example);
 	}
 
 	

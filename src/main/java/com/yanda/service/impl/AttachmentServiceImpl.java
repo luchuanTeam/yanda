@@ -75,26 +75,24 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 		String fileExt = record.getFileExt();
 		File tempFile = new File(fileConfig.getTempPath(), newFilename + "." + fileExt);
 		setAttachmentDuration(record, tempFile);
+			
+		String filePath = record.getFilePath();
+		File dest = new File(filePath, record.getNewFilename() + "." + record.getFileExt());
+		if (!dest.getParentFile().exists()) {
+			dest.getParentFile().mkdirs();
+		}
 		try {
-			
-			String filePath = record.getFilePath();
-			File dest = new File(filePath, record.getNewFilename() + "." + record.getFileExt());
-			if (!dest.getParentFile().exists()) {
-				dest.getParentFile().mkdirs();
-			}
 			FileUtils.copyFile(tempFile, dest);
-			// 图片类型附件要生成缩略图
-			if (FileType.IMG.getValue() == record.getFileType()) {
-				generatedThumbnail(tempFile, new File(filePath), newFilename, fileExt);
-			}
-			tempFile.delete();
-			return this.mapper.insertSelective(record);
-			
 		} catch (IOException e) {
-			String tips = "添加附件失败：生成缩略图异常";
-			LOG.error(tips, e);
-			throw new DOPException(tips);
-		} 
+			LOG.error("拷贝临时文件到正式服务器失败" + e);
+			throw new DOPException("拷贝临时文件到正式服务器失败");
+		}
+		// 图片类型附件要生成缩略图
+		if (FileType.IMG.getValue() == record.getFileType()) {
+			generatedThumbnail(tempFile, new File(filePath), newFilename, fileExt);
+		}
+		tempFile.delete();
+		return this.mapper.insertSelective(record);
 	}
 	
 	/**
@@ -107,6 +105,8 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 		try {
 			
 			AttachmentInfo attachmentInfo = this.mapper.selectByPrimaryKey(recordId);
+			if (null == attachmentInfo)
+				return 0;
 			int result = this.mapper.deleteByPrimaryKey(recordId);
 			String filePath = attachmentInfo.getFilePath();
 			// 若是删除视频附件则只删除对应的文件不删除整个文件夹
@@ -149,16 +149,23 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 	 * @param sFile
 	 * @param folder
 	 * @param fileName
+	 * @throws DOPException 
 	 * @throws IOException
 	 */
-	private void generatedThumbnail(File sFile, File folder, String fileName, String ext) throws IOException {
+	private void generatedThumbnail(File sFile, File folder, String fileName, String ext) throws DOPException {
 		if (!folder.exists() || !folder.isDirectory()) {
 			folder.mkdirs();
 		}
-		for (int size : iconSize) {
-			File dfile = new File(folder, fileName + "_" + size + "." + ext);
-			ImageUtils.zoom(sFile, dfile, size, size, ext);
+		try {
+			for (int size : iconSize) {
+				File dfile = new File(folder, fileName + "_" + size + "." + ext);
+				ImageUtils.zoom(sFile, dfile, size, size, ext);
+			}
+		} catch (Exception e) {
+			LOG.error("生成缩略图异常" + e);
+			throw new DOPException("生成缩略图异常");
 		}
+		
 	}
 	
 	@Cacheable(value = "attach")
