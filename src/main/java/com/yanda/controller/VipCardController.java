@@ -154,6 +154,34 @@ public class VipCardController extends BaseController {
 		vipCardService.update(VipCardInfo);
 		return result(200, "绑定成功!");
 	}
-
 	
+	/**
+	 * 通过会员卡号绑定用户
+	 * @param request
+	 * @param VipCardInfo
+	 * @return
+	 * @throws DOPException
+	 */
+	@RequestMapping(value = "/bindByCardNum", method = RequestMethod.POST)
+	public JsonResult bindByCardNum(HttpServletRequest request) throws DOPException {
+		String cardNum = getNotEmptyValue(request, "cardNum");
+		if (StringUtil.isEmpty(cardNum))
+			return result(-1, "卡号为空");
+		String cardPassword = getNotEmptyValue(request, "cardPassword");
+		if (StringUtil.isEmpty(cardPassword))
+			return result(-1, "密码为空");
+		String userId = getNotEmptyValue(request, "userId");
+		if (StringUtil.isEmpty(userId))
+			return result(-1, "绑定的用户为空");
+		
+		VipCardInfo vipCard = vipCardService.findByCardNumAndPassword(cardNum, cardPassword);
+		if (null == vipCard)
+			return result(-1, "卡号或密码错误");
+		if (null != vipCard.getUserId())
+			return result(-1, "该会员卡已被绑定");
+		vipCard.setUserId(Integer.valueOf(userId));
+		vipCard.setUpdateTime(new Date());
+		vipCardService.upsertSelective(vipCard);
+		return result(200, "绑定成功!");
+	}
 }

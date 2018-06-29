@@ -69,6 +69,13 @@ public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCa
 		cardNum = year + month + day + String.valueOf(vipId) + millis;
 		return cardNum;
 	}
+
+	@Override
+	public VipCardInfo findByCardNumAndPassword(String cardNum, String password) {
+		VipCardInfoExample example = new VipCardInfoExample();
+		example.createCriteria().andCardNumEqualTo(cardNum).andCardPasswordEqualTo(password);
+		return mapper.selectOneByExample(example);
+	}
 	
 //	@Transactional
 //	@Override

@@ -24,6 +24,7 @@ import com.yanda.mapper.generated.AttachmentInfoMapper;
 import com.yanda.mapper.generated.EpisodeInfoMapper;
 import com.yanda.service.AttachmentService;
 import com.yanda.util.ImageUtils;
+import com.yanda.util.StringUtil;
 
 
 /**
@@ -207,5 +208,17 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 			}
 		}
 		
+	}
+	
+	public void updatePath() {
+		List<AttachmentInfo> attachs = this.mapper.selectAll();
+		for (AttachmentInfo attach : attachs) {
+			String path = attach.getFilePath();
+			if (StringUtil.isNotEmpty(path) && path.startsWith("C:")) {
+				path = path.replaceAll("C:", "E:");
+				attach.setFilePath(path);
+				this.mapper.updateByPrimaryKey(attach);
+			}
+		}
 	}
 }

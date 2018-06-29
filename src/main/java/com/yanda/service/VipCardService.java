@@ -10,5 +10,12 @@ public interface VipCardService extends BaseService<VipCardInfo, Integer> {
 	 */
 	String getVipCardNum();
 	
+	/**
+	 * 通过会员卡账号密码查询会员卡信息
+	 * @param cardNum
+	 * @param password
+	 * @return
+	 */
+	VipCardInfo findByCardNumAndPassword(String cardNum, String password);
 	
 }
