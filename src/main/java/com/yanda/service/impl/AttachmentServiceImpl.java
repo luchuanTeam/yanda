@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -217,6 +218,27 @@ public class AttachmentServiceImpl extends BaseServiceImpl<AttachmentInfoMapper,
 			if (StringUtil.isNotEmpty(path) && path.startsWith("C:")) {
 				path = path.replaceAll("C:", "E:");
 				attach.setFilePath(path);
+				this.mapper.updateByPrimaryKey(attach);
+			}
+		}
+	}
+	
+	@Transactional
+	public void updateFileName() {
+		List<AttachmentInfo> attachs = this.mapper.selectAll();
+		for (AttachmentInfo attach : attachs) {
+			String ext = attach.getFileExt();
+			if (ext.indexOf(".") > -1) {
+				String path = attach.getFilePath();
+				String newFilename = attach.getNewFilename();
+				String oldFilename = attach.getOldFilename();
+				
+				File media = new File(path + "/" + newFilename + "." + ext);
+				oldFilename += "." + StringUtils.substringBeforeLast(ext, ".");
+				ext = StringUtils.substringAfterLast(ext, ".");
+				media.renameTo(new File(path + "/" + newFilename + "." + ext));
+				attach.setFileExt(ext);
+				attach.setOldFilename(oldFilename);
 				this.mapper.updateByPrimaryKey(attach);
 			}
 		}

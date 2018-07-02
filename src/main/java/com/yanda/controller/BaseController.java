@@ -117,7 +117,7 @@ public class BaseController {
 		
 		Date crTime = new Date();
 		// 获取图片的扩展名
-		String ext = StringUtils.substringAfter(newFilename, ".");
+		String ext = StringUtils.substringAfterLast(newFilename, ".");
 		// 获取图片名
 		String filename = StringUtils.substringBefore(newFilename, ".");
 
@@ -152,7 +152,7 @@ public class BaseController {
 		
 		Date crTime = new Date();
 		// 获取图片的扩展名
-		String ext = StringUtils.substringAfter(mvNewFilename, ".");
+		String ext = StringUtils.substringAfterLast(mvNewFilename, ".");
 		// 获取图片名
 		String filename = StringUtils.substringBefore(mvNewFilename, ".");
 

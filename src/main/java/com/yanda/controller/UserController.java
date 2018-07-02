@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.HtmlUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yanda.component.MessageSender;
@@ -63,6 +64,7 @@ public class UserController extends BaseController {
 		if (StringUtil.isEmpty(password)) {
 			return result(-1, "请填写登录密码");
 		}
+		password = HtmlUtils.htmlUnescape(password);
 		UserInfo userInfo = userService.login(userName, password);
 		if (userInfo == null) {
 			return result(-1, "用户名密码错误");
@@ -373,4 +375,5 @@ public class UserController extends BaseController {
 		}
 		return result(200, "更新用户名和密码成功");
 	}*/
+	
 }

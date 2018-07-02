@@ -58,7 +58,7 @@ public class TestController {
 	
 	@Test
 	public void updateAttach() {
-		attachmentServiceImpl.updatePath();
+		attachmentServiceImpl.updateFileName();
 	}
 
 }
