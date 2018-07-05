@@ -106,12 +106,17 @@ public class ExceptionHandleAop {
 	
 	private void saveLog(LogInfo logInfo,  Throwable e) {
 		LOG.error("异常:", e);
-		StringWriter sw = new StringWriter();  
-        e.printStackTrace(new PrintWriter(sw, true));  
-        String errInfo = sw.toString(); 
-		logInfo.setMessage(e.getMessage());
-		logInfo.setError(errInfo);
-		logInfoMapper.insertSelective(logInfo);
+		try {
+			StringWriter sw = new StringWriter();  
+	        e.printStackTrace(new PrintWriter(sw, true));  
+	        String errInfo = sw.toString(); 
+			logInfo.setMessage(e.getMessage());
+			logInfo.setError(errInfo);
+			logInfoMapper.insertSelective(logInfo);
+		} catch (Exception e2) {
+			LOG.error("保存异常信息发生错误：", e2);
+		}
+		
 	}
 	
 }

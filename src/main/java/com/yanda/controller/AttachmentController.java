@@ -116,7 +116,7 @@ public class AttachmentController extends BaseController {
 
 		Map<String, String> resultMap = new HashMap<>();
 		// 获取文件的扩展名
-		String fileExt = StringUtils.substringAfter(fileName, ".");
+		String fileExt = StringUtils.substringAfterLast(fileName, ".");
 		// 获取新文件的名字
 		String newFileName = String.valueOf(System.currentTimeMillis()) + "." + fileExt;
 
@@ -224,5 +224,16 @@ public class AttachmentController extends BaseController {
 	public JsonResult updateAttachDurantion(HttpServletRequest request) {
 		attachmentService.updateAllDuration();
 		return result(200, "更新附件时长成功");
+	}
+	
+	@ResponseBody
+	@GetMapping("/updateFile")
+	public JsonResult updateFile(HttpServletRequest request) {
+		attachmentService.updateFileName();
+		return result(200, "更新附件成功");
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(StringUtils.substringAfterLast("10.学习转移动作_batch.mp4", "."));
 	}
 }

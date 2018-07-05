@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.HtmlUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yanda.component.MessageSender;
@@ -29,6 +30,7 @@ import com.yanda.entity.UserDetailInfo;
 import com.yanda.entity.generated.UserInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.service.UserService;
+import com.yanda.util.Const;
 import com.yanda.util.DesEncryptUtil;
 import com.yanda.util.RestTemplateUtil;
 import com.yanda.util.StringUtil;
@@ -45,13 +47,6 @@ public class UserController extends BaseController {
 	private MessageSender messageSender;
 
 
-	private static final String KEY_DATA = "12345678"; // 加密的密钥
-	private static final int COOKIE_AGE = 172800; // cookie的时限
-	private static final String appId = "wx8c025f88b3f63c44";
-	private static final String appSecret = "a308a19541497abdab9a2cad360188d3";
-	private static final String CODE_KEY_PRE = "message#code#"; // 验证码存储key前缀
-	private static final int CODE_EXPIRE = 2; // 验证码有效期，单位分钟
-	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public JsonResult login(HttpServletRequest request, HttpServletResponse response) {
@@ -63,6 +58,7 @@ public class UserController extends BaseController {
 		if (StringUtil.isEmpty(password)) {
 			return result(-1, "请填写登录密码");
 		}
+		password = HtmlUtils.htmlUnescape(password);
 		UserInfo userInfo = userService.login(userName, password);
 		if (userInfo == null) {
 			return result(-1, "用户名密码错误");
@@ -73,14 +69,13 @@ public class UserController extends BaseController {
 		
 		UserDetailInfo user = userService.findUserDetailByUserId(userInfo.getUserId());
 		
-		String str = new Date().getTime() + "&" + JSON.toJSONString(user);
-		String token = DesEncryptUtil.encryptToHex(str.getBytes(), KEY_DATA);
-		String sessionId = request.getSession().getId();
-		Cookie cookie = new Cookie(sessionId, token);
-		cookie.setMaxAge(COOKIE_AGE); // 设置cookie时限为2天
-		response.addCookie(cookie);
+		String str = new Date().getTime() + "&" + user.getUserName();
+		String token = DesEncryptUtil.encryptToHex(str.getBytes(), Const.KEY_DATA);
+		// 将token存入redis缓存，token作为小程序端调用接口和判断是否登录的唯一凭证
+		redisTemplate.opsForHash().put(Const.TOKEN_KEY_PRE, user.getUserName(), token);
+		redisTemplate.expire(Const.TOKEN_KEY_PRE + user.getUserName(), Const.TOKEN_EXPIRE, TimeUnit.DAYS);
+			
 		Map<String, Object> map = new HashMap<>();
-		map.put("sessionId", sessionId);
 		map.put("token", token);
 		map.put("userInfo", user);
 		return result(200, "success", map);
@@ -106,7 +101,7 @@ public class UserController extends BaseController {
 				if (name.equals(sessionId)) {
 					String value = cookie.getValue();
 					if (value.equals(token)) {
-						String str = DesEncryptUtil.decrypt(token, KEY_DATA); // 对传入的token
+						String str = DesEncryptUtil.decrypt(token, Const.KEY_DATA); // 对传入的token
 																				// 进行解密
 						String userStr = str.substring(str.lastIndexOf("&") + 1);
 						UserDetailInfo userInfo = (UserDetailInfo) JSON.parseObject(userStr, UserDetailInfo.class);
@@ -299,8 +294,8 @@ public class UserController extends BaseController {
 		if (StringUtil.isEmpty(js_code))
 			return result(-1, "js_code为空");
 		Map<String, Object> para = new HashMap<>();
-		para.put("appid", appId);
-		para.put("secret", appSecret);
+		para.put("appid", Const.appId);
+		para.put("secret", Const.appSecret);
 		para.put("js_code", js_code);
 		para.put("grant_type", "authorization_code");
 		String result = RestTemplateUtil.getForObject("https://api.weixin.qq.com/sns/jscode2session", String.class, para);
@@ -323,8 +318,8 @@ public class UserController extends BaseController {
 		Random rad = new Random();  
         String code = rad.nextInt(10000) + "";
 		messageSender.sendMessage(code, mobile);
-		redisTemplate.opsForHash().put(CODE_KEY_PRE, userId, code);
-		redisTemplate.expire(CODE_KEY_PRE + userId, CODE_EXPIRE, TimeUnit.MINUTES);
+		redisTemplate.opsForHash().put(Const.CODE_KEY_PRE, userId, code);
+		redisTemplate.expire(Const.CODE_KEY_PRE + userId, Const.CODE_EXPIRE, TimeUnit.MINUTES);
 		return result(200, "发送成功");
 	}
 	
@@ -342,7 +337,7 @@ public class UserController extends BaseController {
 			return result(-1, "手机号为空");
 		if (StringUtil.isEmpty(code))
 			return result(-1, "验证码为空");
-		Object redisCode = redisTemplate.opsForHash().get(CODE_KEY_PRE, userId);
+		Object redisCode = redisTemplate.opsForHash().get(Const.CODE_KEY_PRE, userId);
 		if (null == redisCode || !redisCode.toString().equals(code))
 			return result(-1, "验证码错误或已失效");
 		UserInfo userInfo = new UserInfo();
@@ -373,4 +368,5 @@ public class UserController extends BaseController {
 		}
 		return result(200, "更新用户名和密码成功");
 	}*/
+	
 }

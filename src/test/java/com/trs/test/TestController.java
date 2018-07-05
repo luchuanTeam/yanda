@@ -15,6 +15,7 @@ import com.yanda.component.MessageSender;
 import com.yanda.entity.generated.BannerInfo;
 import com.yanda.mapper.generated.BannerInfoMapper;
 import com.yanda.service.ReportService;
+import com.yanda.service.impl.AttachmentServiceImpl;
 
 /**
  * 测试用例
@@ -31,6 +32,8 @@ public class TestController {
 	private ReportService report;
 	@Autowired
 	private MessageSender meSender;
+	@Autowired
+	private AttachmentServiceImpl attachmentServiceImpl;
 
 	
 	public void testPushApi() {
@@ -44,15 +47,18 @@ public class TestController {
 		
 	}
 	
-	@Test
 	public void testReport() {
 		System.out.println(JSON.toJSONString(report.getClassifyMvCount()));
 	}
 	
-	@Test
 	public void send() {
 		meSender.sendMessage("1111", "17620059260");
 		
+	}
+	
+	@Test
+	public void updateAttach() {
+		attachmentServiceImpl.updateFileName();
 	}
 
 }
