@@ -2,6 +2,8 @@ package com.yanda.controller;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -74,6 +76,49 @@ public class VipCardController extends BaseController {
 	@RequestMapping(value = "/getVipCardNum", method = RequestMethod.GET)
 	public String geVipCardNum(HttpServletRequest request) {
 		return vipCardService.getVipCardNum();
+	}
+	
+	/**
+	 * 客户购买会员后为客户绑定会员卡
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/buy", method = RequestMethod.POST)
+	public JsonResult buyByClient(HttpServletRequest request, @RequestBody VipCardInfo vipCardInfo) {
+		Integer month = vipCardInfo.getPurchaseMonths();
+		if (null == month)
+			return result(-1, "购买月数不能为空");
+		String cardNum = vipCardInfo.getCardNum();
+		Date now = new Date();
+		if(StringUtil.isEmpty(cardNum)) {		// 购买会员
+			cardNum = vipCardService.getVipCardNum();
+			vipCardInfo.setCardNum(cardNum);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(now);
+			calendar.add(Calendar.MONTH, month);
+			vipCardInfo.setCreateTime(now);
+			vipCardInfo.setUpdateTime(now);
+			vipCardInfo.setExpTime(calendar.getTime());
+			vipCardInfo.setCardPassword("123456");
+		} else {							// 续费会员
+			Calendar calendar = Calendar.getInstance();
+			Date expTime = vipCardInfo.getExpTime();
+			calendar.setTime(expTime);
+			calendar.add(Calendar.MONTH, month);
+			vipCardInfo.setUpdateTime(now);
+			vipCardInfo.setExpTime(calendar.getTime());
+		}
+		try {
+			vipCardService.upsertSelective(vipCardInfo);
+			Map<String, Object> result = new HashMap<>();
+			result.put("账号", vipCardInfo.getCardNum());
+			result.put("密码", vipCardInfo.getCardPassword());
+			result.put("到期时间", vipCardInfo.getExpTime());
+			return result(200, "success", result);
+		} catch (Exception e) {
+			LOG.error("购买会员失败", e);
+			return result(-1, "添加失败！");
+		}
 	}
 	
 	/**
