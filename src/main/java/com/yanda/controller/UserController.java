@@ -69,11 +69,11 @@ public class UserController extends BaseController {
 		
 		UserDetailInfo user = userService.findUserDetailByUserId(userInfo.getUserId());
 		
-		String str = new Date().getTime() + "&" + userName;
+		String str = new Date().getTime() + "&" + user.getUserName();
 		String token = DesEncryptUtil.encryptToHex(str.getBytes(), Const.KEY_DATA);
 		// 将token存入redis缓存，token作为小程序端调用接口和判断是否登录的唯一凭证
-		redisTemplate.opsForHash().put(Const.TOKEN_KEY_PRE, userName, token);
-		redisTemplate.expire(Const.TOKEN_KEY_PRE + userName, Const.TOKEN_EXPIRE, TimeUnit.DAYS);
+		redisTemplate.opsForHash().put(Const.TOKEN_KEY_PRE, user.getUserName(), token);
+		redisTemplate.expire(Const.TOKEN_KEY_PRE + user.getUserName(), Const.TOKEN_EXPIRE, TimeUnit.DAYS);
 			
 		Map<String, Object> map = new HashMap<>();
 		map.put("token", token);
