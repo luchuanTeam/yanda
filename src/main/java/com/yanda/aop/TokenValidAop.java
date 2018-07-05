@@ -54,11 +54,11 @@ public class TokenValidAop {
 
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
-		String terminal = request.getParameter("terminal");
-		String token = request.getParameter("token");
+		String terminal = request.getHeader("terminal");
+		String token = request.getHeader("token");
 		if (StringUtil.isNotEmpty(terminal) && terminal.equals("wechat")) {
 			if (StringUtil.isEmpty(token))
-				return new JsonResult(401, "无法获取有效登录凭证,请重新登录"); 
+				return new JsonResult(401, "请先登录"); 
 			String userName = "";
 			try {
 				String decryToken = DesEncryptUtil.decrypt(token, Const.KEY_DATA);

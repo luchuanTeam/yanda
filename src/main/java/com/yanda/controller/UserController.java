@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,8 +45,6 @@ public class UserController extends BaseController {
 	@Autowired
 	private MessageSender messageSender;
 
-
-
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public JsonResult login(HttpServletRequest request, HttpServletResponse response) {
 		String userName = getNotEmptyValue(request, "userName");
@@ -66,15 +63,15 @@ public class UserController extends BaseController {
 		if (userInfo.getStatus().intValue() != 1) {
 			return result(-1, "该账号已被停用");
 		}
-		
+
 		UserDetailInfo user = userService.findUserDetailByUserId(userInfo.getUserId());
-		
+
 		String str = new Date().getTime() + "&" + user.getUserName();
 		String token = DesEncryptUtil.encryptToHex(str.getBytes(), Const.KEY_DATA);
 		// 将token存入redis缓存，token作为小程序端调用接口和判断是否登录的唯一凭证
 		redisTemplate.opsForHash().put(Const.TOKEN_KEY_PRE, user.getUserName(), token);
 		redisTemplate.expire(Const.TOKEN_KEY_PRE + user.getUserName(), Const.TOKEN_EXPIRE, TimeUnit.DAYS);
-			
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("token", token);
 		map.put("userInfo", user);
@@ -89,32 +86,31 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/checkToken", method = RequestMethod.POST)
 	public JsonResult checkToken(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		String sessionId = getNotEmptyValue(request, "sessionId");
-		String token = getNotEmptyValue(request, "token");
-		if (sessionId == null || token == null) {
-			return result(-1, "会话已过期，请重新登录");
-		}
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				String name = cookie.getName();
-				if (name.equals(sessionId)) {
-					String value = cookie.getValue();
-					if (value.equals(token)) {
-						String str = DesEncryptUtil.decrypt(token, Const.KEY_DATA); // 对传入的token
-																				// 进行解密
-						String userStr = str.substring(str.lastIndexOf("&") + 1);
-						UserDetailInfo userInfo = (UserDetailInfo) JSON.parseObject(userStr, UserDetailInfo.class);
-						return result(200, "验证通过", userInfo);
-					} else {
-						return result(-1, "验证未通过，请重新登录");
-					}
-				}
+		String terminal = request.getHeader("terminal");
+		String token = request.getHeader("token");
+		if (StringUtil.isNotEmpty(terminal) && terminal.equals("wechat")) {
+			if (StringUtil.isEmpty(token))
+				return result(401, "请先登录");
+			String userName = "";
+			try {
+				String decryToken = DesEncryptUtil.decrypt(token, Const.KEY_DATA);
+				userName = decryToken.split("&")[1];
+			} catch (Exception e) {
+				LOG.error("token值非法", e);
+				return result(401, "登录凭证非法,请重新登录");
 			}
+
+			Object userToken = redisTemplate.opsForHash().get(Const.TOKEN_KEY_PRE, userName);
+			if (null == userToken || !userToken.toString().equals(token)) {
+				return result(401, "登录状态已失效,请重新登录");
+			}
+			// 重新刷新token有效期
+			redisTemplate.opsForHash().put(Const.TOKEN_KEY_PRE, userName, token);
+			redisTemplate.expire(Const.TOKEN_KEY_PRE + userName, Const.TOKEN_EXPIRE, TimeUnit.DAYS);
 		}
-		return result(-1, "会话已过期，请重新登录");
+		return result(200, "验证通过");
 	}
-	
+
 	@CacheEvict(value = { "userList" }, allEntries = true, beforeInvocation = true)
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public JsonResult register(HttpServletRequest request) {
@@ -222,9 +218,10 @@ public class UserController extends BaseController {
 			return result(-1, "查询失败");
 		}
 	}
-	
+
 	/**
 	 * 通过openid查询该微信用户是否存在
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -237,9 +234,10 @@ public class UserController extends BaseController {
 		return result(200, "success", user);
 
 	}
-	
+
 	/**
 	 * 通过微信注册用户
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -282,9 +280,10 @@ public class UserController extends BaseController {
 			return result(-1, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 调用微信接口获取openid
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -298,13 +297,15 @@ public class UserController extends BaseController {
 		para.put("secret", Const.appSecret);
 		para.put("js_code", js_code);
 		para.put("grant_type", "authorization_code");
-		String result = RestTemplateUtil.getForObject("https://api.weixin.qq.com/sns/jscode2session", String.class, para);
+		String result = RestTemplateUtil.getForObject("https://api.weixin.qq.com/sns/jscode2session", String.class,
+				para);
 		return result(200, "success", JSON.parse(result));
 
 	}
-	
+
 	/**
 	 * 发送短信验证码
+	 * 
 	 * @param userId
 	 * @param mobile
 	 * @return
@@ -315,16 +316,17 @@ public class UserController extends BaseController {
 			return result(-1, "用户ID为空");
 		if (StringUtil.isEmpty(mobile))
 			return result(-1, "手机号为空");
-		Random rad = new Random();  
-        String code = rad.nextInt(10000) + "";
+		Random rad = new Random();
+		String code = rad.nextInt(10000) + "";
 		messageSender.sendMessage(code, mobile);
 		redisTemplate.opsForHash().put(Const.CODE_KEY_PRE, userId, code);
 		redisTemplate.expire(Const.CODE_KEY_PRE + userId, Const.CODE_EXPIRE, TimeUnit.MINUTES);
 		return result(200, "发送成功");
 	}
-	
+
 	/**
 	 * 发送短信验证码
+	 * 
 	 * @param userId
 	 * @param mobile
 	 * @return
@@ -346,27 +348,27 @@ public class UserController extends BaseController {
 		try {
 			userService.update(userInfo);
 		} catch (DOPException e) {
-			LOG.error("绑定用户手机号失败:"+e);
+			LOG.error("绑定用户手机号失败:" + e);
 			return result(-1, "绑定失败");
 		}
 		return result(200, "绑定成功");
 	}
-	
-	/*@Transactional
-	@GetMapping("/batchUpdateUserNameAndPass")
-	public JsonResult batchUpdateUserNameAndPass(HttpServletRequest request) {
-		String token = request.getParameter("token");
-		if (token == null || !token.equals("chenli"))
-			return result(-1, "非法操作");
-		UserInfoExample example = new UserInfoExample();
-		example.createCriteria().andIsWechatEqualTo(true);
-		List<UserInfo> users = userInfoMapper.selectByExampleSelective(example, Col.userId, Col.userName, Col.password);
-		for (UserInfo user: users) {
-			user.setUserName(StringUtil.generateRandomWord(12, "wx"));
-			user.setPassword(StringUtil.generateRandomCodeMixed(8));
-			userInfoMapper.updateByPrimaryKeySelective(user);
-		}
-		return result(200, "更新用户名和密码成功");
-	}*/
-	
+
+	/*
+	 * @Transactional
+	 * 
+	 * @GetMapping("/batchUpdateUserNameAndPass") public JsonResult
+	 * batchUpdateUserNameAndPass(HttpServletRequest request) { String token =
+	 * request.getParameter("token"); if (token == null ||
+	 * !token.equals("chenli")) return result(-1, "非法操作"); UserInfoExample
+	 * example = new UserInfoExample();
+	 * example.createCriteria().andIsWechatEqualTo(true); List<UserInfo> users =
+	 * userInfoMapper.selectByExampleSelective(example, Col.userId,
+	 * Col.userName, Col.password); for (UserInfo user: users) {
+	 * user.setUserName(StringUtil.generateRandomWord(12, "wx"));
+	 * user.setPassword(StringUtil.generateRandomCodeMixed(8));
+	 * userInfoMapper.updateByPrimaryKeySelective(user); } return result(200,
+	 * "更新用户名和密码成功"); }
+	 */
+
 }
