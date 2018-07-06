@@ -18,4 +18,11 @@ public interface VipCardService extends BaseService<VipCardInfo, Integer> {
 	 */
 	VipCardInfo findByCardNumAndPassword(String cardNum, String password);
 	
+	/**
+	 * 通过绑定的用户id查询会员卡信息
+	 * @param userId
+	 * @return
+	 */
+	VipCardInfo findByUserId(Integer userId);
+	
 }

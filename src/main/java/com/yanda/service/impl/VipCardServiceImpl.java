@@ -76,6 +76,15 @@ public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCa
 		example.createCriteria().andCardNumEqualTo(cardNum).andCardPasswordEqualTo(password);
 		return mapper.selectOneByExample(example);
 	}
+
+	@Override
+	public VipCardInfo findByUserId(Integer userId) {
+		VipCardInfoExample example = new VipCardInfoExample();
+		example.createCriteria().andUserIdEqualTo(userId);
+		return mapper.selectOneByExample(example);
+	}
+	
+	
 	
 //	@Transactional
 //	@Override

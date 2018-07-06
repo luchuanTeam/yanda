@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
+import com.yanda.entity.UserDetailInfo;
 import com.yanda.entity.generated.VipCardInfo;
 import com.yanda.exception.DOPException;
+import com.yanda.service.UserService;
 import com.yanda.service.VipCardService;
 import com.yanda.util.StringUtil;
 
@@ -27,6 +29,9 @@ public class VipCardController extends BaseController {
 	
 	@Autowired
 	private VipCardService vipCardService;
+	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * 获取会员卡列表数据
@@ -84,36 +89,49 @@ public class VipCardController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/buy", method = RequestMethod.POST)
-	public JsonResult buyByClient(HttpServletRequest request, @RequestBody VipCardInfo vipCardInfo) {
-		Integer month = vipCardInfo.getPurchaseMonths();
-		if (null == month)
+	public JsonResult buyByClient(HttpServletRequest request) {
+		String month = getNotEmptyValue(request, "month");
+		if (StringUtil.isEmpty(month))
 			return result(-1, "购买月数不能为空");
-		String cardNum = vipCardInfo.getCardNum();
+		String userId = getNotEmptyValue(request, "userId");
+		if (StringUtil.isEmpty(userId)) 
+			return result(-1, "用户id不能为空");
+		String nickName = getValue(request, "nickName", "");
+		VipCardInfo vipCardInfo = vipCardService.findByUserId(Integer.valueOf(userId));
 		Date now = new Date();
-		if(StringUtil.isEmpty(cardNum)) {		// 购买会员
-			cardNum = vipCardService.getVipCardNum();
+		if(vipCardInfo == null) {			// 购买会员
+			vipCardInfo = new VipCardInfo();
+			String cardNum = vipCardService.getVipCardNum();
 			vipCardInfo.setCardNum(cardNum);
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(now);
-			calendar.add(Calendar.MONTH, month);
+			calendar.add(Calendar.MONTH, Integer.valueOf(month));
 			vipCardInfo.setCreateTime(now);
 			vipCardInfo.setUpdateTime(now);
 			vipCardInfo.setExpTime(calendar.getTime());
 			vipCardInfo.setCardPassword("123456");
+			vipCardInfo.setUserId(Integer.valueOf(userId));
+			vipCardInfo.setNickName(nickName);
+			vipCardInfo.setPurchaseMonths(Integer.valueOf(month));
 		} else {							// 续费会员
 			Calendar calendar = Calendar.getInstance();
 			Date expTime = vipCardInfo.getExpTime();
 			calendar.setTime(expTime);
-			calendar.add(Calendar.MONTH, month);
+			calendar.add(Calendar.MONTH, Integer.valueOf(month));
 			vipCardInfo.setUpdateTime(now);
 			vipCardInfo.setExpTime(calendar.getTime());
+			Integer purchaseMonths = vipCardInfo.getPurchaseMonths() + Integer.valueOf(month);
+			vipCardInfo.setPurchaseMonths(purchaseMonths);
 		}
 		try {
+			Integer userId2 = vipCardInfo.getUserId();
 			vipCardService.upsertSelective(vipCardInfo);
+			UserDetailInfo userDetailInfo = userService.findUserDetailByUserId(userId2);
 			Map<String, Object> result = new HashMap<>();
-			result.put("账号", vipCardInfo.getCardNum());
-			result.put("密码", vipCardInfo.getCardPassword());
-			result.put("到期时间", vipCardInfo.getExpTime());
+			result.put("account", vipCardInfo.getCardNum());
+			result.put("password", vipCardInfo.getCardPassword());
+			result.put("expTime", vipCardInfo.getExpTime());
+			result.put("user", userDetailInfo);
 			return result(200, "success", result);
 		} catch (Exception e) {
 			LOG.error("购买会员失败", e);
