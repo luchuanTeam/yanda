@@ -25,15 +25,19 @@ public class PayInfo implements Serializable {
     @Column(name = "trade_no")
     private String tradeNo;
 
+    @Column(name = "pay_msg")
+    private String payMsg;
+
     private static final long serialVersionUID = 1L;
 
-    public PayInfo(Integer payId, Float payAmount, Date payTime, Integer payStatus, Integer userId, String tradeNo) {
+    public PayInfo(Integer payId, Float payAmount, Date payTime, Integer payStatus, Integer userId, String tradeNo, String payMsg) {
         this.payId = payId;
         this.payAmount = payAmount;
         this.payTime = payTime;
         this.payStatus = payStatus;
         this.userId = userId;
         this.tradeNo = tradeNo;
+        this.payMsg = payMsg;
     }
 
     public PayInfo() {
@@ -124,13 +128,28 @@ public class PayInfo implements Serializable {
         this.tradeNo = tradeNo == null ? null : tradeNo.trim();
     }
 
+    /**
+     * @return pay_msg
+     */
+    public String getPayMsg() {
+        return payMsg;
+    }
+
+    /**
+     * @param payMsg
+     */
+    public void setPayMsg(String payMsg) {
+        this.payMsg = payMsg == null ? null : payMsg.trim();
+    }
+
     public enum Col {
         payId("pay_id"),
         payAmount("pay_amount"),
         payTime("pay_time"),
         payStatus("pay_status"),
         userId("user_id"),
-        tradeNo("trade_no");
+        tradeNo("trade_no"),
+        payMsg("pay_msg");
 
         private final String column;
 
