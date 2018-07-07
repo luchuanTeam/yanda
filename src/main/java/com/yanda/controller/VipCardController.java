@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserDetailInfo;
+import com.yanda.entity.generated.PayInfo;
 import com.yanda.entity.generated.VipCardInfo;
 import com.yanda.exception.DOPException;
+import com.yanda.service.PayService;
 import com.yanda.service.UserService;
 import com.yanda.service.VipCardService;
 import com.yanda.util.StringUtil;
@@ -32,6 +34,9 @@ public class VipCardController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PayService PayService;
 	
 	/**
 	 * 获取会员卡列表数据
@@ -124,9 +129,8 @@ public class VipCardController extends BaseController {
 			vipCardInfo.setPurchaseMonths(purchaseMonths);
 		}
 		try {
-			Integer userId2 = vipCardInfo.getUserId();
 			vipCardService.upsertSelective(vipCardInfo);
-			UserDetailInfo userDetailInfo = userService.findUserDetailByUserId(userId2);
+			UserDetailInfo userDetailInfo = userService.findUserDetailByUserId(Integer.valueOf(userId));
 			Map<String, Object> result = new HashMap<>();
 			result.put("account", vipCardInfo.getCardNum());
 			result.put("password", vipCardInfo.getCardPassword());
