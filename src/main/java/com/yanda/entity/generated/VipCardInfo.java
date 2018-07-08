@@ -32,6 +32,12 @@ public class VipCardInfo implements Serializable {
     private Integer purchaseMonths;
 
     /**
+     * 购买天数
+     */
+    @Column(name = "purchase_days")
+    private Integer purchaseDays;
+
+    /**
      * 会员卡创建时间
      */
     @Column(name = "create_time")
@@ -63,11 +69,12 @@ public class VipCardInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public VipCardInfo(Integer cardId, String cardNum, String cardPassword, Integer purchaseMonths, Date createTime, Date updateTime, Date expTime, Integer userId, String nickName) {
+    public VipCardInfo(Integer cardId, String cardNum, String cardPassword, Integer purchaseMonths, Integer purchaseDays, Date createTime, Date updateTime, Date expTime, Integer userId, String nickName) {
         this.cardId = cardId;
         this.cardNum = cardNum;
         this.cardPassword = cardPassword;
         this.purchaseMonths = purchaseMonths;
+        this.purchaseDays = purchaseDays;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.expTime = expTime;
@@ -149,6 +156,24 @@ public class VipCardInfo implements Serializable {
      */
     public void setPurchaseMonths(Integer purchaseMonths) {
         this.purchaseMonths = purchaseMonths;
+    }
+
+    /**
+     * 获取购买天数
+     *
+     * @return purchase_days - 购买天数
+     */
+    public Integer getPurchaseDays() {
+        return purchaseDays;
+    }
+
+    /**
+     * 设置购买天数
+     *
+     * @param purchaseDays 购买天数
+     */
+    public void setPurchaseDays(Integer purchaseDays) {
+        this.purchaseDays = purchaseDays;
     }
 
     /**
@@ -246,6 +271,7 @@ public class VipCardInfo implements Serializable {
         cardNum("card_num"),
         cardPassword("card_password"),
         purchaseMonths("purchase_months"),
+        purchaseDays("purchase_days"),
         createTime("create_time"),
         updateTime("update_time"),
         expTime("exp_time"),

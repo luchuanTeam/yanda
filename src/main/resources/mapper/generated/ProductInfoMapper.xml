@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yanda.mapper.generated.ProductInfoMapper">
+  <resultMap id="BasePropertyResultMap" type="com.yanda.entity.generated.ProductInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="time_unit" jdbcType="INTEGER" property="timeUnit" />
+    <result column="time_num" jdbcType="INTEGER" property="timeNum" />
+    <result column="current_price" jdbcType="DECIMAL" property="currentPrice" />
+    <result column="old_price" jdbcType="DECIMAL" property="oldPrice" />
+    <result column="product" jdbcType="VARCHAR" property="product" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="product_order" jdbcType="INTEGER" property="productOrder" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.yanda.entity.generated.ProductInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="time_unit" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="time_num" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="current_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="old_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="product" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="product_order" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, name, time_unit, time_num, current_price, old_price, product, create_time, product_order
+  </sql>
+  <select id="selectByExample" parameterType="com.yanda.entity.generated.ProductInfoExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleSelective" parameterType="map" resultMap="BasePropertyResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="example.distinct">
+      distinct
+    </if>
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    from t_product_info
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yanda.entity.generated.ProductInfoExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from t_product_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.yanda.entity.generated.ProductInfoExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from t_product_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_product_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeUnit != null">
+        time_unit = #{record.timeUnit,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeNum != null">
+        time_num = #{record.timeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.currentPrice != null">
+        current_price = #{record.currentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oldPrice != null">
+        old_price = #{record.oldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.product != null">
+        product = #{record.product,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.productOrder != null">
+        product_order = #{record.productOrder,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update t_product_info
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      time_unit = #{record.timeUnit,jdbcType=INTEGER},
+      time_num = #{record.timeNum,jdbcType=INTEGER},
+      current_price = #{record.currentPrice,jdbcType=DECIMAL},
+      old_price = #{record.oldPrice,jdbcType=DECIMAL},
+      product = #{record.product,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      product_order = #{record.productOrder,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="selectByPrimaryKeySelective" parameterType="map" resultMap="BasePropertyResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <foreach collection="selective" item="column" separator=",">
+      ${column.value}
+    </foreach>
+    from t_product_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="upsert" parameterType="com.yanda.entity.generated.ProductInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_product_info
+    (id, name, time_unit, time_num, current_price, old_price, product, create_time, product_order
+      )
+    values
+    (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{timeUnit,jdbcType=INTEGER}, 
+      #{timeNum,jdbcType=INTEGER}, #{currentPrice,jdbcType=DECIMAL}, #{oldPrice,jdbcType=DECIMAL}, 
+      #{product,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{productOrder,jdbcType=INTEGER}
+      )
+    on duplicate key update 
+    id = #{id,jdbcType=INTEGER}, 
+    name = #{name,jdbcType=VARCHAR}, 
+    time_unit = #{timeUnit,jdbcType=INTEGER}, 
+    time_num = #{timeNum,jdbcType=INTEGER}, 
+    current_price = #{currentPrice,jdbcType=DECIMAL}, 
+    old_price = #{oldPrice,jdbcType=DECIMAL}, 
+    product = #{product,jdbcType=VARCHAR}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    product_order = #{productOrder,jdbcType=INTEGER}
+  </insert>
+  <insert id="upsertSelective" parameterType="com.yanda.entity.generated.ProductInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    insert into t_product_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="timeUnit != null">
+        time_unit,
+      </if>
+      <if test="timeNum != null">
+        time_num,
+      </if>
+      <if test="currentPrice != null">
+        current_price,
+      </if>
+      <if test="oldPrice != null">
+        old_price,
+      </if>
+      <if test="product != null">
+        product,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="productOrder != null">
+        product_order,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="timeUnit != null">
+        #{timeUnit,jdbcType=INTEGER},
+      </if>
+      <if test="timeNum != null">
+        #{timeNum,jdbcType=INTEGER},
+      </if>
+      <if test="currentPrice != null">
+        #{currentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="oldPrice != null">
+        #{oldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="product != null">
+        #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productOrder != null">
+        #{productOrder,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="timeUnit != null">
+        time_unit = #{timeUnit,jdbcType=INTEGER},
+      </if>
+      <if test="timeNum != null">
+        time_num = #{timeNum,jdbcType=INTEGER},
+      </if>
+      <if test="currentPrice != null">
+        current_price = #{currentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="oldPrice != null">
+        old_price = #{oldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="product != null">
+        product = #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productOrder != null">
+        product_order = #{productOrder,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

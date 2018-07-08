@@ -109,7 +109,8 @@
 		<!-- <table tableName="t_user_history" domainObjectName="UserHistoryInfo" /> -->
 		<!-- <table tableName="t_log_info" domainObjectName="LogInfo" /> -->
 		<!-- <table tableName="t_mv_episode" domainObjectName="EpisodeInfo" /> -->
-		<table tableName="t_pay_info" domainObjectName="PayInfo" />
-
+		<!-- <table tableName="t_pay_info" domainObjectName="PayInfo" /> -->
+		<!-- <table tableName="t_product_info" domainObjectName="ProductInfo" /> -->
+		<table tableName="t_vip_card_info" domainObjectName="VipCardInfo" />
 	</context>
 </generatorConfiguration>

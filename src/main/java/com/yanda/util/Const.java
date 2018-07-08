@@ -11,4 +11,9 @@ public class Const {
 	public static final int CODE_EXPIRE = 2; // 验证码有效期，单位分钟
 	public static final int TOKEN_EXPIRE = 2; // 验证码有效期，单位天
 	
+	/**
+	 * 会员卡产品
+	 */
+	public static final String PRODUCT_VIP = "vipCard";
+	
 }

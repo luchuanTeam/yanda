@@ -365,6 +365,66 @@ public class VipCardInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andPurchaseDaysIsNull() {
+            addCriterion("purchase_days is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysIsNotNull() {
+            addCriterion("purchase_days is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysEqualTo(Integer value) {
+            addCriterion("purchase_days =", value, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysNotEqualTo(Integer value) {
+            addCriterion("purchase_days <>", value, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysGreaterThan(Integer value) {
+            addCriterion("purchase_days >", value, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysGreaterThanOrEqualTo(Integer value) {
+            addCriterion("purchase_days >=", value, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysLessThan(Integer value) {
+            addCriterion("purchase_days <", value, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysLessThanOrEqualTo(Integer value) {
+            addCriterion("purchase_days <=", value, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysIn(List<Integer> values) {
+            addCriterion("purchase_days in", values, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysNotIn(List<Integer> values) {
+            addCriterion("purchase_days not in", values, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysBetween(Integer value1, Integer value2) {
+            addCriterion("purchase_days between", value1, value2, "purchaseDays");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseDaysNotBetween(Integer value1, Integer value2) {
+            addCriterion("purchase_days not between", value1, value2, "purchaseDays");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;

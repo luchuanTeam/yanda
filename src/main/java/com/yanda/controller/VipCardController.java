@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserDetailInfo;
-import com.yanda.entity.generated.PayInfo;
+import com.yanda.entity.generated.ProductInfo;
 import com.yanda.entity.generated.VipCardInfo;
 import com.yanda.exception.DOPException;
-import com.yanda.service.PayService;
+import com.yanda.service.ProductService;
 import com.yanda.service.UserService;
 import com.yanda.service.VipCardService;
 import com.yanda.util.StringUtil;
@@ -36,7 +36,7 @@ public class VipCardController extends BaseController {
 	private UserService userService;
 	
 	@Autowired
-	private PayService PayService;
+	private ProductService productService;
 	
 	/**
 	 * 获取会员卡列表数据
@@ -71,9 +71,11 @@ public class VipCardController extends BaseController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(now);
 		calendar.add(Calendar.MONTH, month);
+		long purchaseDays = (calendar.getTimeInMillis() - now.getTime()) / (1000 * 60 * 60 * 24);
 		VipCardInfo.setCreateTime(now);
 		VipCardInfo.setUpdateTime(now);
 		VipCardInfo.setExpTime(calendar.getTime());
+		VipCardInfo.setPurchaseDays(new Long(purchaseDays).intValue());
 		try {
 			vipCardService.save(VipCardInfo);
 			return result(200, "success");
@@ -92,41 +94,48 @@ public class VipCardController extends BaseController {
 	 * 客户购买会员后为客户绑定会员卡
 	 * @param request
 	 * @return
+	 * @throws DOPException 
+	 * @throws NumberFormatException 
 	 */
 	@RequestMapping(value = "/buy", method = RequestMethod.POST)
-	public JsonResult buyByClient(HttpServletRequest request) {
-		String month = getNotEmptyValue(request, "month");
-		if (StringUtil.isEmpty(month))
-			return result(-1, "购买月数不能为空");
+	public JsonResult buyByClient(HttpServletRequest request) throws Exception {
+		String productId = getNotEmptyValue(request, "productId");
+		if (StringUtil.isEmpty(productId))
+			return result(-1, "会员产品id不能为空");
 		String userId = getNotEmptyValue(request, "userId");
 		if (StringUtil.isEmpty(userId)) 
 			return result(-1, "用户id不能为空");
 		String nickName = getValue(request, "nickName", "");
 		VipCardInfo vipCardInfo = vipCardService.findByUserId(Integer.valueOf(userId));
 		Date now = new Date();
+		ProductInfo product = productService.selectById(Integer.valueOf(productId));
+		int timeUnit = product.getTimeUnit();
+		int timeNum = product.getTimeNum();
+		
 		if(vipCardInfo == null) {			// 购买会员
 			vipCardInfo = new VipCardInfo();
 			String cardNum = vipCardService.getVipCardNum();
 			vipCardInfo.setCardNum(cardNum);
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(now);
-			calendar.add(Calendar.MONTH, Integer.valueOf(month));
+			calendar.add(getCalendarAddType(timeUnit), timeNum);
+			long purchaseDays = (calendar.getTimeInMillis() - now.getTime()) / (1000 * 60 * 60 * 24);
 			vipCardInfo.setCreateTime(now);
 			vipCardInfo.setUpdateTime(now);
 			vipCardInfo.setExpTime(calendar.getTime());
 			vipCardInfo.setCardPassword("123456");
 			vipCardInfo.setUserId(Integer.valueOf(userId));
 			vipCardInfo.setNickName(nickName);
-			vipCardInfo.setPurchaseMonths(Integer.valueOf(month));
+			vipCardInfo.setPurchaseDays(new Long(purchaseDays).intValue());
 		} else {							// 续费会员
 			Calendar calendar = Calendar.getInstance();
 			Date expTime = vipCardInfo.getExpTime();
 			calendar.setTime(expTime);
-			calendar.add(Calendar.MONTH, Integer.valueOf(month));
+			calendar.add(getCalendarAddType(timeUnit), timeNum);
+			long purchaseDays = (calendar.getTimeInMillis() - expTime.getTime()) / (1000 * 60 * 60 * 24);
 			vipCardInfo.setUpdateTime(now);
 			vipCardInfo.setExpTime(calendar.getTime());
-			Integer purchaseMonths = vipCardInfo.getPurchaseMonths() + Integer.valueOf(month);
-			vipCardInfo.setPurchaseMonths(purchaseMonths);
+			vipCardInfo.setPurchaseDays(vipCardInfo.getPurchaseDays().intValue() + new Long(purchaseDays).intValue());
 		}
 		try {
 			vipCardService.upsertSelective(vipCardInfo);
@@ -197,6 +206,8 @@ public class VipCardController extends BaseController {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(VipCardInfo.getExpTime());
 			calendar.add(Calendar.MONTH, addMonthVal);
+			long purchaseDays = (calendar.getTimeInMillis() - VipCardInfo.getExpTime().getTime()) / (1000 * 60 * 60 * 24);
+			VipCardInfo.setPurchaseDays(VipCardInfo.getPurchaseDays().intValue() + new Long(purchaseDays).intValue());
 			VipCardInfo.setExpTime(calendar.getTime());
 		}
 		VipCardInfo.setUpdateTime(new Date());
@@ -250,5 +261,22 @@ public class VipCardController extends BaseController {
 		vipCard.setUpdateTime(new Date());
 		vipCardService.upsertSelective(vipCard);
 		return result(200, "绑定成功!");
+	}
+	
+	/**
+	 * 根据计数方式获取日期添加类型
+	 * @param timeUnit
+	 * @return
+	 */
+	private int getCalendarAddType(int timeUnit) {
+		if (timeUnit == 1) {
+			return Calendar.YEAR;
+		} else if (timeUnit == 2) {
+			return Calendar.MONTH;
+		} else if (timeUnit == 3) {
+			return Calendar.DAY_OF_MONTH;
+		} else {
+			return Calendar.MONTH; 
+		}
 	}
 }
