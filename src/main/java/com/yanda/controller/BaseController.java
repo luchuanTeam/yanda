@@ -164,4 +164,52 @@ public class BaseController {
 		attachmentInfo.setFileType(FileType.VIDEO.getValue());
 		return attachmentInfo;
 	}
+	
+	/**
+	 * 处理上传到临时目录的附件
+	 * @param request
+	 * @return 返回附件实体
+	 * @throws DOPException
+	 */
+	public AttachmentInfo handleAttach(HttpServletRequest request) throws DOPException {
+		String oldFilename = request.getParameter("oldFilename");
+		String newFilename = request.getParameter("newFilename");
+		
+		if (StringUtil.isEmpty(newFilename)) {
+			throw new DOPException("附件地址为空");
+		}
+		
+		File tempFile = new File(fileConfig.getTempPath(), newFilename);
+		if (StringUtil.isEmpty(newFilename) || !tempFile.exists()) {
+			throw new DOPException("找不到上传的附件");
+		}
+		
+		Date crTime = new Date();
+		// 获取附件的扩展名
+		String ext = StringUtils.substringAfterLast(newFilename, ".");
+		// 获取附件名
+		String filename = StringUtils.substringBefore(newFilename, ".");
+
+		AttachmentInfo attachmentInfo = new AttachmentInfo();
+		attachmentInfo.setOldFilename(StringUtils.substringBefore(oldFilename, "."));
+		attachmentInfo.setNewFilename(filename);
+		attachmentInfo.setCreateTime(crTime);
+		attachmentInfo.setFileExt(ext);
+		attachmentInfo.setFilePath(fileConfig.getUploadPath() + "/" + fileConfig.getBaseDir() + "/" + filename);
+		attachmentInfo.setFileType(FileType.ATTACH.getValue());
+		return attachmentInfo;
+	}
+	
+	public String getAttachRelativePath(AttachmentInfo record) {
+		int fileType = record.getFileType();
+		String filePath = "";
+		if (FileType.IMG.getValue() == fileType) {
+			filePath += "/" + fileConfig.getBaseImgDir() + "/" + record.getNewFilename() + "/" + record.getNewFilename() + "." + record.getFileExt();
+		} else if (FileType.VIDEO.getValue() == fileType) {
+			filePath += "/" + fileConfig.getBaseVideoDir() + "/" + record.getNewFilename() + "/" + record.getNewFilename() + "." + record.getFileExt();
+		} else {
+			filePath += "/" + fileConfig.getBaseDir() + "/" + record.getNewFilename() + "/"  + record.getNewFilename() + "." + record.getFileExt();
+		}
+		return filePath;
+	}
 }

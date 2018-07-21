@@ -7,8 +7,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,9 +65,9 @@ public class MovieController extends BaseController {
 	public JsonResult listMovies(HttpServletRequest request) {
 		String pageNum = getValue(request, "pageNum", "1");
 		String pageSize = getValue(request, "pageSize", "4");
-		String mvName = getNotEmptyValue(request, "mvName");
+		String searchVal = getNotEmptyValue(request, "searchVal");
 		PageResult<MovieDetailInfo> mvDetailInfos = movieService.list(Integer.valueOf(pageNum),
-				Integer.valueOf(pageSize), mvName);
+				Integer.valueOf(pageSize), searchVal);
 		return result(200, "success", mvDetailInfos);
 	}
 
@@ -268,4 +270,19 @@ public class MovieController extends BaseController {
 
 		return result(200, "success");
 	}
+	
+	/**
+	 * 获取最新电影
+	 * @param request
+	 * @return
+	 * @throws Exception 
+	 */
+	@GetMapping(value = "/recent")
+	public Object getRecentMovies(HttpServletRequest request) throws Exception {
+		String time = request.getParameter("time");
+		Date createTime = DateUtils.parseDate(time, new String[]{"yyyy-MM-dd hh:mm:ss"});
+		List<MovieInfo> movie = movieService.findRecentMoviesByCreateTime(createTime);
+		return result(200, "success", movie);
+	}
+
 }

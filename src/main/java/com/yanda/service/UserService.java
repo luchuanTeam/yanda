@@ -68,4 +68,10 @@ public interface UserService extends BaseService<UserInfo, Long> {
      * @throws DOPException
      */
     UserInfo findUserByUserName(String userName) throws DOPException;
+    
+    /**
+     * 清除用户登录状态
+     * @param userId
+     */
+    void clearLoginByUserId(Integer userId);
 } 

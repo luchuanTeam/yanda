@@ -30,6 +30,11 @@ public class FileConfig {
 	 * 音视频上传二级目录
 	 */
 	private String baseVideoDir;
+	
+	/**
+	 * 域名
+	 */
+	private String domain;
 
 	public String getTempPath() {
 		return tempPath;
@@ -69,6 +74,14 @@ public class FileConfig {
 
 	public void setBaseVideoDir(String baseVideoDir) {
 		this.baseVideoDir = baseVideoDir;
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
 	
 	

@@ -3,9 +3,12 @@ package com.yanda.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -22,6 +25,7 @@ import com.yanda.mapper.UserCustomMapper;
 import com.yanda.mapper.generated.UserInfoMapper;
 import com.yanda.mapper.generated.VipCardInfoMapper;
 import com.yanda.service.UserService;
+import com.yanda.util.Const;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, Long> implements UserService {
@@ -30,6 +34,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 	private UserCustomMapper userCustomMapper;
 	@Autowired
 	private VipCardInfoMapper vipCardMapper;
+	@Resource
+	private RedisTemplate<String, Object> redisTemplate;
 	
 	@Override
 	public UserInfo login(String userName, String password) {
@@ -126,6 +132,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 		UserInfoExample example = new UserInfoExample();
 		example.createCriteria().andUserNameEqualTo(userName);
 		return this.mapper.selectOneByExample(example);
+	}
+
+	@Override
+	public void clearLoginByUserId(Integer userId) {
+		UserInfo user = this.mapper.selectByPrimaryKeySelective(userId, UserInfo.Col.userName);
+		redisTemplate.opsForHash().put(Const.TOKEN_KEY_PRE, user.getUserName(), "");
 	}
 
 	

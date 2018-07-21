@@ -54,5 +54,5 @@ public interface BaseService<T extends Serializable, ID> {
      */
     public int upsertSelective(T t) throws DOPException;
   
-	
+
 }

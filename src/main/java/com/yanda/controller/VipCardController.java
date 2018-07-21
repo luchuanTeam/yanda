@@ -18,6 +18,7 @@ import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserDetailInfo;
 import com.yanda.entity.generated.ProductInfo;
+import com.yanda.entity.generated.UserInfo;
 import com.yanda.entity.generated.VipCardInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.service.ProductService;
@@ -64,18 +65,17 @@ public class VipCardController extends BaseController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public JsonResult add(HttpServletRequest request, @RequestBody VipCardInfo VipCardInfo) {
-		Integer month = VipCardInfo.getPurchaseMonths();
-		if (null == month)
+		Integer days = VipCardInfo.getPurchaseDays();
+		if (null == days)
 			return result(-1, "购买月数不能为空");
 		Date now = new Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(now);
-		calendar.add(Calendar.MONTH, month);
-		long purchaseDays = (calendar.getTimeInMillis() - now.getTime()) / (1000 * 60 * 60 * 24);
+		calendar.add(Calendar.DAY_OF_MONTH, days);
 		VipCardInfo.setCreateTime(now);
 		VipCardInfo.setUpdateTime(now);
 		VipCardInfo.setExpTime(calendar.getTime());
-		VipCardInfo.setPurchaseDays(new Long(purchaseDays).intValue());
+		VipCardInfo.setPurchaseDays(days);
 		try {
 			vipCardService.save(VipCardInfo);
 			return result(200, "success");
@@ -116,6 +116,9 @@ public class VipCardController extends BaseController {
 			vipCardInfo = new VipCardInfo();
 			String cardNum = vipCardService.getVipCardNum();
 			vipCardInfo.setCardNum(cardNum);
+			if (timeUnit == 4) {
+				vipCardInfo.setIsForever(true);
+			}
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(now);
 			calendar.add(getCalendarAddType(timeUnit), timeNum);
@@ -130,9 +133,16 @@ public class VipCardController extends BaseController {
 		} else {							// 续费会员
 			Calendar calendar = Calendar.getInstance();
 			Date expTime = vipCardInfo.getExpTime();
-			calendar.setTime(expTime);
+			if (isVipExpire(expTime)) {
+				calendar.setTime(new Date());
+			} else {
+				calendar.setTime(expTime);
+			}
 			calendar.add(getCalendarAddType(timeUnit), timeNum);
 			long purchaseDays = (calendar.getTimeInMillis() - expTime.getTime()) / (1000 * 60 * 60 * 24);
+			if (timeUnit == 4) {
+				vipCardInfo.setIsForever(true);
+			}
 			vipCardInfo.setUpdateTime(now);
 			vipCardInfo.setExpTime(calendar.getTime());
 			vipCardInfo.setPurchaseDays(vipCardInfo.getPurchaseDays().intValue() + new Long(purchaseDays).intValue());
@@ -157,17 +167,12 @@ public class VipCardController extends BaseController {
 	 * @param request 请求体
 	 * @param id 会员卡实体id
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-	public JsonResult delete(HttpServletRequest request, @PathVariable("id") Integer id) {
-
-		try {
-			vipCardService.deleteById(id);
-			return result(200, "删除成功!");
-		} catch (Exception e) {
-			LOG.error("删除失败!", e);
-			return result(-1, e.getMessage());
-		}
+	public JsonResult delete(HttpServletRequest request, @PathVariable("id") Integer id) throws Exception {
+		vipCardService.deleteById(id);
+		return result(200, "删除成功!");
 	}
 	
 	/**
@@ -199,15 +204,18 @@ public class VipCardController extends BaseController {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public JsonResult update(HttpServletRequest request, @RequestBody VipCardInfo VipCardInfo) throws DOPException {
-		String addMonth = getNotEmptyValue(request, "addMonth");
-		if (StringUtil.isNotEmpty(addMonth)) {
-			int addMonthVal = Integer.valueOf(addMonth);
-			VipCardInfo.setPurchaseMonths(VipCardInfo.getPurchaseMonths() + addMonthVal);
+		String addDays = getNotEmptyValue(request, "addDays");
+		if (StringUtil.isNotEmpty(addDays)) {
+			int addDaysVal = Integer.valueOf(addDays);
 			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(VipCardInfo.getExpTime());
-			calendar.add(Calendar.MONTH, addMonthVal);
-			long purchaseDays = (calendar.getTimeInMillis() - VipCardInfo.getExpTime().getTime()) / (1000 * 60 * 60 * 24);
-			VipCardInfo.setPurchaseDays(VipCardInfo.getPurchaseDays().intValue() + new Long(purchaseDays).intValue());
+			Date expTime = VipCardInfo.getExpTime();
+			if (isVipExpire(expTime)) {
+				calendar.setTime(new Date());
+			} else {
+				calendar.setTime(VipCardInfo.getExpTime());
+			}
+			calendar.add(Calendar.DAY_OF_MONTH, addDaysVal);
+			VipCardInfo.setPurchaseDays(VipCardInfo.getPurchaseDays().intValue() + Integer.valueOf(addDays));
 			VipCardInfo.setExpTime(calendar.getTime());
 		}
 		VipCardInfo.setUpdateTime(new Date());
@@ -241,7 +249,7 @@ public class VipCardController extends BaseController {
 	 * @throws DOPException
 	 */
 	@RequestMapping(value = "/bindByCardNum", method = RequestMethod.POST)
-	public JsonResult bindByCardNum(HttpServletRequest request) throws DOPException {
+	public JsonResult bindByCardNum(HttpServletRequest request) throws Exception {
 		String cardNum = getNotEmptyValue(request, "cardNum");
 		if (StringUtil.isEmpty(cardNum))
 			return result(-1, "卡号为空");
@@ -257,10 +265,15 @@ public class VipCardController extends BaseController {
 			return result(-1, "卡号或密码错误");
 		if (null != vipCard.getUserId())
 			return result(-1, "该会员卡已被绑定");
+		UserDetailInfo user = userService.findUserDetailByUserId(Integer.valueOf(userId));
+		if (null != user.getVipCard()) 
+			return result(-1, "您之前已绑定了会员卡，若已过期请再次购买进行续费");
+		vipCard.setNickName(user.getNickName());
 		vipCard.setUserId(Integer.valueOf(userId));
 		vipCard.setUpdateTime(new Date());
 		vipCardService.upsertSelective(vipCard);
-		return result(200, "绑定成功!");
+		user = userService.findUserDetailByUserId(Integer.valueOf(userId));
+		return result(200, "绑定成功!", user);
 	}
 	
 	/**
@@ -278,5 +291,17 @@ public class VipCardController extends BaseController {
 		} else {
 			return Calendar.MONTH; 
 		}
+	}
+	
+	/**
+	 * 判断会员卡是否已到期
+	 * @param expireTime
+	 * @return
+	 */
+	private boolean isVipExpire(Date expireTime) {
+		Date now = new Date();
+		if (expireTime.getTime() - now.getTime() <= 0)
+			return true;
+		return false;
 	}
 }

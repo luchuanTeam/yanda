@@ -3,6 +3,7 @@ package com.yanda.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -82,7 +83,8 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo
 		LOG.info("根据分页数和视频名称查询的视频数据列表将从数据库中获取...");
 		Page<MovieInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
 		MovieInfoExample example = new MovieInfoExample();
-		example.createCriteria().andMvNameLike("%" + searchVal + "%");
+		example.or().andMvNameLike("%" + searchVal + "%");
+		example.or().andClassifyNameLike("%" + searchVal + "%");
 		example.setOrderByClause("update_time desc");
 		List<MovieInfo> mvList = mapper.selectByExample(example);
 		List<MovieDetailInfo> mDetailInfos = this.getMovieDetailInfos(mvList);
@@ -251,6 +253,13 @@ public class MovieServiceImpl extends BaseServiceImpl<MovieInfoMapper, MovieInfo
 		ClassifyInfoExample example = new ClassifyInfoExample();
         example.or().andClassifyIdIn(classifyIds);
 		return classifyInfoMapper.selectByExampleSelective(example, com.yanda.entity.generated.ClassifyInfo.Col.classifyId, com.yanda.entity.generated.ClassifyInfo.Col.classifyName);
+	}
+
+	@Override
+	public List<MovieInfo> findRecentMoviesByCreateTime(Date createTime) {
+		MovieInfoExample example = new MovieInfoExample();
+		example.createCriteria().andCreateTimeGreaterThan(createTime).andIsPublicEqualTo(true);
+		return this.mapper.selectByExample(example);
 	}
 
 

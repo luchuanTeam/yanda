@@ -81,6 +81,7 @@ public class TokenValidAop {
 		try {
 			return point.proceed();
 		} catch (Throwable e) {
+			LOG.error("校验token异常:", e);
 			return new JsonResult(500, "内部错误"); 
 		}
 	}

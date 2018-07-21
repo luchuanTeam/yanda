@@ -31,6 +31,7 @@ import com.yanda.entity.FileType;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.exception.DOPException;
+import com.yanda.exception.NullParamException;
 import com.yanda.service.AttachmentService;
 import com.yanda.service.impl.AttachmentServiceImpl;
 import com.yanda.util.StringUtil;
@@ -131,6 +132,47 @@ public class AttachmentController extends BaseController {
 		return result(200, "上传成功！", resultMap);
 
 	}
+	
+	/**
+	 * 附件上传
+	 * 
+	 * @param request
+	 *            请求体
+	 * @param file
+	 *            上传的文件
+	 * @return
+	 * @throws IOException
+	 * @throws IllegalStateException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/doUpload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public JsonResult doUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file)
+			throws IllegalStateException, IOException {
+		if (file.isEmpty())
+			return result(-1, "上传失败，请选择要上传的视频!");
+		String fileType = file.getContentType();
+		if (!fileType.contains("msword") && !fileType.contains("pdf") && !fileType.contains("document"))
+			return result(-1, "上传的文件不是指定类型，请重新上传!");
+		// 获取图片的文件名+后缀
+		String fileName = file.getOriginalFilename();
+
+		Map<String, String> resultMap = new HashMap<>();
+		// 获取文件的扩展名
+		String fileExt = StringUtils.substringAfterLast(fileName, ".");
+		// 获取新文件的名字
+		String newFileName = String.valueOf(System.currentTimeMillis()) + "." + fileExt;
+
+		File dest = new File(fileConfig.getTempPath(), newFileName);
+		if (!dest.getParentFile().exists()) {
+			dest.getParentFile().mkdirs();
+		}
+		// 上传到指定目录
+		file.transferTo(dest);
+		resultMap.put("filename", fileName);
+		resultMap.put("newFilename", newFileName);
+		return result(200, "上传成功！", resultMap);
+
+	}
 
 	/**
 	 * 读取附件
@@ -194,6 +236,18 @@ public class AttachmentController extends BaseController {
 				}
 			}
 		}
+	}
+	
+	@ResponseBody
+	@GetMapping("/getUrl")
+	public Object getAttachUrl(HttpServletRequest request) throws Exception {
+		String id = request.getParameter("id");
+		if (StringUtil.isEmpty("id"))
+			throw new NullParamException("附件编号");
+		AttachmentInfo attach = attachmentService.selectById(Long.valueOf(id));
+		if (null == attach)
+			throw new DOPException("附件不存在");
+		return result(200, "", fileConfig.getDomain() + getAttachRelativePath(attach));
 	}
 
 	/**

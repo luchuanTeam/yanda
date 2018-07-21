@@ -1,5 +1,6 @@
 package com.yanda.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.yanda.entity.MovieDetailInfo;
@@ -121,4 +122,10 @@ public interface MovieService extends BaseService<MovieInfo, Long> {
 	 */
 	List<ClassifyInfo> findClassifyListByIds(List<Integer> classifyIds);
 	
+	/**
+     * 根据创建时间获取后于该时间创建的电影
+     * @param createTime
+     * @return
+     */
+	List<MovieInfo> findRecentMoviesByCreateTime(Date createTime);
 }

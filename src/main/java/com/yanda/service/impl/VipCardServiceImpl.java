@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.VipCardInfo;
 import com.yanda.entity.generated.VipCardInfoExample;
+import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.VipCardInfoMapper;
 import com.yanda.service.UserService;
 import com.yanda.service.VipCardService;
@@ -22,6 +23,7 @@ public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCa
 	
 	@Autowired
 	private UserService userService;
+
 
 	@Override
 	public PageResult<VipCardInfo> getList(int pageNum, int pageSize, String searchVal) {
@@ -84,43 +86,27 @@ public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCa
 		return mapper.selectOneByExample(example);
 	}
 	
+	@Override
+	public int deleteById(Integer id) throws DOPException {
+		VipCardInfo vip = super.selectById(id);
+		Integer userId = vip.getUserId();
+		// 若会员卡已绑定用户，则清空对应用户的登录状态
+		if (null != userId) {
+			userService.clearLoginByUserId(userId);
+		}
+		return super.deleteById(id);
+	}
+
+	@Override
+	public int update(VipCardInfo vip) throws DOPException {
+		Integer userId = vip.getUserId();
+		// 若会员卡已绑定用户，则清空对应用户的登录状态
+		if (null != userId) {
+			userService.clearLoginByUserId(userId);
+		}
+		return super.update(vip);
+	}
 	
-	
-//	@Transactional
-//	@Override
-//	public int save(VipCardInfo t) throws DOPException {
-//		String userName = t.getCardNum();
-//		String password = t.getCardPassword();
-//		UserInfo user = new UserInfo();
-//		user.setUserName(userName);
-//		user.setNickName(userName);
-//		user.setPassword(password);
-//		user.setAvatar("http://www.yanda123.com/app/people.png");
-//		userService.save(user);
-//		return super.save(t);
-//	}
-//	
-//	@Transactional
-//	@Override
-//	public int deleteById(Integer id) throws DOPException {
-//		VipCardInfo vipCard = super.selectById(id);
-//		String userName = vipCard.getCardNum();
-//		userService.deleteByUserName(userName);
-//		return super.deleteById(id);
-//	}
-//
-//	@Override
-//	public int update(VipCardInfo t) throws DOPException {
-//		String userName = t.getCardNum();
-//		Integer userId = t.getUserId();
-//		UserInfo wxUser = userService.selectById(Long.valueOf(userId));
-//		UserInfo vipUser = userService.findUserByUserName(userName);
-//		vipUser.setNickName(wxUser.getNickName());
-//		vipUser.setMobile(wxUser.getMobile());
-//		vipUser.setSex(wxUser.getSex());
-//		vipUser.setAvatar(wxUser.getAvatar());
-//		return super.update(t);
-//	}
 	
 	
 }

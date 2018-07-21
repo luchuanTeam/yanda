@@ -8,13 +8,13 @@
     <id column="card_id" jdbcType="INTEGER" property="cardId" />
     <result column="card_num" jdbcType="VARCHAR" property="cardNum" />
     <result column="card_password" jdbcType="VARCHAR" property="cardPassword" />
-    <result column="purchase_months" jdbcType="INTEGER" property="purchaseMonths" />
     <result column="purchase_days" jdbcType="INTEGER" property="purchaseDays" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="exp_time" jdbcType="TIMESTAMP" property="expTime" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="is_forever" jdbcType="BOOLEAN" property="isForever" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.VipCardInfo">
     <!--
@@ -24,13 +24,13 @@
       <idArg column="card_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="card_num" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="card_password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="purchase_months" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="purchase_days" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="exp_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_forever" javaType="java.lang.Boolean" jdbcType="BOOLEAN" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -101,8 +101,8 @@
     <!--
       WARNING - @mbg.generated
     -->
-    card_id, card_num, card_password, purchase_months, purchase_days, create_time, update_time, 
-    exp_time, user_id, nick_name
+    card_id, card_num, card_password, purchase_days, create_time, update_time, exp_time, 
+    user_id, nick_name, is_forever
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.VipCardInfoExample" resultMap="BaseResultMap">
     <!--
@@ -173,9 +173,6 @@
       <if test="record.cardPassword != null">
         card_password = #{record.cardPassword,jdbcType=VARCHAR},
       </if>
-      <if test="record.purchaseMonths != null">
-        purchase_months = #{record.purchaseMonths,jdbcType=INTEGER},
-      </if>
       <if test="record.purchaseDays != null">
         purchase_days = #{record.purchaseDays,jdbcType=INTEGER},
       </if>
@@ -194,6 +191,9 @@
       <if test="record.nickName != null">
         nick_name = #{record.nickName,jdbcType=VARCHAR},
       </if>
+      <if test="record.isForever != null">
+        is_forever = #{record.isForever,jdbcType=BOOLEAN},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,13 +207,13 @@
     set card_id = #{record.cardId,jdbcType=INTEGER},
       card_num = #{record.cardNum,jdbcType=VARCHAR},
       card_password = #{record.cardPassword,jdbcType=VARCHAR},
-      purchase_months = #{record.purchaseMonths,jdbcType=INTEGER},
       purchase_days = #{record.purchaseDays,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       exp_time = #{record.expTime,jdbcType=TIMESTAMP},
       user_id = #{record.userId,jdbcType=INTEGER},
-      nick_name = #{record.nickName,jdbcType=VARCHAR}
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      is_forever = #{record.isForever,jdbcType=BOOLEAN}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -234,24 +234,24 @@
       WARNING - @mbg.generated
     -->
     insert into t_vip_card_info
-    (card_id, card_num, card_password, purchase_months, purchase_days, create_time, update_time, 
-      exp_time, user_id, nick_name)
+    (card_id, card_num, card_password, purchase_days, create_time, update_time, exp_time, 
+      user_id, nick_name, is_forever)
     values
     (#{cardId,jdbcType=INTEGER}, #{cardNum,jdbcType=VARCHAR}, #{cardPassword,jdbcType=VARCHAR}, 
-      #{purchaseMonths,jdbcType=INTEGER}, #{purchaseDays,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{expTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, 
-      #{nickName,jdbcType=VARCHAR})
+      #{purchaseDays,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{expTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, 
+      #{isForever,jdbcType=BOOLEAN})
     on duplicate key update 
     card_id = #{cardId,jdbcType=INTEGER}, 
     card_num = #{cardNum,jdbcType=VARCHAR}, 
     card_password = #{cardPassword,jdbcType=VARCHAR}, 
-    purchase_months = #{purchaseMonths,jdbcType=INTEGER}, 
     purchase_days = #{purchaseDays,jdbcType=INTEGER}, 
     create_time = #{createTime,jdbcType=TIMESTAMP}, 
     update_time = #{updateTime,jdbcType=TIMESTAMP}, 
     exp_time = #{expTime,jdbcType=TIMESTAMP}, 
     user_id = #{userId,jdbcType=INTEGER}, 
-    nick_name = #{nickName,jdbcType=VARCHAR}
+    nick_name = #{nickName,jdbcType=VARCHAR}, 
+    is_forever = #{isForever,jdbcType=BOOLEAN}
   </insert>
   <insert id="upsertSelective" parameterType="com.yanda.entity.generated.VipCardInfo">
     <!--
@@ -267,9 +267,6 @@
       </if>
       <if test="cardPassword != null">
         card_password,
-      </if>
-      <if test="purchaseMonths != null">
-        purchase_months,
       </if>
       <if test="purchaseDays != null">
         purchase_days,
@@ -289,6 +286,9 @@
       <if test="nickName != null">
         nick_name,
       </if>
+      <if test="isForever != null">
+        is_forever,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -300,9 +300,6 @@
       </if>
       <if test="cardPassword != null">
         #{cardPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="purchaseMonths != null">
-        #{purchaseMonths,jdbcType=INTEGER},
       </if>
       <if test="purchaseDays != null">
         #{purchaseDays,jdbcType=INTEGER},
@@ -322,6 +319,9 @@
       <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
       </if>
+      <if test="isForever != null">
+        #{isForever,jdbcType=BOOLEAN},
+      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -333,9 +333,6 @@
       </if>
       <if test="cardPassword != null">
         card_password = #{cardPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="purchaseMonths != null">
-        purchase_months = #{purchaseMonths,jdbcType=INTEGER},
       </if>
       <if test="purchaseDays != null">
         purchase_days = #{purchaseDays,jdbcType=INTEGER},
@@ -354,6 +351,9 @@
       </if>
       <if test="nickName != null">
         nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="isForever != null">
+        is_forever = #{isForever,jdbcType=BOOLEAN},
       </if>
     </trim>
   </insert>

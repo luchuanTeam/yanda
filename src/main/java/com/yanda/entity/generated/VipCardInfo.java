@@ -26,12 +26,6 @@ public class VipCardInfo implements Serializable {
     private String cardPassword;
 
     /**
-     * 购买会员的月数
-     */
-    @Column(name = "purchase_months")
-    private Integer purchaseMonths;
-
-    /**
      * 购买天数
      */
     @Column(name = "purchase_days")
@@ -67,19 +61,25 @@ public class VipCardInfo implements Serializable {
     @Column(name = "nick_name")
     private String nickName;
 
+    /**
+     * 是否永久会员
+     */
+    @Column(name = "is_forever")
+    private Boolean isForever;
+
     private static final long serialVersionUID = 1L;
 
-    public VipCardInfo(Integer cardId, String cardNum, String cardPassword, Integer purchaseMonths, Integer purchaseDays, Date createTime, Date updateTime, Date expTime, Integer userId, String nickName) {
+    public VipCardInfo(Integer cardId, String cardNum, String cardPassword, Integer purchaseDays, Date createTime, Date updateTime, Date expTime, Integer userId, String nickName, Boolean isForever) {
         this.cardId = cardId;
         this.cardNum = cardNum;
         this.cardPassword = cardPassword;
-        this.purchaseMonths = purchaseMonths;
         this.purchaseDays = purchaseDays;
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.expTime = expTime;
         this.userId = userId;
         this.nickName = nickName;
+        this.isForever = isForever;
     }
 
     public VipCardInfo() {
@@ -138,24 +138,6 @@ public class VipCardInfo implements Serializable {
      */
     public void setCardPassword(String cardPassword) {
         this.cardPassword = cardPassword == null ? null : cardPassword.trim();
-    }
-
-    /**
-     * 获取购买会员的月数
-     *
-     * @return purchase_months - 购买会员的月数
-     */
-    public Integer getPurchaseMonths() {
-        return purchaseMonths;
-    }
-
-    /**
-     * 设置购买会员的月数
-     *
-     * @param purchaseMonths 购买会员的月数
-     */
-    public void setPurchaseMonths(Integer purchaseMonths) {
-        this.purchaseMonths = purchaseMonths;
     }
 
     /**
@@ -266,17 +248,35 @@ public class VipCardInfo implements Serializable {
         this.nickName = nickName == null ? null : nickName.trim();
     }
 
+    /**
+     * 获取是否永久会员
+     *
+     * @return is_forever - 是否永久会员
+     */
+    public Boolean getIsForever() {
+        return isForever;
+    }
+
+    /**
+     * 设置是否永久会员
+     *
+     * @param isForever 是否永久会员
+     */
+    public void setIsForever(Boolean isForever) {
+        this.isForever = isForever;
+    }
+
     public enum Col {
         cardId("card_id"),
         cardNum("card_num"),
         cardPassword("card_password"),
-        purchaseMonths("purchase_months"),
         purchaseDays("purchase_days"),
         createTime("create_time"),
         updateTime("update_time"),
         expTime("exp_time"),
         userId("user_id"),
-        nickName("nick_name");
+        nickName("nick_name"),
+        isForever("is_forever");
 
         private final String column;
 

@@ -112,5 +112,6 @@
 		<!-- <table tableName="t_pay_info" domainObjectName="PayInfo" /> -->
 		<!-- <table tableName="t_product_info" domainObjectName="ProductInfo" /> -->
 		<table tableName="t_vip_card_info" domainObjectName="VipCardInfo" />
+		<!-- <table tableName="t_paper_info" domainObjectName="PaperInfo" /> -->
 	</context>
 </generatorConfiguration>

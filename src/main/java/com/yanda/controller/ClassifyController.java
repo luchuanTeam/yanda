@@ -174,5 +174,6 @@ public class ClassifyController extends BaseController {
 		String content = getNotEmptyValue(request, "content");
 		return PinYinUtil.getPinYin(content, "upper");
 	}
+	
 
 }

@@ -305,66 +305,6 @@ public class VipCardInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andPurchaseMonthsIsNull() {
-            addCriterion("purchase_months is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsIsNotNull() {
-            addCriterion("purchase_months is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsEqualTo(Integer value) {
-            addCriterion("purchase_months =", value, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsNotEqualTo(Integer value) {
-            addCriterion("purchase_months <>", value, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsGreaterThan(Integer value) {
-            addCriterion("purchase_months >", value, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsGreaterThanOrEqualTo(Integer value) {
-            addCriterion("purchase_months >=", value, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsLessThan(Integer value) {
-            addCriterion("purchase_months <", value, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsLessThanOrEqualTo(Integer value) {
-            addCriterion("purchase_months <=", value, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsIn(List<Integer> values) {
-            addCriterion("purchase_months in", values, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsNotIn(List<Integer> values) {
-            addCriterion("purchase_months not in", values, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsBetween(Integer value1, Integer value2) {
-            addCriterion("purchase_months between", value1, value2, "purchaseMonths");
-            return (Criteria) this;
-        }
-
-        public Criteria andPurchaseMonthsNotBetween(Integer value1, Integer value2) {
-            addCriterion("purchase_months not between", value1, value2, "purchaseMonths");
-            return (Criteria) this;
-        }
-
         public Criteria andPurchaseDaysIsNull() {
             addCriterion("purchase_days is null");
             return (Criteria) this;
@@ -732,6 +672,66 @@ public class VipCardInfoExample {
 
         public Criteria andNickNameNotBetween(String value1, String value2) {
             addCriterion("nick_name not between", value1, value2, "nickName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverIsNull() {
+            addCriterion("is_forever is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverIsNotNull() {
+            addCriterion("is_forever is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverEqualTo(Boolean value) {
+            addCriterion("is_forever =", value, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverNotEqualTo(Boolean value) {
+            addCriterion("is_forever <>", value, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverGreaterThan(Boolean value) {
+            addCriterion("is_forever >", value, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_forever >=", value, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverLessThan(Boolean value) {
+            addCriterion("is_forever <", value, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_forever <=", value, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverIn(List<Boolean> values) {
+            addCriterion("is_forever in", values, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverNotIn(List<Boolean> values) {
+            addCriterion("is_forever not in", values, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_forever between", value1, value2, "isForever");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsForeverNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_forever not between", value1, value2, "isForever");
             return (Criteria) this;
         }
     }
