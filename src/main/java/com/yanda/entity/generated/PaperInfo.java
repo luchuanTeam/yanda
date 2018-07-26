@@ -42,15 +42,22 @@ public class PaperInfo implements Serializable {
     @Column(name = "update_time")
     private Date updateTime;
 
+    /**
+     * 文件类型  1-试题  2-课件
+     */
+    @Column(name = "paper_type")
+    private Integer paperType;
+
     private static final long serialVersionUID = 1L;
 
-    public PaperInfo(Integer id, String paperName, String paperDesc, Long appendixId, Date createTime, Date updateTime) {
+    public PaperInfo(Integer id, String paperName, String paperDesc, Long appendixId, Date createTime, Date updateTime, Integer paperType) {
         this.id = id;
         this.paperName = paperName;
         this.paperDesc = paperDesc;
         this.appendixId = appendixId;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.paperType = paperType;
     }
 
     public PaperInfo() {
@@ -165,13 +172,32 @@ public class PaperInfo implements Serializable {
         this.updateTime = updateTime;
     }
 
+    /**
+     * 获取文件类型  1-试题  2-课件
+     *
+     * @return paper_type - 文件类型  1-试题  2-课件
+     */
+    public Integer getPaperType() {
+        return paperType;
+    }
+
+    /**
+     * 设置文件类型  1-试题  2-课件
+     *
+     * @param paperType 文件类型  1-试题  2-课件
+     */
+    public void setPaperType(Integer paperType) {
+        this.paperType = paperType;
+    }
+
     public enum Col {
         id("id"),
         paperName("paper_name"),
         paperDesc("paper_desc"),
         appendixId("appendix_id"),
         createTime("create_time"),
-        updateTime("update_time");
+        updateTime("update_time"),
+        paperType("paper_type");
 
         private final String column;
 

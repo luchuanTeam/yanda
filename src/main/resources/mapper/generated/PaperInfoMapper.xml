@@ -11,6 +11,7 @@
     <result column="appendix_id" jdbcType="BIGINT" property="appendixId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="paper_type" jdbcType="INTEGER" property="paperType" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.yanda.entity.generated.PaperInfo">
     <!--
@@ -23,6 +24,7 @@
       <arg column="appendix_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="paper_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -93,7 +95,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, paper_name, paper_desc, appendix_id, create_time, update_time
+    id, paper_name, paper_desc, appendix_id, create_time, update_time, paper_type
   </sql>
   <select id="selectByExample" parameterType="com.yanda.entity.generated.PaperInfoExample" resultMap="BaseResultMap">
     <!--
@@ -173,6 +175,9 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.paperType != null">
+        paper_type = #{record.paperType,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -188,7 +193,8 @@
       paper_desc = #{record.paperDesc,jdbcType=VARCHAR},
       appendix_id = #{record.appendixId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      paper_type = #{record.paperType,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -209,18 +215,19 @@
       WARNING - @mbg.generated
     -->
     insert into t_paper_info
-    (id, paper_name, paper_desc, appendix_id, create_time, update_time)
+    (id, paper_name, paper_desc, appendix_id, create_time, update_time, paper_type)
     values
     (#{id,jdbcType=INTEGER}, #{paperName,jdbcType=VARCHAR}, #{paperDesc,jdbcType=VARCHAR}, 
-      #{appendixId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{appendixId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{paperType,jdbcType=INTEGER})
     on duplicate key update 
     id = #{id,jdbcType=INTEGER}, 
     paper_name = #{paperName,jdbcType=VARCHAR}, 
     paper_desc = #{paperDesc,jdbcType=VARCHAR}, 
     appendix_id = #{appendixId,jdbcType=BIGINT}, 
     create_time = #{createTime,jdbcType=TIMESTAMP}, 
-    update_time = #{updateTime,jdbcType=TIMESTAMP}
+    update_time = #{updateTime,jdbcType=TIMESTAMP}, 
+    paper_type = #{paperType,jdbcType=INTEGER}
   </insert>
   <insert id="upsertSelective" parameterType="com.yanda.entity.generated.PaperInfo">
     <!--
@@ -246,6 +253,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="paperType != null">
+        paper_type,
+      </if>
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -267,6 +277,9 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="paperType != null">
+        #{paperType,jdbcType=INTEGER},
+      </if>
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -287,6 +300,9 @@
       </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paperType != null">
+        paper_type = #{paperType,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

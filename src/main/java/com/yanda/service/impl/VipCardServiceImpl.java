@@ -1,6 +1,7 @@
 package com.yanda.service.impl;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.VipCardInfoMapper;
 import com.yanda.service.UserService;
 import com.yanda.service.VipCardService;
+import com.yanda.util.StringUtil;
 
 @Service
 public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCardInfo, Integer>
@@ -67,7 +69,7 @@ public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCa
 		if (day.length() < 2) {
 			day = "0" + day;
 		}
-		millis = millis.substring(0, 2);
+		millis = millis.substring(millis.length() - 2);
 		cardNum = year + month + day + String.valueOf(vipId) + millis;
 		return cardNum;
 	}
@@ -107,6 +109,40 @@ public class VipCardServiceImpl extends BaseServiceImpl<VipCardInfoMapper, VipCa
 		return super.update(vip);
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(generateCardNum(1000));
+	}
 	
+	@Override
+	public void batchGenerate(boolean isRandomPassword, String password, Integer purchaseDays, boolean isForever, Integer count) throws Exception {
+		PageHelper.startPage(1, 1);
+		VipCardInfoExample VipCardInfoExample = new VipCardInfoExample();
+		VipCardInfoExample.setOrderByClause("create_time desc");
+		List<VipCardInfo> vipCards = mapper.selectByExample(VipCardInfoExample);
+		Integer cardId = vipCards.get(0).getCardId();
+		cardId ++;
+		String cardNum = generateCardNum(cardId);
+		
+		for (int i = 0; i < count; i++) {
+			Date now = new Date();
+			VipCardInfo vip = new VipCardInfo();
+			vip.setCardNum(cardNum);
+			if (isRandomPassword) {
+				vip.setCardPassword(StringUtil.generateRandomWordAndNum(6, ""));
+			} else {
+				vip.setCardPassword(password);
+			}
+			
+			vip.setCreateTime(now);
+			vip.setUpdateTime(now);
+			vip.setPurchaseDays(purchaseDays);
+			vip.setIsForever(isForever);
+			this.save(vip);
+			vip = null;
+			cardId++;
+			cardNum = generateCardNum(cardId);
+		}
+		
+	}
 	
 }

@@ -149,10 +149,10 @@ public class AttachmentController extends BaseController {
 	public JsonResult doUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file)
 			throws IllegalStateException, IOException {
 		if (file.isEmpty())
-			return result(-1, "上传失败，请选择要上传的视频!");
+			return result(-1, "上传失败，请选择要上传的文件!");
 		String fileType = file.getContentType();
-		if (!fileType.contains("msword") && !fileType.contains("pdf") && !fileType.contains("document"))
-			return result(-1, "上传的文件不是指定类型，请重新上传!");
+//		if (!fileType.contains("msword") && !fileType.contains("pdf") && !fileType.contains("document"))
+//			return result(-1, "上传的文件不是指定类型，请重新上传!");
 		// 获取图片的文件名+后缀
 		String fileName = file.getOriginalFilename();
 

@@ -484,6 +484,66 @@ public class PaperInfoExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andPaperTypeIsNull() {
+            addCriterion("paper_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeIsNotNull() {
+            addCriterion("paper_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeEqualTo(Integer value) {
+            addCriterion("paper_type =", value, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeNotEqualTo(Integer value) {
+            addCriterion("paper_type <>", value, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeGreaterThan(Integer value) {
+            addCriterion("paper_type >", value, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("paper_type >=", value, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeLessThan(Integer value) {
+            addCriterion("paper_type <", value, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("paper_type <=", value, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeIn(List<Integer> values) {
+            addCriterion("paper_type in", values, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeNotIn(List<Integer> values) {
+            addCriterion("paper_type not in", values, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeBetween(Integer value1, Integer value2) {
+            addCriterion("paper_type between", value1, value2, "paperType");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaperTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("paper_type not between", value1, value2, "paperType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysql.fabric.xmlrpc.base.Data;
 import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
@@ -31,8 +30,9 @@ public class PaperController extends BaseController {
 		String pageNum = getValue(request, "pageNum", "1");
 		String pageSize = getValue(request, "pageSize", "10");
 		String searchVal = getNotEmptyValue(request, "searchVal");
+		String paperType = getValue(request, "paperType", "1");
 		PageResult<PaperInfo> papers = paperService.getList(Integer.valueOf(pageNum), Integer.valueOf(pageSize),
-				searchVal);
+				searchVal, Integer.valueOf(paperType));
 		return result(200, "success", papers);
 	}
 	

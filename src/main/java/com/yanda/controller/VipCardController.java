@@ -18,7 +18,6 @@ import com.yanda.entity.JsonResult;
 import com.yanda.entity.PageResult;
 import com.yanda.entity.UserDetailInfo;
 import com.yanda.entity.generated.ProductInfo;
-import com.yanda.entity.generated.UserInfo;
 import com.yanda.entity.generated.VipCardInfo;
 import com.yanda.exception.DOPException;
 import com.yanda.service.ProductService;
@@ -74,7 +73,6 @@ public class VipCardController extends BaseController {
 		calendar.add(Calendar.DAY_OF_MONTH, days);
 		VipCardInfo.setCreateTime(now);
 		VipCardInfo.setUpdateTime(now);
-		VipCardInfo.setExpTime(calendar.getTime());
 		VipCardInfo.setPurchaseDays(days);
 		try {
 			vipCardService.save(VipCardInfo);
@@ -83,6 +81,43 @@ public class VipCardController extends BaseController {
 			LOG.error("添加会员卡异常", e);
 			return result(-1, "添加失败！");
 		}
+	}
+	
+	/**
+	 * 批量生成会员卡
+	 * @param request 请求体
+	 * @param VipCardInfo 会员卡实体对象
+	 * @return
+	 * @throws DOPException 
+	 * @throws  
+	 */
+	@RequestMapping(value = "/batchAdd", method = RequestMethod.POST)
+	public JsonResult batchAdd(HttpServletRequest request) throws Exception {
+		String purchaseDays = getNotEmptyValue(request, "purchaseDays");
+		if (StringUtil.isEmpty(purchaseDays)) 
+			return result(-1, "会员天数不能为空");
+		
+		String count = getNotEmptyValue(request, "count");
+		if (StringUtil.isEmpty(count)) 
+			return result(-1, "生成个数不能为空");
+		
+		String isForever = getNotEmptyValue(request, "isForever");
+		if (StringUtil.isEmpty(isForever)) 
+			return result(-1, "请选择是否永久会员");
+		
+		String random = getValue(request, "random", "1");
+		
+		String cardPassword = "";
+		if (random.equals("0")) {
+			cardPassword = getNotEmptyValue(request, "cardPassword");
+			if (StringUtil.isEmpty(cardPassword))
+				return result(-1, "密码不能为空");
+		}
+		
+		
+		vipCardService.batchGenerate(random.equals("1") ? true : false, cardPassword, Integer.valueOf(purchaseDays), Boolean.valueOf(isForever), Integer.valueOf(count));
+		
+		return result(200, "生成成功");
 	}
 	
 	@RequestMapping(value = "/getVipCardNum", method = RequestMethod.GET)
@@ -209,14 +244,19 @@ public class VipCardController extends BaseController {
 			int addDaysVal = Integer.valueOf(addDays);
 			Calendar calendar = Calendar.getInstance();
 			Date expTime = VipCardInfo.getExpTime();
-			if (isVipExpire(expTime)) {
-				calendar.setTime(new Date());
-			} else {
-				calendar.setTime(VipCardInfo.getExpTime());
+			// 已绑定用户的会员卡才更新失效时间
+			if (null != VipCardInfo.getUserId()) {
+				// 若是会员卡已过了有效期再进行续费，日期从现在开始计算
+				if (isVipExpire(expTime)) {
+					calendar.setTime(new Date());
+				} else {
+					calendar.setTime(VipCardInfo.getExpTime());
+				}
+				calendar.add(Calendar.DAY_OF_MONTH, addDaysVal);
+				VipCardInfo.setExpTime(calendar.getTime());
 			}
-			calendar.add(Calendar.DAY_OF_MONTH, addDaysVal);
+			
 			VipCardInfo.setPurchaseDays(VipCardInfo.getPurchaseDays().intValue() + Integer.valueOf(addDays));
-			VipCardInfo.setExpTime(calendar.getTime());
 		}
 		VipCardInfo.setUpdateTime(new Date());
 		vipCardService.update(VipCardInfo);
@@ -236,7 +276,15 @@ public class VipCardController extends BaseController {
 		Integer userId = VipCardInfo.getUserId();
 		if (null == userId)
 			return result(-1, "绑定的用户为空");
-		VipCardInfo.setUpdateTime(new Date());
+		if (null == VipCardInfo.getPurchaseDays())
+			return result(-1, "无法获取会员卡购买时限");
+		
+		Date now = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(now);
+		calendar.add(Calendar.DAY_OF_MONTH, VipCardInfo.getPurchaseDays());
+		VipCardInfo.setExpTime(calendar.getTime());
+		VipCardInfo.setUpdateTime(now);
 		vipCardService.update(VipCardInfo);
 		return result(200, "绑定成功!");
 	}
@@ -268,9 +316,16 @@ public class VipCardController extends BaseController {
 		UserDetailInfo user = userService.findUserDetailByUserId(Integer.valueOf(userId));
 		if (null != user.getVipCard()) 
 			return result(-1, "您之前已绑定了会员卡，若已过期请再次购买进行续费");
+		
+		Date now = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(now);
+		calendar.add(Calendar.DAY_OF_MONTH, vipCard.getPurchaseDays());
+		
+		vipCard.setExpTime(calendar.getTime());
 		vipCard.setNickName(user.getNickName());
 		vipCard.setUserId(Integer.valueOf(userId));
-		vipCard.setUpdateTime(new Date());
+		vipCard.setUpdateTime(now);
 		vipCardService.upsertSelective(vipCard);
 		user = userService.findUserDetailByUserId(Integer.valueOf(userId));
 		return result(200, "绑定成功!", user);

@@ -50,6 +50,11 @@ public class StringUtil {
 	public static char[] A_z = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
 			'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
 			'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+	
+	public static char[] A_z_0_9 = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+			'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+			'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6',
+			'7', '8', '9'};
 
 	/**
 	 * 将指定字符串的指定位置的字符以byte方式返回. 该方法中对返回的字符有一次ascii转换, 即减去一个'0'的ascii值(十进制的48).
@@ -1412,6 +1417,25 @@ public class StringUtil {
 		for (int i = 0; i < length; i++) {
 			int sub = r.nextInt(A_z.length);
 			pre += A_z[sub];
+		}
+
+		return pre;
+	}
+	
+	/**
+	 * 随机生成一个由英文字母和数字组成的字符串（包含大小写）
+	 * 
+	 * @param length
+	 *            生成的字符串长度
+	 * @param pre
+	 *            生成的字符串前缀
+	 * @return
+	 */
+	public static String generateRandomWordAndNum(int length, String pre) {
+		Random r = new Random();
+		for (int i = 0; i < length; i++) {
+			int sub = r.nextInt(A_z_0_9.length);
+			pre += A_z_0_9[sub];
 		}
 
 		return pre;

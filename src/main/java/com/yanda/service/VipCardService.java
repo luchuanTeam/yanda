@@ -1,6 +1,7 @@
 package com.yanda.service;
 
 import com.yanda.entity.generated.VipCardInfo;
+import com.yanda.exception.DOPException;
 
 public interface VipCardService extends BaseService<VipCardInfo, Integer> {
 	
@@ -24,5 +25,15 @@ public interface VipCardService extends BaseService<VipCardInfo, Integer> {
 	 * @return
 	 */
 	VipCardInfo findByUserId(Integer userId);
+	
+	/**
+	 * 批量生成会员卡
+	 * @param password
+	 * @param purchaseDays
+	 * @param isForever
+	 * @param count
+	 * @throws Exception 
+	 */
+	void batchGenerate(boolean isRandomPassword, String password, Integer purchaseDays, boolean isForever, Integer count)  throws Exception;
 	
 }

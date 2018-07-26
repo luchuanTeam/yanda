@@ -136,6 +136,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInfo, L
 
 	@Override
 	public void clearLoginByUserId(Integer userId) {
+		LOG.debug("清空用户ID为【" + userId + "]的登录状态");
 		UserInfo user = this.mapper.selectByPrimaryKeySelective(userId, UserInfo.Col.userName);
 		redisTemplate.opsForHash().put(Const.TOKEN_KEY_PRE, user.getUserName(), "");
 	}

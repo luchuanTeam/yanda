@@ -12,6 +12,7 @@ import com.yanda.entity.PageResult;
 import com.yanda.entity.generated.AttachmentInfo;
 import com.yanda.entity.generated.PaperInfo;
 import com.yanda.entity.generated.PaperInfoExample;
+import com.yanda.entity.generated.PaperInfoExample.Criteria;
 import com.yanda.exception.DOPException;
 import com.yanda.mapper.generated.PaperInfoMapper;
 import com.yanda.service.AttachmentService;
@@ -26,14 +27,7 @@ public class PaperServiceImpl extends BaseServiceImpl<PaperInfoMapper, PaperInfo
 	@Cacheable(value = "paperList")
 	@Override
 	public PageResult<PaperInfo> getList(int pageNum, int pageSize, String searchVal) {
-		PaperInfoExample example = new PaperInfoExample();
-		example.or().andPaperNameLike("%" + searchVal + "%");
-		example.or().andPaperDescLike("%" + searchVal + "%");
-		Page<PaperInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
-		this.mapper.selectByExample(example);
-		PageResult<PaperInfo> pageResult = new PageResult<>(pageInfo.getTotal(), pageInfo.getPages(),
-				pageInfo.getPageSize(), pageInfo.getResult());
-		return pageResult;
+		return this.getList(pageNum, pageSize, searchVal, 1);
 	}
 	
 	
@@ -71,6 +65,27 @@ public class PaperServiceImpl extends BaseServiceImpl<PaperInfoMapper, PaperInfo
 		attachmentService.save(attch);
 		paper.setAppendixId(attch.getAppendixId());
 		return super.save(paper);
+	}
+
+	
+	@Cacheable(value = "paperList")
+	@Override
+	public PageResult<PaperInfo> getList(int pageNum, int pageSize, String searchVal, Integer paperType) {
+		PaperInfoExample example = new PaperInfoExample();
+		Criteria c1 = example.createCriteria();
+		c1.andPaperTypeEqualTo(paperType);
+		c1.andPaperNameLike("%" + searchVal + "%");
+		
+		Criteria c2 = example.createCriteria();
+		c2.andPaperTypeEqualTo(paperType);
+		c2.andPaperDescLike("%" + searchVal + "%");
+		
+		example.or(c2);
+		Page<PaperInfo> pageInfo = PageHelper.startPage(pageNum, pageSize);
+		this.mapper.selectByExample(example);
+		PageResult<PaperInfo> pageResult = new PageResult<>(pageInfo.getTotal(), pageInfo.getPages(),
+				pageInfo.getPageSize(), pageInfo.getResult());
+		return pageResult;
 	}
 
 
